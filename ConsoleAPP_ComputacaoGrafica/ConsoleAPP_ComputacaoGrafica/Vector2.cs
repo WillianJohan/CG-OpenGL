@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace ConsoleAPP_ComputacaoGrafica
 {
@@ -55,25 +52,19 @@ namespace ConsoleAPP_ComputacaoGrafica
         {
             return obj is Vector2 vector && Equals(vector);
         }
-
         public bool Equals(Vector2 other)
         {
             return x == other.x &&
                    y == other.y;                   
         }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(x, y);
         }
-
         public override string ToString()
         {
             return $"[{x},{y}]";
         }
-
-
-
 
         #region Operators
 
