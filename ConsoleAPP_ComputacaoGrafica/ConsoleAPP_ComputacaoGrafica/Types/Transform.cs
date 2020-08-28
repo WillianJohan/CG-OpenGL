@@ -5,7 +5,7 @@ using System.Text;
 namespace ConsoleAPP_ComputacaoGrafica
 {
 
-    public struct Transform : IEquatable<Transform>
+    public class Transform : IEquatable<Transform>
     {
         public Vector3 Position;
         public Vector3 Rotation;
