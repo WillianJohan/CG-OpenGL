@@ -38,7 +38,7 @@ namespace ConsoleAPP_ComputacaoGrafica
     
      */
 
-    class Homework_TransformacoesGeometricas2D : IHomework
+    public class Homework_TransformacoesGeometricas2D : IHomework
     {
         public void start()
         {
