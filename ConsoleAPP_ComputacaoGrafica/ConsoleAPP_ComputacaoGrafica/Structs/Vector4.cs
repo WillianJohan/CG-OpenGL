@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleAPP_ComputacaoGrafica
 {
-    public class Vector4 : IEquatable<Vector4>
+    public struct Vector4 : IEquatable<Vector4>
     {
         public float x;
         public float y;
