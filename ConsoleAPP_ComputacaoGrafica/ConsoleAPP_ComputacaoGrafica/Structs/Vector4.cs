@@ -21,6 +21,7 @@ namespace ConsoleAPP_ComputacaoGrafica
         public static Vector4 Zero { get => new Vector4(0, 0, 0, 0); }
         public static Vector4 Right { get => new Vector4(1, 0, 0, 0); }
         public static Vector4 Up { get => new Vector4(0, 1, 0, 0); }
+        
         #endregion
 
         #region Constructors
@@ -75,7 +76,7 @@ namespace ConsoleAPP_ComputacaoGrafica
             return normalizedVector;
         }
 
-        public static float dotProduct(Vector4 a, Vector4 b)
+        public static float DotProduct(Vector4 a, Vector4 b)
         {
             return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w));
         }

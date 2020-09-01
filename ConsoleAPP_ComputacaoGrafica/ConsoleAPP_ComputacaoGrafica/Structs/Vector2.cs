@@ -51,7 +51,7 @@ namespace ConsoleAPP_ComputacaoGrafica
             return normalizedVector;
         }
         
-        public static float dotProduct(Vector2 a, Vector2 b)
+        public static float DotProduct(Vector2 a, Vector2 b)
         {
             return ((a.x * b.x) + (a.y * b.y));
         }
