@@ -31,15 +31,6 @@ namespace ConsoleAPP_ComputacaoGrafica
             Rotation = rotation;
             Scale = scale;
         }
-        public Transform(Vector2 position, Vector3 rotation, Vector3 scale)
-        {
-            Position.x = position.x;
-            Position.y = position.y;
-            Position.z = 0;
-
-            Rotation = rotation;
-            Scale = scale;
-        }
 
         public override bool Equals(object obj)
         {

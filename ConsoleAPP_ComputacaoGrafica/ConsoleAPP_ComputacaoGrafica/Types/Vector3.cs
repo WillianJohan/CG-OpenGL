@@ -8,13 +8,19 @@ namespace ConsoleAPP_ComputacaoGrafica
         public float y;
         public float z;
 
-        //Getters
+        #region Getters
+        
         public Vector3 normalized { get => Normalized(); }
         public float magnitude { get => Magnitude(); }
-        public static Vector3 zero { get => Zero(); }
+        
+        //Static getters
+        public static Vector3 Zero { get => new Vector3(0,0,0); }
+        public static Vector3 Right { get => new Vector3(1, 0, 0); }
+        public static Vector3 Up { get => new Vector3(0, 1, 0); }
+        #endregion
 
+        #region Constructors
 
-        //Constructor
         public Vector3(float x, float y, float z)
         {
             this.x = x;
@@ -22,6 +28,23 @@ namespace ConsoleAPP_ComputacaoGrafica
             this.z = z;
         }
 
+        public Vector3(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = 0;
+        }
+
+        public Vector3(Vector2 value)
+        {
+            this.x = value.x;
+            this.y = value.x;
+            this.z = 0;
+        }
+
+        #endregion
+
+        #region Methods
 
         float Magnitude()
         {
@@ -34,6 +57,7 @@ namespace ConsoleAPP_ComputacaoGrafica
 
             return magnitude;
         }
+
         Vector3 Normalized()
         {
             float _magnitude = Magnitude();
@@ -41,33 +65,19 @@ namespace ConsoleAPP_ComputacaoGrafica
 
             return normalizedVector;
         }
-        public static Vector3 Zero()
-        {
-            return new Vector3(0, 0, 0);
-        }
+
         public static float dotProduct(Vector3 a, Vector3 b)
         {
             return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
         }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Vector3 vector && Equals(vector);
-        }
-
-        public bool Equals(Vector3 other)
-        {
-            return x == other.x &&
-                   y == other.y &&
-                   z == other.z;
-        }
-
-        public override string ToString()
-        {
-            return $"[{x},{y},{z}]";
-        }
+        #endregion
 
         #region Operators
+
+        public override bool Equals(object obj)                         => obj is Vector3 vector && Equals(vector);
+        public bool Equals(Vector3 other)                               => x == other.x && y == other.y && z == other.z;
+        public override string ToString()                               => $"[{x},{y},{z}]";
+
 
         public static Vector3 operator +(Vector3 a, Vector3 b)          => new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
         public static Vector3 operator -(Vector3 a)                     => a * -1;

@@ -6,22 +6,32 @@ namespace ConsoleAPP_ComputacaoGrafica
     {
         public float x;
         public float y;
-        
 
-        //Getters
+
+        #region Getters
+
         public Vector2 normalized { get => Normalized(); }
         public float magnitude { get => Magnitude(); }
-        public static Vector2 zero { get => Zero(); }
+        
+        //Static getters
+        public static Vector2 Zero { get => new Vector2(0, 0); }
+        public static Vector2 Right { get => new Vector2(1, 0); }
+        public static Vector2 Up { get => new Vector2(0, 1); }
 
+        #endregion
 
-        //Constructor
+        #region Constructors
+
         public Vector2(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
 
+        #endregion
 
+        #region Methods
+        
         float Magnitude()
         {
             float magnitude = 0;
@@ -32,6 +42,7 @@ namespace ConsoleAPP_ComputacaoGrafica
 
             return magnitude;
         }
+        
         Vector2 Normalized()
         {
             float _magnitude = Magnitude();
@@ -39,34 +50,21 @@ namespace ConsoleAPP_ComputacaoGrafica
 
             return normalizedVector;
         }
-        public static Vector2 Zero()
-        {
-            return new Vector2(0, 0);
-        }
+        
         public static float dotProduct(Vector2 a, Vector2 b)
         {
             return ((a.x * b.x) + (a.y * b.y));
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is Vector2 vector && Equals(vector);
-        }
-        public bool Equals(Vector2 other)
-        {
-            return x == other.x &&
-                   y == other.y;                   
-        }
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(x, y);
-        }
-        public override string ToString()
-        {
-            return $"[{x},{y}]";
-        }
+        #endregion
 
         #region Operators
+        
+        public override bool Equals(object obj)                     => obj is Vector2 vector && Equals(vector);
+        public bool Equals(Vector2 other)                           => x == other.x && y == other.y;
+        public override int GetHashCode()                           => HashCode.Combine(x, y);
+        public override string ToString()                           => $"[{x},{y}]";
+
 
         public static Vector2 operator +(Vector2 a, Vector2 b)      => new Vector2(a.x + b.x, a.y + b.y);
         public static Vector2 operator -(Vector2 a)                 => a * -1;
