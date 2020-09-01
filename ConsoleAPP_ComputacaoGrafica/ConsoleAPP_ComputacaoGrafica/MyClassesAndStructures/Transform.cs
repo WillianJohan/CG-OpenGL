@@ -17,21 +17,7 @@ namespace ConsoleAPP_ComputacaoGrafica
         public Vector3 Scale { get => scale; set => scale = value; }
 
         #endregion
-
-        #region Methods
-
-        public void translate(Vector3 translation)
-        {
-            position = position + translation;
-        }
-
-        public void rotate(Vector3 rotation)
-        {
-            //not implemmented Yet
-        }
-
-        #endregion
-
+        
         #region Constructors
 
         public Transform()
@@ -48,6 +34,19 @@ namespace ConsoleAPP_ComputacaoGrafica
             this.scale = scale;
         }
 
+        #endregion
+
+        #region Methods
+
+        public void translate(Vector3 translation)
+        {
+            position = position + translation;
+        }
+
+        public void rotate(Vector3 rotation)
+        {
+            //not implemmented Yet
+        }
 
         #endregion
 
