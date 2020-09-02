@@ -47,6 +47,19 @@ namespace UFN_CG
             }
         }
 
+        //Static methods
+        public static Matrix4x4 Zero()
+        {
+            return new Matrix4x4(Vector4.Zero, Vector4.Zero, Vector4.Zero, Vector4.Zero);
+        }
+
+        public static Matrix4x4 Identity()
+        {
+            return new Matrix4x4(new Vector4(1, 0, 0, 0),
+                                 new Vector4(0, 1, 0, 0),
+                                 new Vector4(0, 0, 1, 0),
+                                 new Vector4(0, 0, 0, 1));
+        }
         #endregion
 
         #region Constructors
