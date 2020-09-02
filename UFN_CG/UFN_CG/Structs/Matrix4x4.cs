@@ -96,10 +96,26 @@ namespace UFN_CG
             return new Matrix4x4(getColumn(0), getColumn(1), getColumn(2), getColumn(3));
         }
 
+        //Transformações
+        public void Translate(float x, float y, float z)
+        {
+            //not Implemented yet
+        }
+        
+        public void Rotate(float x, float y, float z)
+        {
+            //not Implemented yet
+        }
+
+        public void Scale(float x, float y, float z)
+        {
+            //not Implemented yet
+        }
+
         #endregion
 
         #region Operators
-        
+
         public bool Equals([AllowNull] Matrix4x4 other)
         {
             throw new NotImplementedException();

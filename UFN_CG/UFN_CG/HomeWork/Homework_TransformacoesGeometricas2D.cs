@@ -41,28 +41,67 @@ namespace UFN_CG
         public void start()
         {
             //Iniciando uma matriz 4x4 identidade
-            Matrix4x4 matriz = Matrix4x4.Identity();
+            Matrix4x4 matT = Matrix4x4.Identity();
             
             Console.WriteLine("Gerando matriz identidade:");
-            Console.WriteLine(matriz);
-
-            // usuario escolhe que tipo de transformacao ele ira fazer (rotacao, translacao, escala), 
-            // passando seus parâmetros(valores de translação tx e ty, ângulo de rotação e fatores de escala sx e sy) de acordo com a opção escolhida. 
+            exibirMatriz(matT);
 
 
-            // monte a matriz referente a transformação escolhida, 
-            // multiplique ela pela matriz de transformações(matT), e então
-            // substitua os valores de matT pelo resultado.
+            while (true)
+            {
+                // usuario escolhe que tipo de transformacao ele ira fazer (rotacao, translacao, escala),
+                ExibirMenuDeTransformacoes();
 
-            //Após, apresente novamente matT na tela (agora com valores atualizados), seguida do menu. 
+                // passando seus parâmetros(valores de translação tx e ty, ângulo de rotação e fatores de escala sx e sy) de acordo com a opção escolhida. 
+                int userChoice = -1;
+                Vector2 vetorDeTransformacao = Vector2.Zero;
+                switch (userChoice)
+                {
+                    case 1:
+                        vetorDeTransformacao = Input.getVector2("Digite a translação");
+                        matT.Translate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        break;
+                    case 2:
+                        vetorDeTransformacao = Input.getVector2("Digite a rotação");
+                        matT.Rotate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        break;
+                    case 3:
+                        vetorDeTransformacao = Input.getVector2("Digite a escala");
+                        matT.Scale(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        break;
+                    case 0:
+                        Console.WriteLine("\n\n.......O programa será finalizado.......\n\n");
+                        return;
+                    default:
+                        Console.WriteLine("Opção não reconhecida, programa contuará a execução....");
+                        break;
+                }
 
-            //Mostrar Menu novamente
+
+                // monte a matriz referente a transformação escolhida, 
+                // multiplique ela pela matriz de transformações(matT), e então
+                // substitua os valores de matT pelo resultado.
+
+                //Após, apresente novamente matT na tela (agora com valores atualizados),
+                exibirMatriz(matT);
+
+                //Mostrar Menu novamente
+            }
 
         }
 
-        void menu_Transformacoes()
+        void ExibirMenuDeTransformacoes()
         {
+            Console.WriteLine("Escolha o tipo de transformação que deseja realizar:");
+            Console.WriteLine("1 -> Translação");
+            Console.WriteLine("2 -> Rotação");
+            Console.WriteLine("3 -> Escala");
+            Console.WriteLine("0 -> Sair do programa");
+        }
 
+        void exibirMatriz(Matrix4x4 matriz)
+        {
+            Console.WriteLine(matriz);
         }
 
     }
