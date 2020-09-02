@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace UFN_CG
 {
@@ -106,10 +104,10 @@ namespace UFN_CG
         {
             throw new NotImplementedException();
         }
-        public override string ToString() => $"|{m00},{m01},{m02},{m03}|\n" +
-                                             $"|{m10},{m11},{m12},{m13}|\n" +
-                                             $"|{m20},{m21},{m22},{m23}|\n" +
-                                             $"|{m30},{m31},{m32},{m33}|\n";
+        public override string ToString() => $"|{m00} ,{m01}, {m02}, {m03}|\n" +
+                                             $"|{m10} ,{m11}, {m12}, {m13}|\n" +
+                                             $"|{m20} ,{m21}, {m22}, {m23}|\n" +
+                                             $"|{m30} ,{m31}, {m32}, {m33}|\n";
 
         public static Vector4 operator *(Vector4 vector, Matrix4x4 rhs) 
         {

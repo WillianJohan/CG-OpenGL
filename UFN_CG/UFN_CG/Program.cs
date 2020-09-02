@@ -6,9 +6,8 @@ namespace UFN_CG
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-            Vector3 vetor = Input.getVector3();
+            IHomework homework = new Homework_TransformacoesGeometricas2D();
+            homework.start();
         }
     }
 }
