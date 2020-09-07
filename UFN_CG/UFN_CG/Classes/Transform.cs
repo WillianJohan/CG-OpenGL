@@ -17,9 +17,10 @@ namespace UFN_CG
             get => position;
             set
             {
-                //recalculate all 
+                for (int i = 0; i < mesh.vertices.Length; i++)
+                    mesh.vertices[i] = mesh.vertices[i] - position + value;
+
                 position = value;
-                
             }
         }
         public Vector3 Rotation { get => rotation; }
@@ -28,7 +29,12 @@ namespace UFN_CG
             get => scale; 
             set
             {
-                //recalculate here
+                for (int i = 0; i < mesh.vertices.Length; i++)
+                {
+                    mesh.vertices[i].x = (mesh.vertices[i].x - position.x) * value.x + position.x;
+                    mesh.vertices[i].y = (mesh.vertices[i].y - position.y) * value.y + position.y;
+                    mesh.vertices[i].z = (mesh.vertices[i].z - position.z) * value.z + position.z;
+                }
                 scale = value;
             }
         }
@@ -54,6 +60,13 @@ namespace UFN_CG
 
         #region Methods
 
+        public void Reset()
+        {
+            Position = Vector3.Zero;
+            rotation = Vector3.Zero;
+            Scale = new Vector3(1, 1, 1);
+        }
+
         public void translate(Vector3 translation)
         {
             position = position + translation;
@@ -66,12 +79,20 @@ namespace UFN_CG
         public void rotate(Vector3 rotation)
         {
             //not implemmented Yet
+            /* 𝑥𝑢=2−2∗cos45−2−2∗𝑠𝑒𝑛45+2=2
+            *  𝑦𝑢=2−2∗cos45+2−2∗𝑠𝑒𝑛45+2=2 */
+            
+        }
+
+        public void rotate(Vector3 Axis, float angle)
+        {
+            //not implemmented Yet
         }
 
         #endregion
 
         #region Operators
-        
+
         public override bool Equals(object obj)                             => obj is Transform transform && Equals(transform);
         public bool Equals(Transform other)                                 => position.Equals(other.position) && rotation.Equals(other.rotation) && scale.Equals(other.scale);
         public static bool operator ==(Transform left, Transform right)     => left.Equals(right);

@@ -17,5 +17,14 @@ namespace UFN_CG
         {
             //calculo aqui
         }
+
+        public override string ToString()
+        {
+            string allVertices = "";
+            for (int i = 0; i < vertices.Length; i++)
+                allVertices += $"vertice_{i}: {vertices[i]}\n";
+
+            return allVertices;
+        }
     }
 }

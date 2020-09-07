@@ -105,11 +105,26 @@ namespace UFN_CG
         public void Rotate(float x, float y, float z)
         {
             //not Implemented yet
+            /*
+             *  cos0    -sen0   0   0
+             *  sen0    -cos0   0   0   x    v4(x0, y0, z0, w)
+             *  0       0       0   0
+             *  0       0       0   0
+             */
+
         }
 
         public void Scale(float x, float y, float z)
         {
-            //not Implemented yet
+            /*
+            *  sX  0   0   0
+            *  0   Sy  0   0   x    v4(x0, y0, z0, w)
+            *  0   0   Sz  0
+            *  0   0   0   0
+            */
+            this.m00 = m00 * x;
+            this.m11 = m11 * y;
+            this.m22 = m22 * z;
         }
 
         #endregion
@@ -162,31 +177,31 @@ namespace UFN_CG
             for (int i = 0; i < 4; i++)
             {
                 lineArray[i] = Vector4.Zero;
-                Vector4 line = lhs.getLine(i);
-                Vector4 column = rhs.getColumn(0);
+                Vector4 lhs_line = lhs.getLine(i);
+                Vector4 rhs_column = rhs.getColumn(0);
                 
-                lineArray[i].x =    (line.x * column.x) +
-                                    (line.y * column.y) +
-                                    (line.z * column.z) +
-                                    (line.w * column.w);
+                lineArray[i].x =    (lhs_line.x * rhs_column.x) +
+                                    (lhs_line.y * rhs_column.y) +
+                                    (lhs_line.z * rhs_column.z) +
+                                    (lhs_line.w * rhs_column.w);
 
-                column = rhs.getColumn(1);
-                lineArray[i].y =    (line.x * column.x) +
-                                    (line.y * column.y) +
-                                    (line.z * column.z) +
-                                    (line.w * column.w);
+                rhs_column = rhs.getColumn(1);
+                lineArray[i].y =    (lhs_line.x * rhs_column.x) +
+                                    (lhs_line.y * rhs_column.y) +
+                                    (lhs_line.z * rhs_column.z) +
+                                    (lhs_line.w * rhs_column.w);
 
-                column = rhs.getColumn(2);
-                lineArray[i].z =    (line.x * column.x) +
-                                    (line.y * column.y) +
-                                    (line.z * column.z) +
-                                    (line.w * column.w);
+                rhs_column = rhs.getColumn(2);
+                lineArray[i].z =    (lhs_line.x * rhs_column.x) +
+                                    (lhs_line.y * rhs_column.y) +
+                                    (lhs_line.z * rhs_column.z) +
+                                    (lhs_line.w * rhs_column.w);
 
-                column = rhs.getColumn(3);
-                lineArray[i].w =    (line.x * column.x) +
-                                    (line.y * column.y) +
-                                    (line.z * column.z) +
-                                    (line.w * column.w);
+                rhs_column = rhs.getColumn(3);
+                lineArray[i].w =    (lhs_line.x * rhs_column.x) +
+                                    (lhs_line.y * rhs_column.y) +
+                                    (lhs_line.z * rhs_column.z) +
+                                    (lhs_line.w * rhs_column.w);
 
              
             }

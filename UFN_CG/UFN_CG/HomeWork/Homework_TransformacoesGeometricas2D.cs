@@ -40,11 +40,14 @@ namespace UFN_CG
     {
         public void start()
         {
+            Console.Clear();
+
             //Iniciando uma matriz 4x4 identidade
-            Matrix4x4 matT = Matrix4x4.Identity();
+            Transform2D transform = new Transform2D();
             
-            Console.WriteLine("Gerando matriz identidade:");
-            exibirMatriz(matT);
+            Console.WriteLine("Gerando um Transform:");
+            exibirTransformacao(transform);
+            exibirMesh(transform.Mesh);
 
 
             while (true)
@@ -53,21 +56,21 @@ namespace UFN_CG
                 ExibirMenuDeTransformacoes();
 
                 // passando seus parâmetros(valores de translação tx e ty, ângulo de rotação e fatores de escala sx e sy) de acordo com a opção escolhida. 
-                int userChoice = -1;
+                int userChoice = Input.getInt("Escolha uma Opção: ");
                 Vector2 vetorDeTransformacao = Vector2.Zero;
                 switch (userChoice)
                 {
                     case 1:
                         vetorDeTransformacao = Input.getVector2("Digite a translação");
-                        matT.Translate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        transform.translate(vetorDeTransformacao);
                         break;
                     case 2:
                         vetorDeTransformacao = Input.getVector2("Digite a rotação em graus");
-                        matT.Rotate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        transform.rotate(vetorDeTransformacao);
                         break;
                     case 3:
                         vetorDeTransformacao = Input.getVector2("Digite a escala");
-                        matT.Scale(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        transform.Scale = vetorDeTransformacao;
                         break;
                     case 0:
                         Console.WriteLine("\n\n.......O programa será finalizado.......\n\n");
@@ -78,7 +81,8 @@ namespace UFN_CG
                 }
 
                 //Após, apresente novamente matT na tela (agora com valores atualizados),
-                exibirMatriz(matT);
+                exibirTransformacao(transform);
+                exibirMesh(transform.Mesh);
 
                 //Mostrar Menu novamente
             }
@@ -94,9 +98,15 @@ namespace UFN_CG
             Console.WriteLine("0 -> Sair do programa");
         }
 
-        void exibirMatriz(Matrix4x4 matriz)
+
+        void exibirTransformacao(Transform2D transform)
         {
-            Console.WriteLine(matriz);
+            Console.WriteLine("Transform\n" + transform);
+        }
+        
+        void exibirMesh(Mesh mesh)
+        {
+            Console.WriteLine("Mesh\n" + mesh);
         }
 
     }
