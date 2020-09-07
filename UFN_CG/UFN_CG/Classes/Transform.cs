@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UFN_CG
 {
@@ -10,14 +8,35 @@ namespace UFN_CG
         Vector3 rotation;
         Vector3 scale;
 
+        Mesh mesh;
+
         #region Getters and Setters
 
-        public Vector3 Position { get => position; set => position = value; }
+        public Vector3 Position
+        {
+            get => position;
+            set
+            {
+                //recalculate all 
+                position = value;
+                
+            }
+        }
         public Vector3 Rotation { get => rotation; }
-        public Vector3 Scale { get => scale; set => scale = value; }
+        public Vector3 Scale
+        {
+            get => scale; 
+            set
+            {
+                //recalculate here
+                scale = value;
+            }
+        }
+        
+        public Mesh Mesh { get => mesh; }
 
         #endregion
-        
+
         #region Constructors
 
         public Transform()
@@ -25,13 +44,10 @@ namespace UFN_CG
             position = Vector3.Zero;
             rotation = Vector3.Zero;
             scale = new Vector3(1, 1, 1);
-        }
-
-        public Transform(Vector3 position, Vector3 rotation, Vector3 scale)
-        {
-            this.position = position;
-            this.rotation = rotation;
-            this.scale = scale;
+            
+            mesh = new Mesh();
+            mesh.vertices[0] = new Vector3(1, 1, 0);
+            mesh.vertices[1] = new Vector3(-1, -1, 0);
         }
 
         #endregion
@@ -41,6 +57,10 @@ namespace UFN_CG
         public void translate(Vector3 translation)
         {
             position = position + translation;
+            
+            if (mesh.vertices.Length == 0) return;
+            for (int i = 0; i < mesh.vertices.Length; i++)
+                mesh.vertices[i] += translation;
         }
 
         public void rotate(Vector3 rotation)

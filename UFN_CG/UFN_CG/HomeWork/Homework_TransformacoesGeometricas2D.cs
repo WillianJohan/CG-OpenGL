@@ -62,7 +62,7 @@ namespace UFN_CG
                         matT.Translate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
                         break;
                     case 2:
-                        vetorDeTransformacao = Input.getVector2("Digite a rotação");
+                        vetorDeTransformacao = Input.getVector2("Digite a rotação em graus");
                         matT.Rotate(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
                         break;
                     case 3:
@@ -76,11 +76,6 @@ namespace UFN_CG
                         Console.WriteLine("Opção não reconhecida, programa contuará a execução....");
                         break;
                 }
-
-
-                // monte a matriz referente a transformação escolhida, 
-                // multiplique ela pela matriz de transformações(matT), e então
-                // substitua os valores de matT pelo resultado.
 
                 //Após, apresente novamente matT na tela (agora com valores atualizados),
                 exibirMatriz(matT);

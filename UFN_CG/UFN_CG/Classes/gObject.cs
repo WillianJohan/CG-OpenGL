@@ -6,7 +6,7 @@ namespace UFN_CG
 {
     public class gObject
     {
-        public Transform transform;
-        public Mesh mesh;
+        public string Name;
+        public Transform Transform;
     }
 }

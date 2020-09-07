@@ -91,7 +91,7 @@ namespace UFN_CG
 
         #region Methods
 
-        public Matrix4x4 transpose()
+        public Matrix4x4 Transpose()
         {
             return new Matrix4x4(getColumn(0), getColumn(1), getColumn(2), getColumn(3));
         }
