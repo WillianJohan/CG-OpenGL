@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UFN_CG
+namespace UFN_CG.HomeWork
 {
 
     /*

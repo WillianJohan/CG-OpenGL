@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UFN_CG
+﻿namespace UFN_CG.HomeWork
 {
     interface IHomework
     {
