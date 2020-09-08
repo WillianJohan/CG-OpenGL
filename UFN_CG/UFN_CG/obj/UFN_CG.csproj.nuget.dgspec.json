@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj": {}
+    "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj": {}
   },
   "projects": {
-    "E:\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj": {
+    "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj",
+        "projectUniqueName": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj",
         "projectName": "UFN_CG",
-        "projectPath": "E:\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj",
-        "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
-        "outputPath": "E:\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\obj\\",
+        "projectPath": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\UFN_CG.csproj",
+        "packagesPath": "C:\\Users\\19123\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\UFN_CG\\UFN_CG\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Johan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\19123\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

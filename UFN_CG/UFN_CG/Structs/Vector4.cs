@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UFN_CG
 {
@@ -87,7 +85,7 @@ namespace UFN_CG
 
         public override bool Equals(object obj) => obj is Vector4 vector && Equals(vector);
         public bool Equals(Vector4 other) => x == other.x && y == other.y && z == other.z && w == other.w;
-        public override string ToString() => $"[{x},{y},{z},{w}]";
+        public override string ToString() => $"({x}, {y}, {z}, {w})";
 
 
         public static Vector4 operator +(Vector4 a, Vector4 b) => new Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);

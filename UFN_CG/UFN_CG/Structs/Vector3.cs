@@ -77,7 +77,7 @@ namespace UFN_CG
 
         public override bool Equals(object obj)                         => obj is Vector3 vector && Equals(vector);
         public bool Equals(Vector3 other)                               => x == other.x && y == other.y && z == other.z;
-        public override string ToString()                               => $"[{x},{y},{z}]";
+        public override string ToString()                               => $"({x}, {y}, {z})";
 
 
         public static Vector3 operator +(Vector3 a, Vector3 b)          => new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);

@@ -63,7 +63,7 @@ namespace UFN_CG
         public override bool Equals(object obj)                     => obj is Vector2 vector && Equals(vector);
         public bool Equals(Vector2 other)                           => x == other.x && y == other.y;
         public override int GetHashCode()                           => HashCode.Combine(x, y);
-        public override string ToString()                           => $"[{x},{y}]";
+        public override string ToString()                           => $"({x} | {y})";
 
 
         public static Vector2 operator +(Vector2 a, Vector2 b)      => new Vector2(a.x + b.x, a.y + b.y);
