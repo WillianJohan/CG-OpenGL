@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace UFN_CG
 {
-    public struct Matrix4x4 : IEquatable<Matrix4x4>
+    public struct Matrix4x4
     {
         public float    m00, m01, m02, m03,
                         m10, m11, m12, m13,
@@ -85,8 +85,6 @@ namespace UFN_CG
             this.m33 = line03.w;
         }
 
-
-
         #endregion
 
         #region Methods
@@ -97,49 +95,124 @@ namespace UFN_CG
         }
 
         //Transformações
-        public void Translate(float x, float y, float z)
+        public Matrix4x4 TranslationMatrix(float x, float y, float z)
         {
-            //not Implemented yet
+            // 1  0  0  Tx
+            // 0  1  0  Ty
+            // 0  0  1  Tz
+            // 0  0  0  1
+            
+            Matrix4x4 matriz_Translacao = Matrix4x4.Identity();
+            matriz_Translacao.m03 = x;
+            matriz_Translacao.m13 = y;
+            matriz_Translacao.m23 = z;
+            
+            return matriz_Translacao;
         }
         
-        public void Rotate(float x, float y, float z)
+        public Matrix4x4 RotationMatrix(float x, float y, float z)
         {
-            //not Implemented yet
-            /*
-             *  cos0    -sen0   0   0
-             *  sen0    -cos0   0   0   x    v4(x0, y0, z0, w)
-             *  0       0       0   0
-             *  0       0       0   0
-             */
+            Matrix4x4 Mat_X = Identity();     
+            Mat_X.m11 = (float)Math.Cos(x);         // Rx   |1       0       0       0|  
+            Mat_X.m12 = (float)-Math.Sin(x);        //      |0       Sen()   Cos()   0|  
+            Mat_X.m21 = (float)Math.Sin(x);         //      |0       0       0       0|
+            Mat_X.m22 = (float)Math.Cos(x);         //      |0       cos()   -Sen()  1|  
 
+            Matrix4x4 Mat_Y = Identity();
+            Mat_Y.m00 = (float)Math.Cos(y);         // Ry   |cos()   0       -sen()  0|
+            Mat_Y.m02 = (float)-Math.Sin(y);        //      |0       1       0       0|  
+            Mat_Y.m20 = (float)-Math.Sin(y);        //      |-sen()  0       cos()   0|  
+            Mat_Y.m22 = (float)Math.Cos(y);         //      |0       0       0       1|
+
+            Matrix4x4 Mat_Z = Identity();
+            Mat_Z.m00 = (float)Math.Cos(z);         // Rz   |cos()   -sen()  0       0|  
+            Mat_Z.m01 = (float)-Math.Sin(z);        //      |sen()   -cos()  0       0|  
+            Mat_Z.m10 = (float)Math.Sin(z);         //      |0       0       1       0|  
+            Mat_Z.m11 = (float)-Math.Cos(z);        //      |0       0       0       1|  
+
+            return Mat_X * Mat_Y * Mat_Z;
         }
 
-        public void Scale(float x, float y, float z)
+        public Matrix4x4 RotationMatrix(Vector3 axis, float angle)
         {
-            /*
-            *  sX  0   0   0
-            *  0   Sy  0   0   x    v4(x0, y0, z0, w)
-            *  0   0   Sz  0
-            *  0   0   0   0
-            */
-            this.m00 = m00 * x;
-            this.m11 = m11 * y;
-            this.m22 = m22 * z;
+            Matrix4x4 rotationMatrix = Identity();
+            
+            if (axis.x == 1) // X
+            {
+                rotationMatrix.m11 = (float)Math.Cos(angle);
+                rotationMatrix.m12 = (float)-Math.Sin(angle);
+                rotationMatrix.m21 = (float)Math.Sin(angle);
+                rotationMatrix.m22 = (float)Math.Cos(angle);
+            }else if (axis.y == 1) // Y
+            {
+               rotationMatrix.m00 = (float)Math.Cos(angle);
+               rotationMatrix.m02 = (float)-Math.Sin(angle);
+               rotationMatrix.m20 = (float)-Math.Sin(angle);
+               rotationMatrix.m22 = (float)Math.Cos(angle);
+            }else if (axis.z == 1) // Z
+            {
+               rotationMatrix.m00 = (float)Math.Cos(angle);
+               rotationMatrix.m01 = (float)-Math.Sin(angle);
+               rotationMatrix.m10 = (float)Math.Sin(angle);
+               rotationMatrix.m11 = (float)-Math.Cos(angle);
+            }
+
+            return rotationMatrix;
+        }
+
+        public Matrix4x4 ScaleMatrix(float x, float y, float z)
+        {
+            //  sX  0   0   0
+            //  0   Sy  0   0
+            //  0   0   Sz  0
+            //  0   0   0   1
+            
+            Matrix4x4 matriz_Rotacao = Matrix4x4.Identity();
+            matriz_Rotacao.m00 = x;
+            matriz_Rotacao.m11 = y;
+            matriz_Rotacao.m22 = z;
+
+            return matriz_Rotacao;
         }
 
         #endregion
 
         #region Operators
 
-        public bool Equals([AllowNull] Matrix4x4 other)
-        {
-            throw new NotImplementedException();
-        }
         public override string ToString() => $"|{m00} ,{m01}, {m02}, {m03}|\n" +
                                              $"|{m10} ,{m11}, {m12}, {m13}|\n" +
                                              $"|{m20} ,{m21}, {m22}, {m23}|\n" +
                                              $"|{m30} ,{m31}, {m32}, {m33}|\n";
+        public static Vector3 operator *(Vector3 vector, Matrix4x4 rhs)
+        {
+            Vector4 resultado = Vector4.Zero;
 
+            Vector4 column = rhs.getColumn(0);
+            resultado.x = (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            column = rhs.getColumn(1);
+            resultado.y = (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            column = rhs.getColumn(2);
+            resultado.z = (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            column = rhs.getColumn(3);
+            resultado.w = (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            return new Vector3(resultado.x, resultado.y, resultado.z);
+        }
         public static Vector4 operator *(Vector4 vector, Matrix4x4 rhs) 
         {
             Vector4 resultado = Vector4.Zero;
