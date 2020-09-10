@@ -95,7 +95,7 @@ namespace UFN_CG
         }
 
         //Transformações
-        public Matrix4x4 TranslationMatrix(float x, float y, float z)
+        public static Matrix4x4 TranslationMatrix(float x, float y, float z)
         {
             // 1  0  0  Tx
             // 0  1  0  Ty
@@ -110,8 +110,12 @@ namespace UFN_CG
             return matriz_Translacao;
         }
         
-        public Matrix4x4 RotationMatrix(float x, float y, float z)
+        public static Matrix4x4 RotationMatrix(float x, float y, float z)
         {
+            x = (float)Math.PI * x / 180;
+            y = (float)Math.PI * y / 180;
+            z = (float)Math.PI * z / 180;
+
             Matrix4x4 Mat_X = Identity();     
             Mat_X.m11 = (float)Math.Cos(x);         // Rx   |1       0       0       0|  
             Mat_X.m12 = (float)-Math.Sin(x);        //      |0       Sen()   Cos()   0|  
@@ -130,13 +134,22 @@ namespace UFN_CG
             Mat_Z.m10 = (float)Math.Sin(z);         //      |0       0       1       0|  
             Mat_Z.m11 = (float)-Math.Cos(z);        //      |0       0       0       1|  
 
+            Console.WriteLine(Mat_X);
+            Console.WriteLine(Mat_Y);
+            Console.WriteLine(Mat_Z);
+
+            Console.WriteLine(x);
+            Console.WriteLine(y);
+            Console.WriteLine(z);
+
             return Mat_X * Mat_Y * Mat_Z;
         }
 
-        public Matrix4x4 RotationMatrix(Vector3 axis, float angle)
+        public static Matrix4x4 RotationMatrix(Vector3 axis, float angle)
         {
             Matrix4x4 rotationMatrix = Identity();
-            
+            angle = (float)Math.PI * angle / 180;
+
             if (axis.x == 1) // X
             {
                 rotationMatrix.m11 = (float)Math.Cos(angle);
@@ -160,7 +173,7 @@ namespace UFN_CG
             return rotationMatrix;
         }
 
-        public Matrix4x4 ScaleMatrix(float x, float y, float z)
+        public static Matrix4x4 ScaleMatrix(float x, float y, float z)
         {
             //  sX  0   0   0
             //  0   Sy  0   0
@@ -191,19 +204,19 @@ namespace UFN_CG
             resultado.x = (vector.x * column.x) +
                             (vector.y * column.y) +
                             (vector.z * column.z) +
-                            (1 * column.w);
+                            (0 * column.w);
 
             column = rhs.getColumn(1);
             resultado.y = (vector.x * column.x) +
                             (vector.y * column.y) +
                             (vector.z * column.z) +
-                            (1 * column.w);
+                            (0 * column.w);
 
             column = rhs.getColumn(2);
             resultado.z = (vector.x * column.x) +
                             (vector.y * column.y) +
                             (vector.z * column.z) +
-                            (1 * column.w);
+                            (0 * column.w);
 
             column = rhs.getColumn(3);
             resultado.w = (vector.x * column.x) +

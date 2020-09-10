@@ -7,9 +7,17 @@ namespace UFN_CG
     {
         static void Main(string[] args)
         {
-            Matrix4x4 m1 = Matrix4x4.Identity();
-            Matrix4x4 m2 = Matrix4x4.Identity();
-            Console.WriteLine(m1==m2);
+            Transform transform = new Transform();
+            Mesh malha = new Mesh();
+            
+            transform.Position = new Vector3(1, 2, 0);
+            transform.rotate(new Vector3(45, 0, 0));
+            transform.Scale = new Vector3(1, 2, 1);
+            
+            Vector3[] shape = malha.getShape(transform.Position, transform.Rotation, transform.Scale);
+            
+            foreach(Vector3 ponto in shape)
+                Console.WriteLine(ponto);
         }
     }
 }
