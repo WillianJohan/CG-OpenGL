@@ -134,14 +134,6 @@ namespace UFN_CG
             Mat_Z.m10 = (float)Math.Sin(z);         //      |0       0       1       0|  
             Mat_Z.m11 = (float)-Math.Cos(z);        //      |0       0       0       1|  
 
-            Console.WriteLine(Mat_X);
-            Console.WriteLine(Mat_Y);
-            Console.WriteLine(Mat_Z);
-
-            Console.WriteLine(x);
-            Console.WriteLine(y);
-            Console.WriteLine(z);
-
             return Mat_X * Mat_Y * Mat_Z;
         }
 

@@ -16,10 +16,11 @@ namespace UFN_CG
 
 
         //Static getters
-        public static Vector4 Zero { get => new Vector4(0, 0, 0, 0); }
-        public static Vector4 Right { get => new Vector4(1, 0, 0, 0); }
-        public static Vector4 Up { get => new Vector4(0, 1, 0, 0); }
-        
+        public static Vector4 Zero    { get => new Vector4(0, 0, 0, 0); }
+        public static Vector4 Right   { get => new Vector4(1, 0, 0, 0); }
+        public static Vector4 Up      { get => new Vector4(0, 1, 0, 0); }
+        public static Vector4 Forward { get => new Vector4(0, 0, 1, 0); }
+
         #endregion
 
         #region Constructors

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UFN_CG
 {
@@ -31,9 +29,10 @@ namespace UFN_CG
         public Vector3[] getShape(Vector3 Position, Vector3 Rotation, Vector3 Scale)
         {
             Vector3[] pontos = new Vector3[vertices.Length];
-            Matrix4x4 MatT = Matrix4x4.TranslationMatrix(Position.x, Position.y, Position.z) *
-                             Matrix4x4.RotationMatrix(Rotation.x, Rotation.y, Rotation.z) *
-                             Matrix4x4.ScaleMatrix(Scale.x, Scale.y, Scale.z);
+            Matrix4x4 MatT = Matrix4x4.RotationMatrix(Rotation.x, Rotation.y, Rotation.z) *
+                             Matrix4x4.ScaleMatrix(Scale.x, Scale.y, Scale.z) *
+                             Matrix4x4.TranslationMatrix(Position.x, Position.y, Position.z);
+            
             Console.WriteLine(MatT);
 
             for(int i = 0; i < vertices.Length; i++)
