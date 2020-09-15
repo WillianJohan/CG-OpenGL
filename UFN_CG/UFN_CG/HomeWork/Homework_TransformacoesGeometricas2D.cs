@@ -71,15 +71,15 @@ namespace UFN_CG.HomeWork
                 {
                     case 1:
                         vetorDeTransformacao = Input.getVector2("Digite a translação");
-                        MatT *= Matrix4x4.TranslationMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 0);
+                        MatT = Matrix4x4.TranslationMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 0) * MatT;
                         break;
                     case 2:
                         float rotacao =  Input.getFloat("Digite a rotação em graus");
-                        MatT *= Matrix4x4.RotationMatrix(Vector3.Right, rotacao);
+                        MatT = Matrix4x4.RotationMatrix(Vector3.Right, rotacao) * MatT;
                         break;
                     case 3:
                         vetorDeTransformacao = Input.getVector2("Digite a escala");
-                        MatT *= Matrix4x4.ScaleMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 1);
+                        MatT = Matrix4x4.ScaleMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 1) * MatT;
                         break;
                     case 0:
                         Console.WriteLine("\n\n.......O programa será finalizado.......\n\n");

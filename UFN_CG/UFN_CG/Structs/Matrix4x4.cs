@@ -190,37 +190,37 @@ namespace UFN_CG
                                              $"|{m30} ,{m31}, {m32}, {m33}|\n";
         public static Vector3 operator *(Vector3 vector, Matrix4x4 rhs)
         {
-            Vector4 resultado = Vector4.Zero;
+            Vector4 resultado = Vector4.Identity;
 
             Vector4 column = rhs.getColumn(0);
-            resultado.x = (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (0 * column.w);
-
-            column = rhs.getColumn(1);
-            resultado.y = (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (0 * column.w);
-
-            column = rhs.getColumn(2);
-            resultado.z = (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (0 * column.w);
-
-            column = rhs.getColumn(3);
-            resultado.w = (vector.x * column.x) +
+            resultado.x =   (vector.x * column.x) +
                             (vector.y * column.y) +
                             (vector.z * column.z) +
                             (1 * column.w);
 
+            column = rhs.getColumn(1);
+            resultado.y =   (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            column = rhs.getColumn(2);
+            resultado.z =   (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+
+            column = rhs.getColumn(3);
+            resultado.w =   (vector.x * column.x) +
+                            (vector.y * column.y) +
+                            (vector.z * column.z) +
+                            (1 * column.w);
+            
             return new Vector3(resultado.x, resultado.y, resultado.z);
         }
         public static Vector4 operator *(Vector4 vector, Matrix4x4 rhs) 
         {
-            Vector4 resultado = Vector4.Zero;
+            Vector4 resultado = Vector4.Identity;
             
             Vector4 column = rhs.getColumn(0);
             resultado.x =   (vector.x * column.x) +

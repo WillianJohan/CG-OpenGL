@@ -7,7 +7,8 @@ namespace UFN_CG
     {
         static void Main(string[] args)
         {
-            print("Hello World");
+            HomeWork.IHomework trabalho = new HomeWork.Homework_TransformacoesGeometricas2D();
+            trabalho.start();
         }
 
         public static void print(string texto)
