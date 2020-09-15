@@ -8,8 +8,6 @@ namespace UFN_CG
         Vector3 rotation;
         Vector3 scale;
 
-        //Mesh mesh;
-
         #region Getters and Setters
 
         public Vector3 Position
@@ -17,9 +15,6 @@ namespace UFN_CG
             get => position;
             set
             {
-                //for (int i = 0; i < mesh.vertices.Length; i++)
-                //    mesh.vertices[i] = mesh.vertices[i] - position + value;
-
                 position = value;
             }
         }
@@ -29,18 +24,10 @@ namespace UFN_CG
             get => scale; 
             set
             {
-                //for (int i = 0; i < mesh.vertices.Length; i++)
-                //{
-                //    mesh.vertices[i].x = (mesh.vertices[i].x - position.x) * value.x + position.x;
-                //    mesh.vertices[i].y = (mesh.vertices[i].y - position.y) * value.y + position.y;
-                //    mesh.vertices[i].z = (mesh.vertices[i].z - position.z) * value.z + position.z;
-                //}
                 scale = value;
             }
         }
         
-        //public Mesh Mesh { get => mesh; }
-
         #endregion
 
         #region Constructors
@@ -50,10 +37,6 @@ namespace UFN_CG
             position = Vector3.Zero;
             rotation = Vector3.Zero;
             scale = new Vector3(1, 1, 1);
-            
-            //mesh = new Mesh();
-            //mesh.vertices[0] = new Vector3(1, 1, 0);
-            //mesh.vertices[1] = new Vector3(-1, -1, 0);
         }
 
         #endregion
@@ -70,10 +53,6 @@ namespace UFN_CG
         public void translate(Vector3 translation)
         {
             position = position + translation;
-            
-            //if (mesh.vertices.Length == 0) return;
-            //for (int i = 0; i < mesh.vertices.Length; i++)
-            //    mesh.vertices[i] += translation;
         }
 
         public void rotate(Vector3 rotation)

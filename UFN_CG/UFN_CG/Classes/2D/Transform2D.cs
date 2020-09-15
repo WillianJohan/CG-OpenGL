@@ -8,8 +8,6 @@ namespace UFN_CG
         Vector2 rotation;
         Vector2 scale;
 
-        Mesh mesh;
-
         #region Getters and Setters
 
         public Vector2 Position
@@ -37,8 +35,6 @@ namespace UFN_CG
                 scale = value;
             }
         }
-
-        public Mesh Mesh { get => mesh; }
 
         #endregion
 
