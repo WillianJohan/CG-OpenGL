@@ -192,29 +192,29 @@ namespace UFN_CG
         {
             Vector4 resultado = Vector4.Identity;
 
-            Vector4 column = rhs.getColumn(0);
-            resultado.x =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (1 * column.w);
+            Vector4 line = rhs.getLine(0);
+            resultado.x =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (1 * line.w);
 
-            column = rhs.getColumn(1);
-            resultado.y =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (1 * column.w);
+            line = rhs.getLine(1);
+            resultado.y =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (1 * line.w);
 
-            column = rhs.getColumn(2);
-            resultado.z =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (1 * column.w);
+            line = rhs.getLine(2);
+            resultado.z =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (1 * line.w);
 
-            column = rhs.getColumn(3);
-            resultado.w =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (1 * column.w);
+            line = rhs.getLine(3);
+            resultado.w =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (1 * line.w);
             
             return new Vector3(resultado.x, resultado.y, resultado.z);
         }
@@ -222,29 +222,29 @@ namespace UFN_CG
         {
             Vector4 resultado = Vector4.Identity;
             
-            Vector4 column = rhs.getColumn(0);
-            resultado.x =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (vector.w * column.w);
+            Vector4 line = rhs.getLine(0);
+            resultado.x =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (vector.w * line.w);
             
-            column = rhs.getColumn(1);
-            resultado.y =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (vector.w * column.w);
+            line = rhs.getLine(1);
+            resultado.y =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (vector.w * line.w);
             
-            column = rhs.getColumn(2);
-            resultado.z =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (vector.w * column.w);
+            line = rhs.getLine(2);
+            resultado.z =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (vector.w * line.w);
             
-            column = rhs.getColumn(3);
-            resultado.w =   (vector.x * column.x) +
-                            (vector.y * column.y) +
-                            (vector.z * column.z) +
-                            (vector.w * column.w);
+            line = rhs.getLine(3);
+            resultado.w =   (vector.x * line.x) +
+                            (vector.y * line.y) +
+                            (vector.z * line.z) +
+                            (vector.w * line.w);
 
             return resultado;
         }
