@@ -11,35 +11,20 @@ namespace UFN_CG.HomeWork
     
      */
 
-    public class Homework_TransformacoesGeometricas3D : IHomework
+    public class TransformacoesGeometricas3D : IHomework
     {
         public void start()
         {
-            Console.Clear();
-
             //Matriz de transformação
             Transform transform = new Transform();
 
-            Console.WriteLine("Gerando um Transform:");
-            exibirTransformacao(transform.TransformationMatrix);
-
-            //Criando pontos em um plano 2D
-            Vector3[] pontos = new Vector3[]
-            {
-                new Vector3(0,0,0),
-                new Vector3(1,0,0),
-                new Vector3(0,1,0),
-                new Vector3(1,1,0),
-                new Vector3(1,0,1),
-                new Vector3(0,1,1),
-                new Vector3(1,1,1)
-            };
-
-            exibirMesh(pontos, transform.TransformationMatrix);
-
-
             while (true)
             {
+                Console.Clear();
+
+                //Exibe as transformações na tela
+                exibirTransformações(transform);
+
                 // usuario escolhe que tipo de transformacao ele ira fazer (rotacao, translacao, escala),
                 ExibirMenuDeTransformacoes();
 
@@ -67,11 +52,6 @@ namespace UFN_CG.HomeWork
                         Console.WriteLine("Opção não reconhecida, programa contuará a execução....");
                         break;
                 }
-
-                //Após, apresente novamente matT na tela (agora com valores atualizados),
-                exibirTransformacao(transform.TransformationMatrix);
-                exibirMesh(pontos, transform.TransformationMatrix);
-
                 //Mostrar Menu novamente
             }
 
@@ -86,19 +66,26 @@ namespace UFN_CG.HomeWork
             Console.WriteLine("0 -> Sair do programa");
         }
 
-
-        void exibirTransformacao(Matrix4x4 MatT)
+        void exibirTransformações(Transform transform)
         {
-            Console.WriteLine("Matriz de Transformação:\n" + MatT);
-        }
+            Console.WriteLine("Transformação: \n" + transform);
+            Console.WriteLine("Matriz de Transformação:\n" + transform.TransformationMatrix);
 
-        void exibirMesh(Vector3[] pontos, Matrix4x4 MatT)
-        {
-            foreach (var p in pontos)
+            Console.WriteLine("Pontos no espaço 3D:");
+            Vector3[] pontos = new Vector3[]    //Criando pontos em um plano 2D
             {
-                var vetor = new Vector4(p.x, p.y, p.z);
-                Console.WriteLine("Ponto:\n" +  vetor * MatT);
-            }
+                new Vector3(0,0,0) + transform.Position,
+                new Vector3(1,0,0) + transform.Position,
+                new Vector3(0,1,0) + transform.Position,
+                new Vector3(1,1,0) + transform.Position,
+                new Vector3(1,0,1) + transform.Position,
+                new Vector3(0,1,1) + transform.Position,
+                new Vector3(1,1,1) + transform.Position
+            };
+            foreach (var p in pontos)
+                Console.WriteLine("Ponto: " +  (Vector3)(new Vector4(p.x, p.y, p.z) * transform.TransformationMatrix));
+
+            Console.WriteLine("\n");
         }
     }
 }

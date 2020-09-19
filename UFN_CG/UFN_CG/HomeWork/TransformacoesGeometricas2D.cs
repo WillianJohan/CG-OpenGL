@@ -36,21 +36,18 @@ namespace UFN_CG.HomeWork
     
      */
 
-    public class Homework_TransformacoesGeometricas2D : IHomework
+    public class TransformacoesGeometricas2D : IHomework
     {
         public void start()
         {
-            Console.Clear();
-
             //Matriz de transformação
             Transform2D transform = new Transform2D();
-
-            Console.WriteLine("Gerando um Transform:");
-            exibirTransformacao(transform.TransformationMatrix);
-            exibirMesh(transform);
             
             while (true)
             {
+                Console.Clear();
+                exibirTransformacoes(transform);
+
                 // usuario escolhe que tipo de transformacao ele ira fazer (rotacao, translacao, escala),
                 ExibirMenuDeTransformacoes();
 
@@ -78,11 +75,6 @@ namespace UFN_CG.HomeWork
                         Console.WriteLine("Opção não reconhecida, programa contuará a execução....");
                         break;
                 }
-
-                //Após, apresente novamente matT na tela (agora com valores atualizados),
-                exibirTransformacao(transform.TransformationMatrix);
-                exibirMesh(transform);
-
                 //Mostrar Menu novamente
             }
 
@@ -97,26 +89,22 @@ namespace UFN_CG.HomeWork
             Console.WriteLine("0 -> Sair do programa");
         }
 
-
-        void exibirTransformacao(Matrix3x3 MatT)
+        void exibirTransformacoes(Transform2D transform)
         {
-            Console.WriteLine("Matriz de Transformação:\n" + MatT);
-        }
-
-        void exibirMesh(Transform2D transform)
-        {
-            //Criando pontos em um plano 2D
-            Vector2[] pontos = new Vector2[]
+            Console.WriteLine("Transformação: \n" + transform);
+            Console.WriteLine("Matriz de Transformação:\n" + transform.TransformationMatrix);
+            
+            Console.WriteLine("Pontos no espaço 2D:");
+            Vector2[] pontos = new Vector2[] //Criando pontos em um plano 2D
             {
                 new Vector2(0,0) + transform.Position,
                 new Vector2(0,1) + transform.Position,
                 new Vector2(1,1) + transform.Position
             };
-
             foreach (var p in pontos)
-            {
-                Console.WriteLine("Ponto:\n" + (Vector2)((Vector3)p * transform.TransformationMatrix));
-            }
+                Console.WriteLine("Ponto: " + (Vector2)((Vector3)p * transform.TransformationMatrix));
+            
+            Console.WriteLine("\n");
         }
     }
 }

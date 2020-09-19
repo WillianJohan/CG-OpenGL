@@ -1,6 +1,6 @@
 ﻿namespace UFN_CG.HomeWork
 {
-    public class Homework_LinhasCirculosCurvas : IHomework
+    public class LinhasCirculosCurvas : IHomework
     {
         public void start()
         {
