@@ -188,59 +188,30 @@ namespace UFN_CG
                                              $"|{m10} ,{m11}, {m12}, {m13}|\n" +
                                              $"|{m20} ,{m21}, {m22}, {m23}|\n" +
                                              $"|{m30} ,{m31}, {m32}, {m33}|\n";
-        public static Vector3 operator *(Vector3 vector, Matrix4x4 rhs)
-        {
-            Vector4 resultado = Vector4.Identity;
-
-            Vector4 line = rhs.getLine(0);
-            resultado.x =   (vector.x * line.x) +
-                            (vector.y * line.y) +
-                            (vector.z * line.z) +
-                            (1 * line.w);
-
-            line = rhs.getLine(1);
-            resultado.y =   (vector.x * line.x) +
-                            (vector.y * line.y) +
-                            (vector.z * line.z) +
-                            (1 * line.w);
-
-            line = rhs.getLine(2);
-            resultado.z =   (vector.x * line.x) +
-                            (vector.y * line.y) +
-                            (vector.z * line.z) +
-                            (1 * line.w);
-
-            line = rhs.getLine(3);
-            resultado.w =   (vector.x * line.x) +
-                            (vector.y * line.y) +
-                            (vector.z * line.z) +
-                            (1 * line.w);
-            
-            return new Vector3(resultado.x, resultado.y, resultado.z);
-        }
+        
         public static Vector4 operator *(Vector4 vector, Matrix4x4 rhs) 
         {
-            Vector4 resultado = Vector4.Identity;
+            Vector4 resultado = Vector4.one;
             
-            Vector4 line = rhs.getLine(0);
+            Vector4 line = rhs.getColumn(0);
             resultado.x =   (vector.x * line.x) +
                             (vector.y * line.y) +
                             (vector.z * line.z) +
                             (vector.w * line.w);
             
-            line = rhs.getLine(1);
+            line = rhs.getColumn(1);
             resultado.y =   (vector.x * line.x) +
                             (vector.y * line.y) +
                             (vector.z * line.z) +
                             (vector.w * line.w);
             
-            line = rhs.getLine(2);
+            line = rhs.getColumn(2);
             resultado.z =   (vector.x * line.x) +
                             (vector.y * line.y) +
                             (vector.z * line.z) +
                             (vector.w * line.w);
             
-            line = rhs.getLine(3);
+            line = rhs.getColumn(3);
             resultado.w =   (vector.x * line.x) +
                             (vector.y * line.y) +
                             (vector.z * line.z) +

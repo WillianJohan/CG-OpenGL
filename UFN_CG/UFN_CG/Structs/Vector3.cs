@@ -14,10 +14,11 @@ namespace UFN_CG
         public float magnitude { get => Magnitude(); }
         
         //Static getters
-        public static Vector3 Zero    { get => new Vector3(0, 0, 0); }
-        public static Vector3 Right   { get => new Vector3(1, 0, 0); }
-        public static Vector3 Up      { get => new Vector3(0, 1, 0); }
-        public static Vector3 Forward { get => new Vector3(0, 0, 1); }
+        public static Vector3 Zero     { get => new Vector3(0, 0, 0); }
+        public static Vector3 Right    { get => new Vector3(1, 0, 0); }
+        public static Vector3 Up       { get => new Vector3(0, 1, 0); }
+        public static Vector3 Forward  { get => new Vector3(0, 0, 1); }
+        public static Vector3 One      { get => new Vector3(1, 1, 1); }
 
         #endregion
 

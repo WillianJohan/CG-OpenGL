@@ -20,7 +20,7 @@ namespace UFN_CG
         public static Vector4 Right    { get => new Vector4(1, 0, 0, 0); }
         public static Vector4 Up       { get => new Vector4(0, 1, 0, 0); }
         public static Vector4 Forward  { get => new Vector4(0, 0, 1, 0); }
-        public static Vector4 Identity { get => new Vector4(1, 1, 1, 1); }
+        public static Vector4 one      { get => new Vector4(1, 1, 1, 1); }
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace UFN_CG
             this.x = x;
             this.y = y;
             this.z = 0;
-            this.w = 0;
+            this.w = 1;
         }
 
         public Vector4(float x, float y, float z)
@@ -39,7 +39,7 @@ namespace UFN_CG
             this.x = x;
             this.y = y;
             this.z = z;
-            this.w = 0;
+            this.w = 1;
         }
 
         public Vector4(float x, float y, float z, float w)
