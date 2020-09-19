@@ -101,9 +101,9 @@ namespace UFN_CG
             angle = (float)Math.PI * angle / 180;
 
             rotationMatrix.m00 = (float)Math.Cos(angle);    // |cos()   -sen()  0|
-            rotationMatrix.m01 = (float)-Math.Sin(angle);   // |sen()   -cos()  0|
+            rotationMatrix.m01 = (float)-Math.Sin(angle);   // |sen()   cos()   0|
             rotationMatrix.m10 = (float)Math.Sin(angle);    // |0       0       1|
-            rotationMatrix.m11 = (float)-Math.Cos(angle);
+            rotationMatrix.m11 = (float)Math.Cos(angle);
 
             return rotationMatrix;
         }
@@ -153,7 +153,7 @@ namespace UFN_CG
         {
             Vector3[] lineArray = new Vector3[3];
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 lineArray[i] = Vector3.Zero;
                 Vector3 lhs_line = lhs.getLine(i);

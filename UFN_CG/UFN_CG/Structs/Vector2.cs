@@ -28,10 +28,12 @@ namespace UFN_CG
             this.y = y;
         }
 
+        
+
         #endregion
 
         #region Methods
-        
+
         float Magnitude()
         {
             float magnitude = 0;
@@ -65,7 +67,8 @@ namespace UFN_CG
         public override int GetHashCode()                           => HashCode.Combine(x, y);
         public override string ToString()                           => $"({x} , {y})";
 
-
+        public static explicit operator Vector2(Vector4 v)          => new Vector2(v.x, v.y);
+        public static explicit operator Vector2(Vector3 v)          => new Vector2(v.x, v.y);
         public static Vector2 operator +(Vector2 a, Vector2 b)      => new Vector2(a.x + b.x, a.y + b.y);
         public static Vector2 operator -(Vector2 a)                 => a * -1;
         public static Vector2 operator -(Vector2 a, Vector2 b)      => new Vector2(a.x - b.x, a.y - b.y);

@@ -89,15 +89,16 @@ namespace UFN_CG
         public bool Equals(Vector4 other) => x == other.x && y == other.y && z == other.z && w == other.w;
         public override string ToString() => $"({x}, {y}, {z}, {w})";
 
-
-        public static Vector4 operator +(Vector4 a, Vector4 b) => new Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
-        public static Vector4 operator -(Vector4 a) => a * -1;
-        public static Vector4 operator -(Vector4 a, Vector4 b) => new Vector4(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
-        public static Vector4 operator *(float d, Vector4 a) => new Vector4(a.x * d, a.y * d, a.z * d * a.w * d);
-        public static Vector4 operator *(Vector4 a, float d) => new Vector4(a.x * d, a.y * d, a.z * d, a.w * d);
-        public static Vector4 operator /(Vector4 a, float d) => new Vector4(a.x / d, a.y / d, a.z / d, a.w / d);
-        public static bool operator ==(Vector4 lhs, Vector4 rhs) => ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z) && (lhs.w == rhs.w)) ? true : false;
-        public static bool operator !=(Vector4 lhs, Vector4 rhs) => ((lhs.x != rhs.x) || (lhs.y != rhs.y) || (lhs.z != rhs.z) || (lhs.w == rhs.w)) ? true : false;
+        public static explicit operator Vector4(Vector3 v)          => new Vector4(v.x, v.y, v.z);
+        public static explicit operator Vector4(Vector2 v)          => new Vector4(v.x, v.y);
+        public static Vector4 operator +(Vector4 a, Vector4 b)      => new Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+        public static Vector4 operator -(Vector4 a)                 => a * -1;
+        public static Vector4 operator -(Vector4 a, Vector4 b)      => new Vector4(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+        public static Vector4 operator *(float d, Vector4 a)        => new Vector4(a.x * d, a.y * d, a.z * d * a.w * d);
+        public static Vector4 operator *(Vector4 a, float d)        => new Vector4(a.x * d, a.y * d, a.z * d, a.w * d);
+        public static Vector4 operator /(Vector4 a, float d)        => new Vector4(a.x / d, a.y / d, a.z / d, a.w / d);
+        public static bool operator ==(Vector4 lhs, Vector4 rhs)    => ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z) && (lhs.w == rhs.w)) ? true : false;
+        public static bool operator !=(Vector4 lhs, Vector4 rhs)    => ((lhs.x != rhs.x) || (lhs.y != rhs.y) || (lhs.z != rhs.z) || (lhs.w == rhs.w)) ? true : false;
 
         #endregion
     }
