@@ -5,7 +5,7 @@ namespace UFN_CG
     public class Transform2D : IEquatable<Transform2D>
     {
         Vector2 position;
-        Vector2 rotation;
+        float   rotation;
         Vector2 scale;
 
         #region Getters and Setters
@@ -18,7 +18,7 @@ namespace UFN_CG
                 position = value;
             }
         }
-        public Vector2 Rotation { get => rotation; }
+        public float Rotation { get => rotation; }
         public Vector2 Scale
         {
             get => scale;
@@ -34,7 +34,7 @@ namespace UFN_CG
         public Transform2D()
         {
             position = Vector2.Zero;
-            rotation = Vector2.Zero;
+            rotation = 0;
             scale = new Vector2(1, 1);
         }
 
@@ -45,7 +45,7 @@ namespace UFN_CG
         public void Reset()
         {
             Position = Vector2.Zero;
-            rotation = Vector2.Zero;
+            rotation = 0;
             Scale = new Vector2(1, 1);
         }
 
@@ -55,7 +55,7 @@ namespace UFN_CG
         }
 
 
-        public void rotate(Vector2 r)
+        public void rotate(float r)
         {
             this.rotation += r;
         }
