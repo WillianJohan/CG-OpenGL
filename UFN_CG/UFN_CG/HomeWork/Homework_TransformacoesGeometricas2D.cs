@@ -47,18 +47,8 @@ namespace UFN_CG.HomeWork
 
             Console.WriteLine("Gerando um Transform:");
             exibirTransformacao(transform.TransformationMatrix);
-
-            //Criando pontos em um plano 2D
-            Vector2[] pontos = new Vector2[]
-            {
-                new Vector2(0,0),
-                new Vector2(0,1),
-                new Vector2(1,1)
-            };
-
-            exibirMesh(pontos, transform.TransformationMatrix);
-
-
+            exibirMesh(transform);
+            
             while (true)
             {
                 // usuario escolhe que tipo de transformacao ele ira fazer (rotacao, translacao, escala),
@@ -91,7 +81,7 @@ namespace UFN_CG.HomeWork
 
                 //Após, apresente novamente matT na tela (agora com valores atualizados),
                 exibirTransformacao(transform.TransformationMatrix);
-                exibirMesh(pontos, transform.TransformationMatrix);
+                exibirMesh(transform);
 
                 //Mostrar Menu novamente
             }
@@ -113,11 +103,19 @@ namespace UFN_CG.HomeWork
             Console.WriteLine("Matriz de Transformação:\n" + MatT);
         }
 
-        void exibirMesh(Vector2[] pontos, Matrix3x3 MatT)
+        void exibirMesh(Transform2D transform)
         {
+            //Criando pontos em um plano 2D
+            Vector2[] pontos = new Vector2[]
+            {
+                new Vector2(0,0) + transform.Position,
+                new Vector2(0,1) + transform.Position,
+                new Vector2(1,1) + transform.Position
+            };
+
             foreach (var p in pontos)
             {
-                Console.WriteLine("Ponto:\n" + (new Vector3(p.x, p.y, 0) * MatT));
+                Console.WriteLine("Ponto:\n" + (Vector2)((Vector3)p * transform.TransformationMatrix));
             }
         }
     }
