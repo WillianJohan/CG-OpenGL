@@ -8,6 +8,8 @@ namespace UFN_CG
         Vector3 rotation;
         Vector3 scale;
 
+        Matrix4x4 transformationMatrix;
+
         #region Getters and Setters
 
         public Vector3 Position
@@ -16,18 +18,29 @@ namespace UFN_CG
             set
             {
                 position = value;
+                CalculateTransformationMatrix();
             }
         }
-        public Vector3 Rotation { get => rotation; }
+        public Vector3 Rotation 
+        { 
+            get => rotation;
+            set
+            {
+                rotation = value;
+                CalculateTransformationMatrix();
+            }
+        }
         public Vector3 Scale
         {
             get => scale; 
             set
             {
                 scale = value;
+                CalculateTransformationMatrix();
             }
         }
-        
+        public Matrix4x4 TransformationMatrix { get => transformationMatrix; }
+
         #endregion
 
         #region Constructors
@@ -37,32 +50,50 @@ namespace UFN_CG
             position = Vector3.Zero;
             rotation = Vector3.Zero;
             scale = new Vector3(1, 1, 1);
+            
+            CalculateTransformationMatrix();
         }
 
         #endregion
 
         #region Methods
 
+        private void CalculateTransformationMatrix()
+        {
+            Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(position.x, position.y, position.z);
+            Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(rotation.x, rotation.y, rotation.z);
+            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(scale.x, scale.y, scale.z);
+
+            Matrix4x4 MatT = TranslationMatrix * RotationMatrix * ScaleMatrix;
+
+            transformationMatrix = MatT;
+        }
+
         public void Reset()
         {
             Position = Vector3.Zero;
             rotation = Vector3.Zero;
             Scale = new Vector3(1, 1, 1);
+            
+            CalculateTransformationMatrix();
         }
 
         public void translate(Vector3 translation)
         {
-            position = position + translation;
+            position += translation;
+            CalculateTransformationMatrix();
         }
 
         public void rotate(Vector3 rotation)
         {
             this.rotation += rotation;
+            CalculateTransformationMatrix();
         }
 
         public void rotate(Vector3 Axis, float angle)
         {
             this.rotation += Axis * angle;
+            CalculateTransformationMatrix();
         }
 
         #endregion

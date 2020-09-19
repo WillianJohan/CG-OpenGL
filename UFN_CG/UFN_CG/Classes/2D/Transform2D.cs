@@ -8,6 +8,8 @@ namespace UFN_CG
         float   rotation;
         Vector2 scale;
 
+        Matrix3x3 transformationMatrix;
+
         #region Getters and Setters
 
         public Vector2 Position
@@ -16,16 +18,28 @@ namespace UFN_CG
             set
             {
                 position = value;
+                CalculateTransformationMatrix();
             }
         }
-        public float Rotation { get => rotation; }
+        public float Rotation 
+        { 
+            get => rotation;
+            set 
+            {
+                rotation = value;
+                CalculateTransformationMatrix();
+            }
+        }
         public Vector2 Scale
         {
             get => scale;
             set
             {
+                scale = value;
+                CalculateTransformationMatrix();
             }
         }
+        public Matrix3x3 TransformationMatrix { get => transformationMatrix; }
 
         #endregion
 
@@ -36,28 +50,43 @@ namespace UFN_CG
             position = Vector2.Zero;
             rotation = 0;
             scale = new Vector2(1, 1);
+            CalculateTransformationMatrix();
         }
 
         #endregion
 
         #region Methods
+        
+        private void CalculateTransformationMatrix()
+        {
+            Matrix3x3 TranslationMatrix = Matrix3x3.TranslationMatrix(position.x, position.y);
+            Matrix3x3 RotationMatrix = Matrix3x3.RotationMatrix(rotation);
+            Matrix3x3 ScaleMatrix = Matrix3x3.ScaleMatrix(scale.x, scale.y);
 
+            Matrix3x3 MatT = TranslationMatrix * RotationMatrix * ScaleMatrix;
+
+            transformationMatrix = MatT;
+        }
+        
         public void Reset()
         {
             Position = Vector2.Zero;
             rotation = 0;
             Scale = new Vector2(1, 1);
+            CalculateTransformationMatrix();
         }
 
-        public void translate(Vector2 t)
+        public void translate(Vector2 translation)
         {
-            position = position + t;
+            this.position += translation;
+            CalculateTransformationMatrix();
         }
 
 
-        public void rotate(float r)
+        public void rotate(float rotation)
         {
-            this.rotation += r;
+            this.rotation += rotation;
+            CalculateTransformationMatrix();
         }
 
 
