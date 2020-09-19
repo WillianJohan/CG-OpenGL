@@ -24,14 +24,3 @@ C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\ne
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.dll
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.pdb
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.genruntimeconfig.cache
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.csprojAssemblyReference.cache
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.AssemblyInfoInputs.cache
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.AssemblyInfo.cs
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.exe
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.deps.json
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.runtimeconfig.json
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.runtimeconfig.dev.json
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.dll
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\netcoreapp3.1\UFN_CG.pdb
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.dll
-E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\netcoreapp3.1\UFN_CG.pdb
