@@ -84,6 +84,14 @@ namespace UFN_CG
             CalculateTransformationMatrix();
         }
 
+        public void translate(float x,float y,float z)
+        {
+            position.x += x;
+            position.y += y;
+            position.z += z;
+            CalculateTransformationMatrix();
+        }
+
         public void rotate(Vector3 rotation)
         {
             this.rotation += rotation;
