@@ -42,11 +42,11 @@ namespace UFN_CG.HomeWork
         {
             Console.Clear();
 
-            //Iniciando uma matriz 4x4 identidade            
-            Matrix4x4 MatT = Matrix4x4.Identity();
+            //Matriz de transformação
+            Transform2D transform = new Transform2D();
 
             Console.WriteLine("Gerando um Transform:");
-            exibirTransformacao(MatT);
+            exibirTransformacao(transform.TransformationMatrix);
 
             //Criando pontos em um plano 2D
             Vector2[] pontos = new Vector2[]
@@ -56,7 +56,7 @@ namespace UFN_CG.HomeWork
                 new Vector2(1,1)
             };
 
-            exibirMesh(pontos, MatT);
+            exibirMesh(pontos, transform.TransformationMatrix);
 
 
             while (true)
@@ -71,15 +71,15 @@ namespace UFN_CG.HomeWork
                 {
                     case 1:
                         vetorDeTransformacao = Input.getVector2("Digite a translação");
-                        MatT = Matrix4x4.TranslationMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 0) * MatT;
+                        transform.translate(vetorDeTransformacao);
                         break;
                     case 2:
-                        float rotacao =  Input.getFloat("Digite a rotação em graus");
-                        MatT = Matrix4x4.RotationMatrix(Vector3.Right, rotacao) * MatT;
+                        float rotacao = Input.getFloat("Digite a rotação em graus");
+                        transform.rotate(rotacao);
                         break;
                     case 3:
                         vetorDeTransformacao = Input.getVector2("Digite a escala");
-                        MatT = Matrix4x4.ScaleMatrix(vetorDeTransformacao.x, vetorDeTransformacao.y, 1) * MatT;
+                        transform.Scale = vetorDeTransformacao;
                         break;
                     case 0:
                         Console.WriteLine("\n\n.......O programa será finalizado.......\n\n");
@@ -90,8 +90,8 @@ namespace UFN_CG.HomeWork
                 }
 
                 //Após, apresente novamente matT na tela (agora com valores atualizados),
-                exibirTransformacao(MatT);
-                exibirMesh(pontos, MatT);
+                exibirTransformacao(transform.TransformationMatrix);
+                exibirMesh(pontos, transform.TransformationMatrix);
 
                 //Mostrar Menu novamente
             }
@@ -108,12 +108,12 @@ namespace UFN_CG.HomeWork
         }
 
 
-        void exibirTransformacao(Matrix4x4 MatT)
+        void exibirTransformacao(Matrix3x3 MatT)
         {
             Console.WriteLine("Matriz de Transformação:\n" + MatT);
         }
 
-        void exibirMesh(Vector2[] pontos, Matrix4x4 MatT)
+        void exibirMesh(Vector2[] pontos, Matrix3x3 MatT)
         {
             foreach (var p in pontos)
             {
