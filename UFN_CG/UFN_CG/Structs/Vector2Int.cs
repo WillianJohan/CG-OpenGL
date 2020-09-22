@@ -17,7 +17,7 @@ namespace UFN_CG
         public static Vector2Int Zero { get => new Vector2Int(0, 0); }
         public static Vector2Int Right { get => new Vector2Int(1, 0); }
         public static Vector2Int Up { get => new Vector2Int(0, 1); }
-
+        public static Vector2Int One { get => new Vector2Int(1, 1); }
         #endregion
 
         #region Constructors
@@ -51,7 +51,7 @@ namespace UFN_CG
             return normalizedVector;
         }
         
-        public static float DotProduct(Vector2Int a, Vector2Int b)
+        public static float Dot(Vector2Int a, Vector2Int b)
         {
             return ((a.x * b.x) + (a.y * b.y));
         }

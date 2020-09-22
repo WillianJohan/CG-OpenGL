@@ -76,7 +76,7 @@ namespace UFN_CG
             return normalizedVector;
         }
 
-        public static float DotProduct(Vector4 a, Vector4 b)
+        public static float Dot(Vector4 a, Vector4 b)
         {
             return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w));
         }
