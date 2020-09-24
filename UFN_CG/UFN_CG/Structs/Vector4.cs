@@ -59,11 +59,11 @@ namespace UFN_CG
         {
             float magnitude = 0;
 
-            magnitude += MathF.Pow(x, 2);
-            magnitude += MathF.Pow(y, 2);
-            magnitude += MathF.Pow(z, 2);
-            magnitude += MathF.Pow(w, 2);
-            magnitude = MathF.Sqrt(magnitude);
+            magnitude += (float)Math.Pow(x, 2);
+            magnitude += (float)Math.Pow(y, 2);
+            magnitude += (float)Math.Pow(z, 2);
+            magnitude += (float)Math.Pow(w, 2);
+            magnitude =  (float)Math.Sqrt(magnitude);
 
             return magnitude;
         }

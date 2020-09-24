@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace UFN_CG
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Ponto de entrada principal para o aplicativo.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            HomeWork.IHomework hw = new HomeWork.TransformacoesGeometricas2D();
-            hw.start();
-        }
-
-        public static void print(string texto)
-        {
-            Console.WriteLine(texto);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
         }
     }
 }

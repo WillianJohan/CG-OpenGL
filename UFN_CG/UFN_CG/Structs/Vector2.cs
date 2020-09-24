@@ -38,9 +38,9 @@ namespace UFN_CG
         {
             float magnitude = 0;
 
-            magnitude += MathF.Pow(x, 2);
-            magnitude += MathF.Pow(y, 2);
-            magnitude = MathF.Sqrt(magnitude);
+            magnitude += (float)Math.Pow(x, 2);
+            magnitude += (float)Math.Pow(y, 2);
+            magnitude = (float)Math.Sqrt(magnitude);
 
             return magnitude;
         }
@@ -64,7 +64,6 @@ namespace UFN_CG
         
         public override bool Equals(object obj)                     => obj is Vector2 vector && Equals(vector);
         public bool Equals(Vector2 other)                           => x == other.x && y == other.y;
-        public override int GetHashCode()                           => HashCode.Combine(x, y);
         public override string ToString()                           => $"({x} , {y})";
 
         public static explicit operator Vector2(Vector4 v)          => new Vector2(v.x, v.y);
