@@ -8,7 +8,8 @@ namespace UFN_CG
         float   rotation;
         Vector2 scale;
 
-        Matrix3x3 transformationMatrix;
+        Matrix3x3 RotationMatrix;           //Matriz que acumula as rotações
+        Matrix3x3 transformationMatrix;     //Matriz que representa as transformações
 
         #region Getters and Setters
 
@@ -27,6 +28,7 @@ namespace UFN_CG
             set 
             {
                 rotation = value;
+                RotationMatrix = Matrix3x3.RotationMatrix(value);
                 CalculateTransformationMatrix();
             }
         }
@@ -50,6 +52,8 @@ namespace UFN_CG
             position = Vector2.Zero;
             rotation = 0;
             scale = new Vector2(1, 1);
+
+            RotationMatrix = Matrix3x3.RotationMatrix(0);
             CalculateTransformationMatrix();
         }
 
@@ -60,19 +64,18 @@ namespace UFN_CG
         private void CalculateTransformationMatrix()
         {
             Matrix3x3 TranslationMatrix = Matrix3x3.TranslationMatrix(position.x, position.y);
-            Matrix3x3 RotationMatrix = Matrix3x3.RotationMatrix(rotation);
             Matrix3x3 ScaleMatrix = Matrix3x3.ScaleMatrix(scale.x, scale.y);
 
-            Matrix3x3 MatT = RotationMatrix * ScaleMatrix * TranslationMatrix;
-
-            transformationMatrix = MatT;
+            transformationMatrix = ScaleMatrix * RotationMatrix * TranslationMatrix;
         }
         
         public void Reset()
         {
             Position = Vector2.Zero;
             rotation = 0;
-            Scale = new Vector2(1, 1);
+            Scale = Vector2.One;
+            RotationMatrix = Matrix3x3.RotationMatrix(0);
+
             CalculateTransformationMatrix();
         }
 
@@ -89,9 +92,10 @@ namespace UFN_CG
             CalculateTransformationMatrix();
         }
 
-        public void rotate(float rotation)
+        public void rotate(float angle)
         {
-            this.rotation += rotation;
+            this.rotation += angle;
+            RotationMatrix *= Matrix3x3.RotationMatrix(angle);
             CalculateTransformationMatrix();
         }
 
