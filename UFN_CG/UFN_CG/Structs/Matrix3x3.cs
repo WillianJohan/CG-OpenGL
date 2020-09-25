@@ -127,6 +127,13 @@ namespace UFN_CG
         public override string ToString() => $"|{m00} ,{m01}, {m02}|\n" +
                                              $"|{m10} ,{m11}, {m12}|\n" +
                                              $"|{m20} ,{m21}, {m22}|\n";
+        public static Matrix3x3 operator +(Matrix3x3 lhs, Matrix3x3 rhs)
+        {
+            Vector3[] lineArray = new Vector3[3];
+            for (int i = 0; i < 3; i++)
+                lineArray[i] = lhs.getLine(i) + rhs.getLine(i);
+            return new Matrix3x3(lineArray[0], lineArray[1], lineArray[2]);
+        }
         public static Vector3 operator *(Vector3 vector, Matrix3x3 rhs)
         {
             Vector3 resultado = Vector3.One;

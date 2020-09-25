@@ -187,7 +187,13 @@ namespace UFN_CG
                                              $"|{m10} ,{m11}, {m12}, {m13}|\n" +
                                              $"|{m20} ,{m21}, {m22}, {m23}|\n" +
                                              $"|{m30} ,{m31}, {m32}, {m33}|\n";
-        
+        public static Matrix4x4 operator +(Matrix4x4 lhs, Matrix4x4 rhs)
+        {
+            Vector4[] lineArray = new Vector4[3];
+            for (int i = 0; i < 3; i++)
+                lineArray[i] = lhs.getLine(i) + rhs.getLine(i);
+            return new Matrix4x4(lineArray[0], lineArray[1], lineArray[2], lineArray[3]);
+        }
         public static Vector4 operator *(Vector4 vector, Matrix4x4 rhs) 
         {
             Vector4 resultado = Vector4.one;
