@@ -8,8 +8,7 @@ namespace UFN_CG
         float   rotation;
         Vector2 scale;
 
-        Matrix3x3 RotationMatrix;           //Matriz que acumula as rotações
-        Matrix3x3 transformationMatrix;     //Matriz que representa as transformações
+        Matrix3x3 transformationMatrix;
 
         #region Getters and Setters
 
@@ -28,7 +27,6 @@ namespace UFN_CG
             set 
             {
                 rotation = value;
-                RotationMatrix = Matrix3x3.RotationMatrix(value);
                 CalculateTransformationMatrix();
             }
         }
@@ -53,7 +51,6 @@ namespace UFN_CG
             rotation = 0;
             scale = new Vector2(1, 1);
 
-            RotationMatrix = Matrix3x3.RotationMatrix(0);
             CalculateTransformationMatrix();
         }
 
@@ -64,9 +61,10 @@ namespace UFN_CG
         private void CalculateTransformationMatrix()
         {
             Matrix3x3 TranslationMatrix = Matrix3x3.TranslationMatrix(position.x, position.y);
+            Matrix3x3 RotationMatrix = Matrix3x3.RotationMatrix(rotation);
             Matrix3x3 ScaleMatrix = Matrix3x3.ScaleMatrix(scale.x, scale.y);
 
-            transformationMatrix = ScaleMatrix * RotationMatrix * TranslationMatrix;
+            transformationMatrix = (ScaleMatrix * RotationMatrix) * TranslationMatrix;
         }
         
         public void Reset()
@@ -74,7 +72,6 @@ namespace UFN_CG
             Position = Vector2.Zero;
             rotation = 0;
             Scale = Vector2.One;
-            RotationMatrix = Matrix3x3.RotationMatrix(0);
 
             CalculateTransformationMatrix();
         }
@@ -95,7 +92,6 @@ namespace UFN_CG
         public void rotate(float angle)
         {
             this.rotation += angle;
-            RotationMatrix *= Matrix3x3.RotationMatrix(angle);
             CalculateTransformationMatrix();
         }
 

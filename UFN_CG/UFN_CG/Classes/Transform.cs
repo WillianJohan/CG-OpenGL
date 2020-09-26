@@ -8,8 +8,7 @@ namespace UFN_CG
         Vector3 rotation;
         Vector3 scale;
 
-        Matrix4x4 RotationMatrix;           //Matriz que acumula as rotações
-        Matrix4x4 transformationMatrix;     //Matriz que representa a transformação
+        Matrix4x4 transformationMatrix;
 
         #region Getters and Setters
 
@@ -28,7 +27,6 @@ namespace UFN_CG
             set
             {
                 rotation = value;
-                RotationMatrix = Matrix4x4.RotationMatrix(value.x, value.y, value.z); //Zera o acumulo de rotações e aplica a rotação que foi setada.
                 CalculateTransformationMatrix();
             }
         }
@@ -53,7 +51,6 @@ namespace UFN_CG
             rotation = Vector3.Zero;
             scale = new Vector3(1, 1, 1);
 
-            RotationMatrix = Matrix4x4.RotationMatrix(0, 0, 0);
             CalculateTransformationMatrix();
         }
 
@@ -64,6 +61,7 @@ namespace UFN_CG
         private void CalculateTransformationMatrix()
         {
             Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(position.x, position.y, position.z);
+            Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(rotation.x, rotation.y, rotation.z);
             Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(scale.x, scale.y, scale.z);
 
             transformationMatrix = ScaleMatrix * RotationMatrix * TranslationMatrix;
@@ -74,7 +72,6 @@ namespace UFN_CG
             Position = Vector3.Zero;
             rotation = Vector3.Zero;
             Scale = Vector3.One;
-            RotationMatrix = Matrix4x4.RotationMatrix(0, 0, 0);
 
             CalculateTransformationMatrix();
         }
@@ -96,14 +93,13 @@ namespace UFN_CG
         public void rotate(Vector3 rotation)
         {
             this.rotation += rotation;
-            RotationMatrix *= Matrix4x4.RotationMatrix(rotation.x, rotation.y, rotation.z);
+            
             CalculateTransformationMatrix();
         }
 
         public void rotate(Vector3 Axis, float angle)
         {
             this.rotation += Axis * angle;
-            RotationMatrix *= Matrix4x4.RotationMatrix(Axis, angle);
             CalculateTransformationMatrix();
         }
 
