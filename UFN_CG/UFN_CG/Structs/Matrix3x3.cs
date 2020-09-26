@@ -138,17 +138,17 @@ namespace UFN_CG
         {
             Vector3 resultado = Vector3.One;
 
-            Vector3 line = rhs.getColumn(0);
+            Vector3 line = rhs.getLine(0);
             resultado.x = (vector.x * line.x) +
                           (vector.y * line.y) +
                           (vector.z * line.z);
 
-            line = rhs.getColumn(1);
+            line = rhs.getLine(1);
             resultado.y = (vector.x * line.x) +
                           (vector.y * line.y) +
                           (vector.z * line.z);
 
-            line = rhs.getColumn(2);
+            line = rhs.getLine(2);
             resultado.z = (vector.x * line.x) +
                           (vector.y * line.y) +
                           (vector.z * line.z);
