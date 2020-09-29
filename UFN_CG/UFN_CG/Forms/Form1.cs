@@ -39,11 +39,8 @@ namespace UFN_CG
             
             for (int i = 0; i < vertices.Length; i++)
             {
-                Vector3 v_Ini = (new Vector3(vertices[i].x, vertices[i].y, 1) - (Vector3)transform.Position) * transform.TransformationMatrix;
-                Vector3 v_End = (((i + 1 >= vertices.Length) ? new Vector3(vertices[0].x, vertices[0].y, 1) : new Vector3(vertices[i+1].x, vertices[i+1].y, 1)) - (Vector3)transform.Position) * transform.TransformationMatrix;
-
-                v_Ini += (Vector3)transform.Position;
-                v_End += (Vector3)transform.Position;
+                Vector3 v_Ini = new Vector3(vertices[i].x, vertices[i].y, 1)* transform.TransformationMatrix;
+                Vector3 v_End = ((i + 1 >= vertices.Length) ? new Vector3(vertices[0].x, vertices[0].y, 1) : new Vector3(vertices[i+1].x, vertices[i+1].y, 1)) * transform.TransformationMatrix;
 
                 Point ini = new Point((int)v_Ini.x, (int)v_Ini.y);
                 Point end = new Point((int)v_End.x, (int)v_End.y);

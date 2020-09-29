@@ -64,7 +64,7 @@ namespace UFN_CG
             Matrix3x3 RotationMatrix = Matrix3x3.RotationMatrix(rotation);
             Matrix3x3 ScaleMatrix = Matrix3x3.ScaleMatrix(scale.x, scale.y);
 
-            transformationMatrix = (ScaleMatrix * RotationMatrix) * TranslationMatrix;
+            transformationMatrix = (TranslationMatrix * RotationMatrix) * ScaleMatrix;
         }
         
         public void Reset()
