@@ -93,7 +93,8 @@ namespace UFN_CG
             return new Matrix4x4(getColumn(0), getColumn(1), getColumn(2), getColumn(3));
         }
 
-        //Transformações
+
+        // Matrizes de Transformações =====================================
         public static Matrix4x4 TranslationMatrix(float x, float y, float z)
         {
             // 1  0  0  Tx
@@ -178,6 +179,37 @@ namespace UFN_CG
 
             return matriz_Rotacao;
         }
+
+
+        // Matriz de Projeção de perspectiva ou ortográfica =====================================
+        public static Matrix4x4 ProjectionMatrix(float fovy, float aspect, float zNear, float zFar)
+        {
+            Matrix4x4 Matriz_Projecao = Zero();
+
+            Matriz_Projecao.m00 = (float)(1 / (Math.Tan(fovy / 2) * aspect));
+            Matriz_Projecao.m11 = (float)(1 / Math.Tan(fovy / 2));
+            Matriz_Projecao.m22 = (zFar + zNear) / (zNear - zFar);
+            Matriz_Projecao.m23 = (2 * zFar * zNear) / (zNear * zFar);
+            Matriz_Projecao.m32 = -1;
+
+            return Matriz_Projecao;
+        }
+
+        public static Matrix4x4 ProjectionMatrix(float left, float right, float top, float bottom, float near, float far)
+        {
+            Matrix4x4 Matriz_Projecao = Identity();
+
+            Matriz_Projecao.m00 = 2 / (right - left);
+            Matriz_Projecao.m11 = 2 / (top - bottom);
+            Matriz_Projecao.m22 = -2 / (far - near);
+
+            Matriz_Projecao.m03 = -(right + left) / (right - left);
+            Matriz_Projecao.m13 = -(top + bottom) / (top - bottom);
+            Matriz_Projecao.m23 = -(far + near) / (far - near);
+
+            return Matriz_Projecao;
+        }
+
 
         #endregion
 
