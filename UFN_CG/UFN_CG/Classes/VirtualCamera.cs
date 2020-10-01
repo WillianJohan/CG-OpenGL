@@ -138,7 +138,7 @@
             Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(-Rotation.x, -Rotation.y, -Rotation.z);
             Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(1,1,1);
 
-            return (ScaleMatrix * RotationMatrix * TranslationMatrix);
+            return (TranslationMatrix * RotationMatrix) * ScaleMatrix;
         }
 
 
