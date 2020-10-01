@@ -1,85 +1,161 @@
 ﻿namespace UFN_CG
 {
-    public class VirtualCamera
+    public class Perspective
     {
+        public int fov;
+        public float aspect;
+        public float zNear;
+        public float zFar;
 
-        #region Variables
-
-        Vector3 position;
-        Vector3 rotation;
-        Matrix4x4 visualizationMatrix;
-
-        // 3D Components
-        int fov;
-        float aspect;
-        float zNear;
-        float zFear;
-
-        //2D Components
-        int left;
-        int right;
-        int top;
-        int bottom;
-        int near;
-        int far;
-
-        bool isOrtographic;
-
-        #endregion
-
-        #region Getters and Setters
-
-        public bool IsOrtographic {get=> isOrtographic;}
-        public Matrix4x4 VisualizationMatrix { get => visualizationMatrix; }
-
-        #endregion
-
-
-        #region Constructors
-
-        public VirtualCamera() 
+        public Perspective()
         {
-            this.position = Vector3.Zero;
-            this.rotation = Vector3.Zero;
-            this.fov = 60;
-            this.aspect = 1;
-            this.zNear = 0.1f;
-            this.zFear = 100f;
-            this.isOrtographic = false;
-            this.visualizationMatrix = CalculateVisualizationMatrix();
+            fov = 60;
+            aspect = 1;
+            zNear = 0.1f;
+            zFar = 100f;
         }
 
-        public VirtualCamera(Vector3 position, Vector3 rotation, int left, int right, int top, int bottom, int near, int far)
+        public Perspective(int fov, float aspect, float zNear, float zFar)
         {
-            this.position = position;
-            this.rotation = rotation;
+            this.fov = fov;
+            this.aspect = aspect;
+            this.zNear = zNear;
+            this.zFar = zFar;
+        }
+
+        public Matrix4x4 ProjectionMatrix() => Matrix4x4.ProjectionMatrix(fov, aspect, zNear, zFar);
+
+    }
+
+    public class Ortographic
+    {
+        public int left;
+        public int right;
+        public int top;
+        public int bottom;
+        public int near;
+        public int far;
+
+        public Ortographic()
+        {
+            left = 0;
+            right = 600;
+            top = 0;
+            bottom = 600;
+            near = 1;
+            far = 10;
+        }
+
+        public Ortographic(int left, int right, int top, int bottom, int near, int far)
+        {
             this.left = left;
             this.right = right;
             this.top = top;
             this.bottom = bottom;
             this.near = near;
             this.far = far;
-            this.isOrtographic = true;
-            this.visualizationMatrix = CalculateVisualizationMatrix();
         }
 
-        public VirtualCamera(Vector3 position, Vector3 rotation, int fov, float aspect, float zNear, float zFear)
+        public Matrix4x4 ProjectionMatrix() => Matrix4x4.ProjectionMatrix(left, right, top, bottom, near, far);
+
+    }
+
+    public class VirtualCamera
+    {
+
+        public Vector3 Position;
+        public Vector3 Rotation;
+
+        public Perspective Perspective;
+        public Ortographic Ortographic;
+        public bool IsOrtographic = false;
+
+        #region Getters and Setters
+
+        public Matrix4x4 VisualizationMatrix { get => visualizationMatrix(); }
+        public Matrix4x4 ProjectionMatrix { get => (IsOrtographic) ? Ortographic.ProjectionMatrix() : Perspective.ProjectionMatrix(); }
+
+        #endregion
+
+        #region Constructors
+
+        public VirtualCamera() 
         {
-            this.position = position;
-            this.rotation = rotation;
-            this.fov = fov;
-            this.aspect = aspect;
-            this.zNear = zNear;
-            this.zFear = zFear;
-            this.isOrtographic = false;
-            this.visualizationMatrix = CalculateVisualizationMatrix();
+            this.Position = Vector3.Zero;
+            this.Rotation = Vector3.Zero;
+            Perspective = new Perspective();
+            Ortographic = new Ortographic();
+
+            this.IsOrtographic = false;
+        }
+
+        public VirtualCamera(Vector3 position, Vector3 rotation, int left, int right, int top, int bottom, int near, int far)
+        {
+            this.Position = position;
+            this.Rotation = rotation;
+            Ortographic = new Ortographic(left, right, top, bottom, near, far);
+            Perspective = new Perspective();
+            
+            this.IsOrtographic = true;
+        }
+        public VirtualCamera(int left, int right, int top, int bottom, int near, int far)
+        {
+            Position = new Vector3(0,0,2);
+            Rotation = Vector3.Zero;
+            Ortographic = new Ortographic(left, right, top, bottom, near, far);
+            Perspective = new Perspective();
+
+            this.IsOrtographic = true;
+        }
+        
+        public VirtualCamera(Vector3 position, Vector3 rotation, int fov, float aspect, float zNear, float zFar)
+        {
+            this.Position = position;
+            this.Rotation = rotation;
+            Perspective = new Perspective(fov, aspect, zNear, zFar);
+            Ortographic = new Ortographic();
+
+            this.IsOrtographic = false;
+        }
+        public VirtualCamera(int fov, float aspect, float zNear, float zFar)
+        {
+            Position = new Vector3(0, 0, 2);
+            Rotation = Vector3.Zero;
+            Perspective = new Perspective(fov, aspect, zNear, zFar);
+            Ortographic = new Ortographic();
+
+            this.IsOrtographic = false;
         }
 
         #endregion
 
-        Matrix4x4 CalculateVisualizationMatrix() => (isOrtographic) ? 
-            Matrix4x4.ProjectionMatrix(fov, aspect, zNear, zFear): 
-            Matrix4x4.ProjectionMatrix(left, right, top, bottom, near, far);
+        #region Methods
+        
+        private Matrix4x4 visualizationMatrix()
+        {
+            // Passa os valores invertidos por argumento pois a matriz resultante será multiplicada pelo ponto do universo
+            Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(-Position.x, -Position.y, -Position.z);
+            Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(-Rotation.x, -Rotation.y, -Rotation.z);
+            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(1,1,1);
 
+            return (ScaleMatrix * RotationMatrix * TranslationMatrix);
+        }
+
+
+        public void translate(Vector3 translation) => Position += translation;
+
+        public void translate(float x,float y,float z)
+        {
+            Position.x += x;
+            Position.y += y;
+            Position.z += z;
+        }
+
+        public void rotate(Vector3 rotation) => rotation += rotation;
+        
+        public void rotate(Vector3 Axis, float angle) => Rotation += Axis * angle;
+
+        #endregion
+        
     }
 }
