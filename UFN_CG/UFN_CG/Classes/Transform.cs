@@ -4,42 +4,22 @@ namespace UFN_CG
 {
     public class Transform : IEquatable<Transform>
     {
-        Vector3 position;
-        Vector3 rotation;
-        Vector3 scale;
-
-        Matrix4x4 transformationMatrix;
-
+        public Vector3 Position;
+        public Vector3 Rotation;
+        public Vector3 Scale;
+        
         #region Getters and Setters
 
-        public Vector3 Position
+        public Matrix4x4 TransformationMatrix { get => CalculateTransformationMatrix(); }
+
+        Matrix4x4 CalculateTransformationMatrix()
         {
-            get => position;
-            set
-            {
-                position = value;
-                CalculateTransformationMatrix();
-            }
+            Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(Position.x, Position.y, Position.z);
+            Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(Rotation.x, Rotation.y, Rotation.z);
+            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(Scale.x, Scale.y, Scale.z);
+
+            return (TranslationMatrix * RotationMatrix) * ScaleMatrix;
         }
-        public Vector3 Rotation 
-        { 
-            get => rotation;
-            set
-            {
-                rotation = value;
-                CalculateTransformationMatrix();
-            }
-        }
-        public Vector3 Scale
-        {
-            get => scale; 
-            set
-            {
-                scale = value;
-                CalculateTransformationMatrix();
-            }
-        }
-        public Matrix4x4 TransformationMatrix { get => transformationMatrix; }
 
         #endregion
 
@@ -47,60 +27,49 @@ namespace UFN_CG
 
         public Transform()
         {
-            position = Vector3.Zero;
-            rotation = Vector3.Zero;
-            scale = new Vector3(1, 1, 1);
-
-            CalculateTransformationMatrix();
+            Position = Vector3.Zero;
+            Rotation = Vector3.Zero;
+            Scale = new Vector3(1, 1, 1);
         }
 
         #endregion
 
         #region Methods
 
-        private void CalculateTransformationMatrix()
-        {
-            Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(position.x, position.y, position.z);
-            Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(rotation.x, rotation.y, rotation.z);
-            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(scale.x, scale.y, scale.z);
-
-            transformationMatrix = (TranslationMatrix * RotationMatrix) * ScaleMatrix;
-        }
-
         public void Reset()
         {
             Position = Vector3.Zero;
-            rotation = Vector3.Zero;
+            Rotation = Vector3.Zero;
             Scale = Vector3.One;
-
-            CalculateTransformationMatrix();
         }
 
         public void translate(Vector3 translation)
         {
-            this.position += translation;
-            CalculateTransformationMatrix();
+            this.Position += translation;
         }
 
         public void translate(float x,float y,float z)
         {
-            position.x += x;
-            position.y += y;
-            position.z += z;
-            CalculateTransformationMatrix();
+            Position.x += x;
+            Position.y += y;
+            Position.z += z;
         }
 
         public void rotate(Vector3 rotation)
         {
-            this.rotation += rotation;
-            
-            CalculateTransformationMatrix();
+            Rotation += rotation;
+        }
+
+        public void rotate(float x, float y, float z)
+        {
+            Rotation.x += x;
+            Rotation.y += y;
+            Rotation.z += z;
         }
 
         public void rotate(Vector3 Axis, float angle)
         {
-            this.rotation += Axis * angle;
-            CalculateTransformationMatrix();
+            this.Rotation += Axis * angle;
         }
 
         #endregion
@@ -108,8 +77,8 @@ namespace UFN_CG
         #region Operators
         
         public override bool Equals(object obj) => obj is Transform transform && Equals(transform);
-        public bool Equals(Transform other)     => position.Equals(other.position) && rotation.Equals(other.rotation) && scale.Equals(other.scale);
-        public override string ToString()       => $"Position {position} ; Rotation {rotation} ; Scale {scale}";
+        public bool Equals(Transform other)     => Position.Equals(other.Position) && Rotation.Equals(other.Rotation) && Scale.Equals(other.Scale);
+        public override string ToString()       => $"Position {Position} ; Rotation {Rotation} ; Scale {Scale}";
         
         public static bool operator ==(Transform left, Transform right)     => left.Equals(right);
         public static bool operator !=(Transform left, Transform right)     => !(left == right);

@@ -28,9 +28,10 @@ namespace UFN_CG
             List<int[]> list_TrianglesArray = new List<int[]>();
 
             string[] Lines = File.ReadAllLines(selectedPathFileName("Wavefront File(*.obj)| *.obj"));
+            
             foreach (var line in Lines)
             {
-                if (line.StartsWith("v "))
+                if (line.StartsWith("v ")) // Vertices Values
                 {
                     float x, y, z;
                     x = float.Parse(line.Split(' ')[1].Replace('.', ','));
@@ -38,29 +39,29 @@ namespace UFN_CG
                     z = float.Parse(line.Split(' ')[3].Replace('.', ','));
                     list_VerticesArray.Add(new Vector4(x, y, z, 1));
                 }
-                else if (line.StartsWith("f "))
+                else if (line.StartsWith("f ")) // Triangles Values
                 {
                     int[] _triangle0 = new int[3];
                     int[] _triangle1 = new int[3];
                     int[] _triangle2 = new int[3];
                     int[] _triangle3 = new int[3];
 
-                    _triangle0[0] = int.Parse(line.Split(' ')[1].Split('/')[0]);
-                    _triangle0[1] = int.Parse(line.Split(' ')[1].Split('/')[1]);
-                    _triangle0[2] = int.Parse(line.Split(' ')[1].Split('/')[2]);
+                    _triangle0[0] = int.Parse(line.Split(' ')[1].Split('/')[0]) - 1;
+                    _triangle0[1] = int.Parse(line.Split(' ')[1].Split('/')[1]) - 1;
+                    _triangle0[2] = int.Parse(line.Split(' ')[1].Split('/')[2]) - 1;
 
-                    _triangle1[0] = int.Parse(line.Split(' ')[2].Split('/')[0]);
-                    _triangle1[1] = int.Parse(line.Split(' ')[2].Split('/')[1]);
-                    _triangle1[2] = int.Parse(line.Split(' ')[2].Split('/')[2]);
+                    _triangle1[0] = int.Parse(line.Split(' ')[2].Split('/')[0]) - 1;
+                    _triangle1[1] = int.Parse(line.Split(' ')[2].Split('/')[1]) - 1;
+                    _triangle1[2] = int.Parse(line.Split(' ')[2].Split('/')[2]) - 1;
 
 
-                    _triangle2[0] = int.Parse(line.Split(' ')[3].Split('/')[0]);
-                    _triangle2[1] = int.Parse(line.Split(' ')[3].Split('/')[1]);
-                    _triangle2[2] = int.Parse(line.Split(' ')[3].Split('/')[2]);
+                    _triangle2[0] = int.Parse(line.Split(' ')[3].Split('/')[0]) - 1;
+                    _triangle2[1] = int.Parse(line.Split(' ')[3].Split('/')[1]) - 1;
+                    _triangle2[2] = int.Parse(line.Split(' ')[3].Split('/')[2]) - 1;
 
-                    _triangle3[0] = int.Parse(line.Split(' ')[4].Split('/')[0]);
-                    _triangle3[1] = int.Parse(line.Split(' ')[4].Split('/')[1]);
-                    _triangle3[2] = int.Parse(line.Split(' ')[4].Split('/')[2]);
+                    _triangle3[0] = int.Parse(line.Split(' ')[4].Split('/')[0]) - 1;
+                    _triangle3[1] = int.Parse(line.Split(' ')[4].Split('/')[1]) - 1;
+                    _triangle3[2] = int.Parse(line.Split(' ')[4].Split('/')[2]) - 1;
 
                     list_TrianglesArray.Add(_triangle0);
                     list_TrianglesArray.Add(_triangle1);
@@ -81,7 +82,7 @@ namespace UFN_CG
                 triangles[i, 2] = list_TrianglesArray[0][2];
             }
 
-            MeshFilter meshFilter = new MeshFilter(new Mesh(list_VerticesArray.ToArray(), triangles));
+            MeshFilter meshFilter = new MeshFilter(list_VerticesArray.ToArray(), list_TrianglesArray);
             return new G_Object(ObjName, meshFilter);
         }
 

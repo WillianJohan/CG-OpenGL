@@ -1,100 +1,111 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace UFN_CG
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        Transform2D transform;
-        Vector2[] vertices;
+        VirtualCamera _VirtualCamera;
+        G_Object _GraphicObject;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            
-            transform = new Transform2D();
-            transform.Position = new Vector2(200,200);
 
-            vertices = new Vector2[]
-            {
-                new Vector2(-100,-100),
-                new Vector2(100,-100),
-                new Vector2(100,100),
-                new Vector2(-100,100)
-            };
+            _VirtualCamera = new VirtualCamera();
+            _GraphicObject = FileManager.importObject();
 
             updateTransformValues();
-            paintLines();
+            updateScreen();
         }
 
-        
+        #region Render Methods
 
-        void paintLines()
+        void updateScreen()
         {
-            Graphics graphic = canvas.CreateGraphics();
-            graphic.Clear(Color.White);
-            Brush brush = new SolidBrush(Color.Red);
-            Pen p = new Pen(brush, 3);
+            Graphics screenRenderer = canvas.CreateGraphics();
+            screenRenderer.Clear(canvas.BackColor);
             
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                Vector3 v_Ini = new Vector3(vertices[i].x, vertices[i].y, 1)* transform.TransformationMatrix;
-                Vector3 v_End = ((i + 1 >= vertices.Length) ? new Vector3(vertices[0].x, vertices[0].y, 1) : new Vector3(vertices[i+1].x, vertices[i+1].y, 1)) * transform.TransformationMatrix;
+            Brush brush = new SolidBrush(Color.Red);
+            Pen p = new Pen(brush, 2);
 
-                Point ini = new Point((int)v_Ini.x, (int)v_Ini.y);
-                Point end = new Point((int)v_End.x, (int)v_End.y);
-                
-                graphic.DrawLine(p, ini, end);
+            if (_VirtualCamera == null) return;
+            if (_GraphicObject == null) return;
+
+            Matrix4x4 virtualCameraMatrix = _VirtualCamera.ProjectionMatrix;
+            Mesh graphicObjectMesh = _GraphicObject.MeshWithTransformation;
+
+            List<Point> point = new List<Point>(); // Lista que irá conter toda lista de pontos
+            for (int i = 0; i < graphicObjectMesh.Vertices.Length; i++)
+            {
+                graphicObjectMesh.Vertices[i] = (graphicObjectMesh.Vertices[i] * virtualCameraMatrix) / graphicObjectMesh.Vertices[i].w;
+                point.Add(new Point((int)graphicObjectMesh.Vertices[i].x, (int)graphicObjectMesh.Vertices[i].y));
             }
 
-            
+            for (int i = 0; i < graphicObjectMesh.Triangles.GetLength(0); i++)
+            {
+                //Calcular a conversão viewport
+                int ini = graphicObjectMesh.Triangles[i, 0];
+                int mid = graphicObjectMesh.Triangles[i, 1];
+                int end = graphicObjectMesh.Triangles[i, 2];
+
+                screenRenderer.DrawLine(p, point[ini], point[mid]);
+                screenRenderer.DrawLine(p, point[mid], point[end]);
+                screenRenderer.DrawLine(p, point[end], point[ini]);
+            }
         }
+
+        #endregion
 
         #region Button Commands
 
+        private void btn_Import3DModel_Click(object sender, EventArgs e)
+        {
+            _GraphicObject = FileManager.importObject();
+            updateTransformValues();
+            updateScreen();
+        }
+
         private void btn_Translate_Click(object sender, System.EventArgs e)
         {
-            float _Tx = (float)Value_Tx.Value;
-            float _TY = (float)Value_Ty.Value;
-            float _Tz = (float)Value_Tz.Value;
+            float _Tx = (float)_ObjectCommandsTranslate_X.Value;
+            float _TY = (float)_ObjectCommandsTranslate_Y.Value;
+            float _Tz = (float)_ObjectCommandsTranslate_Z.Value;
             
-            //transform.translate(_Tx, _TY, _Tz);   // 3D Orientation
-            transform.translate(_Tx, _TY);          // 2D Orientation
+            _GraphicObject.transform.translate(_Tx, _TY, _Tz);
 
             updateTransformValues();
-            paintLines();
+            updateScreen();
         }
 
         private void btn_Rotate_Click(object sender, EventArgs e)
         {
-            //float _Rx    = (float)Value_Rx.Value;  // 3D Orientation
-            //float _RY    = (float)Value_Ry.Value;  // 3D Orientation
-            //float _Rz    = (float)Value_Rz.Value;  // 3D Orientation
-            float _Angle = (float)Value_Ar.Value;
+            float _Rx = (float)_ObjectCommandsRotate_X.Value;
+            float _RY = (float)_ObjectCommandsRotate_Y.Value;
+            float _Rz = (float)_ObjectCommandsRotate_Z.Value;
             
-            //transform.translate(_Rx, _RY, _Rz);   // 3D Orientation
-            transform.rotate(_Angle);                // 2D Orientation
+            _GraphicObject.transform.rotate(_Rx, _RY, _Rz);
 
             updateTransformValues();
-            paintLines();
+            updateScreen();
         }
 
         private void updateTransformValues()
         {
-            Px.Value = (decimal)transform.Position.x;
-            Py.Value = (decimal)transform.Position.y;
-            //Pz.Value = (decimal)transform.Position.z;
+            // -- Graphic Object Values in canvas ------------------------------------------
+            _ObjectTransformPosition_X.Value = (decimal)_GraphicObject.transform.Position.x;
+            _ObjectTransformPosition_Y.Value = (decimal)_GraphicObject.transform.Position.y;
+            _ObjectTransformPosition_Z.Value = (decimal)_GraphicObject.transform.Position.y;
 
-            //Rx.Value = (decimal)transform.Rotation.x;     //3D Value
-            //Ry.Value = (decimal)transform.Rotation.y;     //3D Value
-            //Rz.Value = (decimal)transform.Rotation.z;     //3D Value
-            
-            Rz.Value = (decimal)transform.Rotation;         //2D Value
+            _ObjectTransformRotation_X.Value = (decimal)_GraphicObject.transform.Rotation.x;
+            _ObjectTransformRotation_Y.Value = (decimal)_GraphicObject.transform.Rotation.y;
+            _ObjectTransformRotation_Z.Value = (decimal)_GraphicObject.transform.Rotation.z;
 
-            Sx.Value = (decimal)transform.Scale.x;
-            Sy.Value = (decimal)transform.Scale.y;
-            //Sz.Value = (decimal)transform.Scale.z;
+            _ObjectTransformScale_X.Value = (decimal)_GraphicObject.transform.Scale.x;
+            _ObjectTransformScale_Y.Value = (decimal)_GraphicObject.transform.Scale.y;
+            _ObjectTransformScale_Z.Value = (decimal)_GraphicObject.transform.Scale.z;
         }
 
         #endregion
@@ -102,52 +113,71 @@ namespace UFN_CG
         #region Object Transform Values Changed
 
         #region Position Values
-        
-        private void Px_ValueChanged(object sender, EventArgs e) => OnPositionChanged((float)Px.Value, transform.Position.y);
-        private void Py_ValueChanged(object sender, EventArgs e) => OnPositionChanged(transform.Position.x, (float)Py.Value);
-        private void Pz_ValueChanged(object sender, EventArgs e) => OnPositionChanged(transform.Position.x, transform.Position.y);
 
-        void OnPositionChanged(float x, float y)
+        private void GraphicObject_PositionX_ValueChanged(object sender, EventArgs e) => OnGraphicObjectPositionChanged((float)_ObjectTransformPosition_X.Value, _GraphicObject.transform.Position.y, _GraphicObject.transform.Position.z);
+        private void GraphicObject_PositionY_ValueChanged(object sender, EventArgs e) => OnGraphicObjectPositionChanged(_GraphicObject.transform.Position.x, (float)_ObjectTransformPosition_Y.Value, _GraphicObject.transform.Position.z);
+        private void GraphicObject_PositionZ_ValueChanged(object sender, EventArgs e) => OnGraphicObjectPositionChanged(_GraphicObject.transform.Position.x, _GraphicObject.transform.Position.y, (float)_ObjectTransformPosition_Z.Value);
+
+        void OnGraphicObjectPositionChanged(float x, float y, float z)
         {
-            transform.Position = new Vector2(x, y);
-            paintLines();
+            _GraphicObject.transform.Position = new Vector3(x, y);
+            updateScreen();
         }
 
         #endregion
 
         #region Rotation Values
-        
-        private void Rx_ValueChanged(object sender, EventArgs e) { } //=> transform.Rotation = new Vector3((float)Rx.Value, transform.Rotation.y , transform.Rotation.z);
-        private void Ry_ValueChanged(object sender, EventArgs e) { } //=> transform.Rotation = new Vector3(transform.Rotation.x, (float)Ry.Value, transform.Rotation.z);
-        //private void Rz_ValueChanged(object sender, EventArgs e) { } //=> transform.Rotation = new Vector3(transform.Rotation.x, transform.Rotation.y, (float)Rz.Value);
-        private void Rz_ValueChanged(object sender, EventArgs e) => OnRotationChanged(0, 0, (float)Rz.Value);
 
-        void OnRotationChanged(float x, float y, float z)
+        private void GraphicObject_RotationX_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged((float)_ObjectTransformRotation_X.Value, _GraphicObject.transform.Rotation.y, _GraphicObject.transform.Rotation.z);
+        private void GraphicObject_RotationY_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged(_GraphicObject.transform.Rotation.x, (float)_ObjectTransformRotation_Y.Value, _GraphicObject.transform.Rotation.z); 
+        private void GraphicObject_RotationZ_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged(_GraphicObject.transform.Rotation.x, _GraphicObject.transform.Rotation.y, (float)_ObjectTransformRotation_Z.Value);
+
+        void OnGraphicObjectRotationChanged(float x, float y, float z)
         {
-            //2D:
-            transform.Rotation = (float)z;
-
-            //3D:
-            //transform.Rotation = new Vector3(x, y, z);
-
-            paintLines();
+            _GraphicObject.transform.Rotation = new Vector3(x, y, z);
+            updateScreen();
         }
 
         #endregion
 
         #region Scale Values
 
-        private void Sx_ValueChanged(object sender, EventArgs e) => OnScaleChanged((float)Sx.Value, transform.Scale.y, 0);
-        private void Sy_ValueChanged(object sender, EventArgs e) => OnScaleChanged(transform.Scale.x, (float)Sy.Value, 0);
-        private void Sz_ValueChanged(object sender, EventArgs e) => OnScaleChanged(transform.Scale.x, transform.Scale.y, (float)Sz.Value);
+        private void Sx_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged((float)_ObjectTransformScale_X.Value, _GraphicObject.transform.Scale.y, _GraphicObject.transform.Scale.z);
+        private void Sy_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged(_GraphicObject.transform.Scale.x, (float)_ObjectTransformScale_Y.Value, _GraphicObject.transform.Scale.z); 
+        private void Sz_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged(_GraphicObject.transform.Scale.x, _GraphicObject.transform.Scale.y, (float)_ObjectTransformScale_Z.Value);
 
-        void OnScaleChanged(float x, float y, float z)
+        void OnGraphicObjectScaleChanged(float x, float y, float z)
         {
-            transform.Scale = new Vector2(x,y);
-            paintLines();
+            _GraphicObject.transform.Scale = new Vector3(x, y, z);
+            updateScreen();
         }
 
         #endregion
+
+        #endregion
+
+        #region Virtual Camera Values Changed
+
+        private void _VirtualCameraPosition_X_ValueChanged(object sender, EventArgs e) => OnVirtualCameraPositionChanged((float)_VirtualCameraPosition_X.Value, _VirtualCamera.Position.y, _VirtualCamera.Position.z);
+        private void _VirtualCameraPosition_Y_ValueChanged(object sender, EventArgs e) => OnVirtualCameraPositionChanged(_VirtualCamera.Position.x, (float)_VirtualCameraPosition_Y.Value, _VirtualCamera.Position.z);
+        private void _VirtualCameraPosition_Z_ValueChanged(object sender, EventArgs e) => OnVirtualCameraPositionChanged(_VirtualCamera.Position.x, _VirtualCamera.Position.y, (float)_VirtualCameraPosition_Z.Value);
+
+        private void _VirtualCameraRotation_X_ValueChanged(object sender, EventArgs e) => OnVirtualCameraRotationChanged((float)_VirtualCameraRotation_X.Value, _VirtualCamera.Rotation.y, _VirtualCamera.Rotation.z);
+        private void _VirtualCameraRotation_Y_ValueChanged(object sender, EventArgs e) => OnVirtualCameraRotationChanged(_VirtualCamera.Rotation.x, (float)_VirtualCameraRotation_Y.Value, _VirtualCamera.Rotation.z);
+        private void _VirtualCameraRotation_Z_ValueChanged(object sender, EventArgs e) => OnVirtualCameraRotationChanged(_VirtualCamera.Rotation.x, _VirtualCamera.Rotation.y, (float)_VirtualCameraRotation_Z.Value);
+
+
+        void OnVirtualCameraPositionChanged(float x, float y, float z)
+        {
+            _VirtualCamera.Position = new Vector3(x, y, z);
+            updateScreen();
+        }
+
+        void OnVirtualCameraRotationChanged(float x, float y, float z)
+        {
+            _VirtualCamera.Rotation = new Vector3(x, y, z);
+            updateScreen();
+        }
 
         #endregion
     }

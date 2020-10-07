@@ -53,6 +53,7 @@
     <Compile Include="Classes\2D\Circulos\Natural.cs" />
     <Compile Include="Classes\2D\Circulos\PontoMedio.cs" />
     <Compile Include="Classes\2D\Transform2D.cs" />
+    <Compile Include="Classes\FileManager.cs" />
     <Compile Include="Classes\G_Object.cs" />
     <Compile Include="Classes\Mesh\Mesh.cs" />
     <Compile Include="Classes\Mesh\MeshFilter.cs" />

@@ -65,13 +65,12 @@
         {
             if (meshFilter.Mesh == null) return null;
             Vector4[] vertices = meshFilter.Mesh.Vertices;
-            int[,] triangles = meshFilter.Mesh.Triangles;
             Matrix4x4 transformationMatrix = transform.TransformationMatrix;
 
             for (int i = 0; i < vertices.Length; i++)
                 vertices[i] = vertices[i] * transformationMatrix;
 
-            return new Mesh(vertices, triangles);
+            return new Mesh(vertices, meshFilter.Mesh.Triangles);
         }
 
         #endregion
