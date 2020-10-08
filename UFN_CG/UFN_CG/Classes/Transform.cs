@@ -45,7 +45,7 @@ namespace UFN_CG
 
         public void translate(Vector3 translation)
         {
-            this.Position += translation;
+            Position += translation;
         }
 
         public void translate(float x,float y,float z)
@@ -69,7 +69,7 @@ namespace UFN_CG
 
         public void rotate(Vector3 Axis, float angle)
         {
-            this.Rotation += Axis * angle;
+            Rotation += Axis * angle;
         }
 
         #endregion

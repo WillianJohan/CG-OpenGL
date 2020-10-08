@@ -16,7 +16,28 @@ namespace UFN_CG
             InitializeComponent();
 
             _VirtualCamera = new VirtualCamera();
-            _GraphicObject = FileManager.importObject();
+            //_GraphicObject = FileManager.importObject();
+            Vector4[] vertices = new Vector4[]
+            {
+                new Vector4(-0.5f * 50, -0.5f * 50, -0.5f * 50, 1),
+                new Vector4(-0.5f * 50, -0.5f * 50,  0.5f * 50, 1),
+                new Vector4(-0.5f * 50,  0.5f * 50, -0.5f * 50, 1),
+                new Vector4(-0.5f * 50,  0.5f * 50,  0.5f * 50, 1),
+                new Vector4( 0.5f * 50, -0.5f * 50, -0.5f * 50, 1),
+                new Vector4( 0.5f * 50, -0.5f * 50,  0.5f * 50, 1),
+                new Vector4( 0.5f * 50,  0.5f * 50, -0.5f * 50, 1),
+                new Vector4( 0.5f * 50,  0.5f * 50, -0.5f * 50, 1)
+            };
+            int[,] tris = new int[4, 4]
+            {
+                {0, 1, 3, 2},
+                {2, 6, 7, 3},
+                {0, 4, 6, 2},
+                {0, 4, 5, 1}
+            };
+            _GraphicObject = new G_Object("OBJ" , new MeshFilter(new Mesh(vertices, tris)));
+            
+            
             worldToScreenPoint = new WorldToScreenPoint(new WorldToScreenPoint.Viewport(0, 0, canvas.Size.Width, canvas.Size.Height));
 
             updateTransformValues();
@@ -33,24 +54,26 @@ namespace UFN_CG
             Brush brush = new SolidBrush(Color.Red);
             Pen p = new Pen(brush, 5);
 
-            if (_VirtualCamera == null) return;
-            if (_GraphicObject == null) return;
+            //if (_VirtualCamera == null) return;
+            //if (_GraphicObject == null) return;
 
-            Matrix4x4 virtualCameraMatrix = _VirtualCamera.ProjectionMatrix;
-            Mesh graphicObjectMesh = _GraphicObject.MeshWithTransformation;
             Vector2 toWorldPoint = worldToScreenPoint.getPoint();
+            Matrix4x4 virtualCameraMatrix = _VirtualCamera.ProjectionMatrix;
+            Matrix4x4 graphicObjectMatrix = _GraphicObject.transform.TransformationMatrix;
+            Mesh graphicObjectMesh = _GraphicObject.meshFilter.Mesh;
 
             List<Point> point = new List<Point>(); // Lista que irá conter toda lista de pontos
             
             for (int i = 0; i < graphicObjectMesh.Vertices.Length; i++)
             {
-                graphicObjectMesh.Vertices[i] = (graphicObjectMesh.Vertices[i] * virtualCameraMatrix) / graphicObjectMesh.Vertices[i].w;
-                point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y)));
+                graphicObjectMesh.Vertices[i] = graphicObjectMesh.Vertices[i] * graphicObjectMatrix;// * virtualCameraMatrix;
+                graphicObjectMesh.Vertices[i] = new Vector4(graphicObjectMesh.Vertices[i].x / graphicObjectMesh.Vertices[i].w, graphicObjectMesh.Vertices[i].y / graphicObjectMesh.Vertices[i].w);
+                //point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y)));
+                point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x), (int)(graphicObjectMesh.Vertices[i].y)));
             }
 
             for (int i = 0; i < graphicObjectMesh.Triangles.GetLength(0); i++)
             {
-                //Calcular a conversão viewport
                 int p1 = graphicObjectMesh.Triangles[i, 0];
                 int p2 = graphicObjectMesh.Triangles[i, 1];
                 int p3 = graphicObjectMesh.Triangles[i, 2];
@@ -102,7 +125,7 @@ namespace UFN_CG
             // -- Graphic Object Values in canvas ------------------------------------------
             _ObjectTransformPosition_X.Value = (decimal)_GraphicObject.transform.Position.x;
             _ObjectTransformPosition_Y.Value = (decimal)_GraphicObject.transform.Position.y;
-            _ObjectTransformPosition_Z.Value = (decimal)_GraphicObject.transform.Position.y;
+            _ObjectTransformPosition_Z.Value = (decimal)_GraphicObject.transform.Position.z;
 
             _ObjectTransformRotation_X.Value = (decimal)_GraphicObject.transform.Rotation.x;
             _ObjectTransformRotation_Y.Value = (decimal)_GraphicObject.transform.Rotation.y;
