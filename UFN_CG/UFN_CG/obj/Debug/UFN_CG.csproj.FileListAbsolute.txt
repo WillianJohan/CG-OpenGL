@@ -8,3 +8,12 @@ C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\UF
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.exe
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.pdb
 C:\Users\19123\Documents\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.MainForm.resources
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\UFN_CG.exe.config
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\UFN_CG.exe
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\bin\Debug\UFN_CG.pdb
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.csprojAssemblyReference.cache
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.MainForm.resources
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.Properties.Resources.resources
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.csproj.GenerateResource.cache
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.exe
+E:\GitHub\UFN_ComputacaoGrafica\UFN_CG\UFN_CG\obj\Debug\UFN_CG.pdb

@@ -41,32 +41,14 @@ namespace UFN_CG
                 }
                 else if (line.StartsWith("f ")) // Triangles Values
                 {
-                    int[] _triangle0 = new int[3];
-                    int[] _triangle1 = new int[3];
-                    int[] _triangle2 = new int[3];
-                    int[] _triangle3 = new int[3];
+                    int[] _triangle = new int[4];
 
-                    _triangle0[0] = int.Parse(line.Split(' ')[1].Split('/')[0]) - 1;
-                    _triangle0[1] = int.Parse(line.Split(' ')[1].Split('/')[1]) - 1;
-                    _triangle0[2] = int.Parse(line.Split(' ')[1].Split('/')[2]) - 1;
+                    _triangle[0] = int.Parse(line.Split(' ')[1]) - 1;
+                    _triangle[1] = int.Parse(line.Split(' ')[2]) - 1;
+                    _triangle[2] = int.Parse(line.Split(' ')[3]) - 1;
+                    _triangle[3] = int.Parse(line.Split(' ')[4]) - 1;
 
-                    _triangle1[0] = int.Parse(line.Split(' ')[2].Split('/')[0]) - 1;
-                    _triangle1[1] = int.Parse(line.Split(' ')[2].Split('/')[1]) - 1;
-                    _triangle1[2] = int.Parse(line.Split(' ')[2].Split('/')[2]) - 1;
-
-
-                    _triangle2[0] = int.Parse(line.Split(' ')[3].Split('/')[0]) - 1;
-                    _triangle2[1] = int.Parse(line.Split(' ')[3].Split('/')[1]) - 1;
-                    _triangle2[2] = int.Parse(line.Split(' ')[3].Split('/')[2]) - 1;
-
-                    _triangle3[0] = int.Parse(line.Split(' ')[4].Split('/')[0]) - 1;
-                    _triangle3[1] = int.Parse(line.Split(' ')[4].Split('/')[1]) - 1;
-                    _triangle3[2] = int.Parse(line.Split(' ')[4].Split('/')[2]) - 1;
-
-                    list_TrianglesArray.Add(_triangle0);
-                    list_TrianglesArray.Add(_triangle1);
-                    list_TrianglesArray.Add(_triangle2);
-                    list_TrianglesArray.Add(_triangle3);
+                    list_TrianglesArray.Add(_triangle);
                 }
                 else if(line.StartsWith("O "))
                 {
@@ -74,12 +56,13 @@ namespace UFN_CG
                 }
             }
 
-            int[,] triangles = new int[list_TrianglesArray.Count, 3];
+            int[,] triangles = new int[list_TrianglesArray.Count, 4];
             for (int i = 0; i < list_TrianglesArray.Count; i++)
             {
-                triangles[i, 0] = list_TrianglesArray[0][0];
-                triangles[i, 1] = list_TrianglesArray[0][1];
-                triangles[i, 2] = list_TrianglesArray[0][2];
+                triangles[i, 0] = list_TrianglesArray[i][0];
+                triangles[i, 1] = list_TrianglesArray[i][1];
+                triangles[i, 2] = list_TrianglesArray[i][2];
+                triangles[i, 3] = list_TrianglesArray[i][3];
             }
 
             MeshFilter meshFilter = new MeshFilter(list_VerticesArray.ToArray(), list_TrianglesArray);

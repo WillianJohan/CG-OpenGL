@@ -57,6 +57,7 @@
     <Compile Include="Classes\G_Object.cs" />
     <Compile Include="Classes\Mesh\Mesh.cs" />
     <Compile Include="Classes\Mesh\MeshFilter.cs" />
+    <Compile Include="Classes\WorldToScreenPoint.cs" />
     <Compile Include="Classes\VirtualCamera.cs" />
     <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>

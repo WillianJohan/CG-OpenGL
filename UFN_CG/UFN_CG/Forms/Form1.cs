@@ -7,6 +7,7 @@ namespace UFN_CG
 {
     public partial class MainForm : Form
     {
+        WorldToScreenPoint worldToScreenPoint;
         VirtualCamera _VirtualCamera;
         G_Object _GraphicObject;
 
@@ -16,6 +17,7 @@ namespace UFN_CG
 
             _VirtualCamera = new VirtualCamera();
             _GraphicObject = FileManager.importObject();
+            worldToScreenPoint = new WorldToScreenPoint(new WorldToScreenPoint.Viewport(0, 0, canvas.Size.Width, canvas.Size.Height));
 
             updateTransformValues();
             updateScreen();
@@ -26,34 +28,37 @@ namespace UFN_CG
         void updateScreen()
         {
             Graphics screenRenderer = canvas.CreateGraphics();
-            screenRenderer.Clear(canvas.BackColor);
+            screenRenderer.Clear(Color.White);
             
             Brush brush = new SolidBrush(Color.Red);
-            Pen p = new Pen(brush, 2);
+            Pen p = new Pen(brush, 5);
 
             if (_VirtualCamera == null) return;
             if (_GraphicObject == null) return;
 
             Matrix4x4 virtualCameraMatrix = _VirtualCamera.ProjectionMatrix;
             Mesh graphicObjectMesh = _GraphicObject.MeshWithTransformation;
+            Vector2 toWorldPoint = worldToScreenPoint.getPoint();
 
             List<Point> point = new List<Point>(); // Lista que irá conter toda lista de pontos
+            
             for (int i = 0; i < graphicObjectMesh.Vertices.Length; i++)
             {
                 graphicObjectMesh.Vertices[i] = (graphicObjectMesh.Vertices[i] * virtualCameraMatrix) / graphicObjectMesh.Vertices[i].w;
-                point.Add(new Point((int)graphicObjectMesh.Vertices[i].x, (int)graphicObjectMesh.Vertices[i].y));
+                point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y)));
             }
 
             for (int i = 0; i < graphicObjectMesh.Triangles.GetLength(0); i++)
             {
                 //Calcular a conversão viewport
-                int ini = graphicObjectMesh.Triangles[i, 0];
-                int mid = graphicObjectMesh.Triangles[i, 1];
-                int end = graphicObjectMesh.Triangles[i, 2];
+                int p1 = graphicObjectMesh.Triangles[i, 0];
+                int p2 = graphicObjectMesh.Triangles[i, 1];
+                int p3 = graphicObjectMesh.Triangles[i, 2];
+                int p4 = graphicObjectMesh.Triangles[i, 3];
 
-                screenRenderer.DrawLine(p, point[ini], point[mid]);
-                screenRenderer.DrawLine(p, point[mid], point[end]);
-                screenRenderer.DrawLine(p, point[end], point[ini]);
+                screenRenderer.DrawLine(p, point[p1], point[p2]);
+                screenRenderer.DrawLine(p, point[p2], point[p3]);
+                screenRenderer.DrawLine(p, point[p3], point[p4]);
             }
         }
 
@@ -120,7 +125,7 @@ namespace UFN_CG
 
         void OnGraphicObjectPositionChanged(float x, float y, float z)
         {
-            _GraphicObject.transform.Position = new Vector3(x, y);
+            _GraphicObject.transform.Position = new Vector3(x, y, z);
             updateScreen();
         }
 

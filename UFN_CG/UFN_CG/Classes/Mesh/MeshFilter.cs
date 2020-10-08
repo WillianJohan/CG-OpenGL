@@ -23,12 +23,13 @@ namespace UFN_CG
                 if (Triangles[i][0] <= verticesCount || Triangles[i][1] <= verticesCount || Triangles[i][2] <= verticesCount)
                     filteredTriangles.Add(Triangles[i]);
 
-            int[,] triangles = new int[filteredTriangles.Count, 3];
+            int[,] triangles = new int[filteredTriangles.Count, 4];
             for (int i = 0; i < filteredTriangles.Count; i++)
             {
                 triangles[i, 0] = filteredTriangles[i][0];
                 triangles[i, 1] = filteredTriangles[i][1];
                 triangles[i, 2] = filteredTriangles[i][2];
+                triangles[i, 3] = filteredTriangles[i][3];
             }
 
             mesh = new Mesh(Vertices, triangles);
