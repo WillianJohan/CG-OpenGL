@@ -58,18 +58,29 @@ namespace UFN_CG
             //if (_GraphicObject == null) return;
 
             Vector2 toWorldPoint = worldToScreenPoint.getPoint();
-            Matrix4x4 virtualCameraMatrix = _VirtualCamera.ProjectionMatrix;
+            Matrix4x4 projectionMatrix = _VirtualCamera.ProjectionMatrix;
+            Matrix4x4 visualizationMatrix = _VirtualCamera.VisualizationMatrix;
             Matrix4x4 graphicObjectMatrix = _GraphicObject.transform.TransformationMatrix;
             Mesh graphicObjectMesh = _GraphicObject.meshFilter.Mesh;
 
+            Console.WriteLine("");
+            Console.WriteLine(graphicObjectMatrix);
+            Console.WriteLine(visualizationMatrix);
+            Console.WriteLine(projectionMatrix);
+
             List<Point> point = new List<Point>(); // Lista que irá conter toda lista de pontos
-            
+            Console.WriteLine("");
             for (int i = 0; i < graphicObjectMesh.Vertices.Length; i++)
             {
-                graphicObjectMesh.Vertices[i] = graphicObjectMesh.Vertices[i] * graphicObjectMatrix;// * virtualCameraMatrix;
-                graphicObjectMesh.Vertices[i] = new Vector4(graphicObjectMesh.Vertices[i].x / graphicObjectMesh.Vertices[i].w, graphicObjectMesh.Vertices[i].y / graphicObjectMesh.Vertices[i].w);
-                //point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y)));
-                point.Add(new Point((int)(graphicObjectMesh.Vertices[i].x), (int)(graphicObjectMesh.Vertices[i].y)));
+                graphicObjectMesh.Vertices[i] *= graphicObjectMatrix;
+                graphicObjectMesh.Vertices[i] *= visualizationMatrix;
+                graphicObjectMesh.Vertices[i] *= projectionMatrix;
+                graphicObjectMesh.Vertices[i] /= graphicObjectMesh.Vertices[i].w;
+
+                //Point novoPonto = new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y));
+                Point novoPonto = new Point((int)(graphicObjectMesh.Vertices[i].x), (int)(graphicObjectMesh.Vertices[i].y));
+                point.Add(novoPonto);
+                Console.WriteLine(novoPonto);
             }
 
             for (int i = 0; i < graphicObjectMesh.Triangles.GetLength(0); i++)

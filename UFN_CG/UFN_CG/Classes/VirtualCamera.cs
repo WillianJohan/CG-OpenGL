@@ -11,7 +11,7 @@
         {
             fov = 60;
             aspect = 1;
-            zNear = 0.1f;
+            zNear = 1f;
             zFar = 100f;
         }
 
@@ -81,7 +81,7 @@
 
         public VirtualCamera() 
         {
-            this.Position = Vector3.Zero;
+            this.Position = new Vector3(0, 0, -10);
             this.Rotation = Vector3.Zero;
             Perspective = new Perspective();
             Ortographic = new Ortographic();
@@ -136,7 +136,7 @@
             // Passa os valores invertidos por argumento pois a matriz resultante será multiplicada pelo ponto do universo
             Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(-Position.x, -Position.y, -Position.z);
             Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(-Rotation.x, -Rotation.y, -Rotation.z);
-            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(1,1,1);
+            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(-1,-1,-1);
 
             return (TranslationMatrix * RotationMatrix) * ScaleMatrix;
         }
