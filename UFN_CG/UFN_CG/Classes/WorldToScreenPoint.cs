@@ -1,4 +1,6 @@
-﻿namespace UFN_CG
+﻿using System.Drawing;
+
+namespace UFN_CG
 {
     public class WorldToScreenPoint
     {
@@ -43,11 +45,18 @@
             V = v;
         }
 
-        public Vector2 getPoint() 
+        public Point getPoint(float x, float y)
         {
-            float x = (((W.xMax - W.xMin) * (V.xMax - V.xMin)) / (W.xMax - W.xMin)) + V.xMin;
-            float y = (((W.yMax - W.yMin) * (V.yMin - V.yMax)) / (W.yMax - W.yMin)) + V.yMax;
-            return new Vector2(x, y);
+            return new Point(
+                ((((int)x - W.xMin) * (V.xMax - V.xMin)) / (W.xMax - W.xMin)) + V.xMin,
+                ((((int)y - W.yMin) * (V.yMin - V.yMax)) / (W.yMax - W.yMin)) + V.yMax);
+        }
+
+        public Point getPoint(int x, int y)
+        {
+            return new Point(
+                (((x - W.xMin) * (V.xMax - V.xMin)) / (W.xMax - W.xMin)) + V.xMin,
+                (((y - W.yMin) * (V.yMin - V.yMax)) / (W.yMax - W.yMin)) + V.yMax);
         }
     }
 }
