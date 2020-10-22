@@ -109,30 +109,30 @@ namespace UFN_CG
             
             return matriz_Translacao;
         }
-        
+
         public static Matrix4x4 RotationMatrix(float x, float y, float z)
         {
             x = (float)Math.PI * x / 180;
             y = (float)Math.PI * y / 180;
             z = (float)Math.PI * z / 180;
 
-            Matrix4x4 Mat_X = Identity();     
+            Matrix4x4 Mat_X = Identity();
             Mat_X.m11 = (float)Math.Cos(x);         // Rx   |1       0       0       0|  
-            Mat_X.m12 = (float)-Math.Sin(x);        //      |0       Sen()   Cos()   0|  
-            Mat_X.m21 = (float)Math.Sin(x);         //      |0       0       0       0|
-            Mat_X.m22 = (float)Math.Cos(x);         //      |0       cos()   -Sen()  1|  
+            Mat_X.m12 = (float)-Math.Sin(x);        //      |0       Cos()   -Sen()  0|  
+            Mat_X.m21 = (float)Math.Sin(x);         //      |0       Sen()   Cos()   0|
+            Mat_X.m22 = (float)Math.Cos(x);         //      |0       0       1       1|  
 
             Matrix4x4 Mat_Y = Identity();
-            Mat_Y.m00 = (float)Math.Cos(y);         // Ry   |cos()   0       -sen()  0|
-            Mat_Y.m02 = (float)-Math.Sin(y);        //      |0       1       0       0|  
+            Mat_Y.m00 = (float)Math.Cos(y);         // Ry   |cos()   0       sen()   0|
+            Mat_Y.m02 = (float)Math.Sin(y);         //      |0       1       0       0|  
             Mat_Y.m20 = (float)-Math.Sin(y);        //      |-sen()  0       cos()   0|  
             Mat_Y.m22 = (float)Math.Cos(y);         //      |0       0       0       1|
 
             Matrix4x4 Mat_Z = Identity();
-            Mat_Z.m00 = (float)Math.Cos(z);         // Rz   |cos()   -sen()  0       0|  
-            Mat_Z.m01 = (float)-Math.Sin(z);        //      |sen()   -cos()  0       0|  
-            Mat_Z.m10 = (float)Math.Sin(z);         //      |0       0       1       0|  
-            Mat_Z.m11 = (float)-Math.Cos(z);        //      |0       0       0       1|  
+            Mat_Z.m00 = (float)Math.Cos(z);         // Rz   |cos()   -sen()  0       0|  m00, m01, m02, m03,
+            Mat_Z.m01 = (float)-Math.Sin(z);        //      |sen()   cos()   0       0|  m10, m11, m12, m13,
+            Mat_Z.m10 = (float)Math.Sin(z);         //      |0       0       1       0|  m20, m21, m22, m23,
+            Mat_Z.m11 = (float)Math.Cos(z);         //      |0       0       0       1|  m30, m31, m32, m33;
 
             return Mat_X * Mat_Y * Mat_Z;
         }
@@ -148,18 +148,20 @@ namespace UFN_CG
                 rotationMatrix.m12 = (float)-Math.Sin(angle);
                 rotationMatrix.m21 = (float)Math.Sin(angle);
                 rotationMatrix.m22 = (float)Math.Cos(angle);
-            }else if (axis.y == 1) // Y
+            }
+            else if (axis.y == 1) // Y
             {
-               rotationMatrix.m00 = (float)Math.Cos(angle);
-               rotationMatrix.m02 = (float)-Math.Sin(angle);
-               rotationMatrix.m20 = (float)-Math.Sin(angle);
-               rotationMatrix.m22 = (float)Math.Cos(angle);
-            }else if (axis.z == 1) // Z
+                rotationMatrix.m00 = (float)Math.Cos(angle);
+                rotationMatrix.m02 = (float)Math.Sin(angle);
+                rotationMatrix.m20 = (float)-Math.Sin(angle);
+                rotationMatrix.m22 = (float)Math.Cos(angle);
+            }
+            else if (axis.z == 1) // Z
             {
-               rotationMatrix.m00 = (float)Math.Cos(angle);
-               rotationMatrix.m01 = (float)-Math.Sin(angle);
-               rotationMatrix.m10 = (float)Math.Sin(angle);
-               rotationMatrix.m11 = (float)-Math.Cos(angle);
+                rotationMatrix.m00 = (float)Math.Cos(angle);
+                rotationMatrix.m01 = (float)-Math.Sin(angle);
+                rotationMatrix.m10 = (float)Math.Sin(angle);
+                rotationMatrix.m11 = (float)Math.Cos(angle);
             }
 
             return rotationMatrix;
@@ -185,11 +187,11 @@ namespace UFN_CG
         public static Matrix4x4 ProjectionMatrix(float fovy, float aspect, float zNear, float zFar)
         {
             Matrix4x4 Matriz_Projecao = Zero();
-
-            Matriz_Projecao.m00 = (float)(1 / (Math.Tan(fovy / 2) * aspect));
-            Matriz_Projecao.m11 = (float)(1 / Math.Tan(fovy / 2));
+            float fovyR = fovy * (float)Math.PI / 180.0f;
+            Matriz_Projecao.m00 = (float)(1 / (Math.Tan(fovyR / 2) * aspect));
+            Matriz_Projecao.m11 = (float)(1 / Math.Tan(fovyR / 2));
             Matriz_Projecao.m22 = (zFar + zNear) / (zNear - zFar);
-            Matriz_Projecao.m23 = (2 * zFar * zNear) / (zNear * zFar);
+            Matriz_Projecao.m23 = (2 * zFar * zNear) / (zNear - zFar);
             Matriz_Projecao.m32 = -1;
 
             return Matriz_Projecao;
