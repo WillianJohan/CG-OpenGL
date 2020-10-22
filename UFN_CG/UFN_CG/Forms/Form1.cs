@@ -16,31 +16,18 @@ namespace UFN_CG
             InitializeComponent();
 
             _VirtualCamera = new VirtualCamera();
-            //_GraphicObject = FileManager.importObject();
-            Vector4[] vertices = new Vector4[]
-            {
-                new Vector4(-0.5f * 50, -0.5f * 50, -0.5f * 50, 1),
-                new Vector4(-0.5f * 50, -0.5f * 50,  0.5f * 50, 1),
-                new Vector4(-0.5f * 50,  0.5f * 50, -0.5f * 50, 1),
-                new Vector4(-0.5f * 50,  0.5f * 50,  0.5f * 50, 1),
-                new Vector4( 0.5f * 50, -0.5f * 50, -0.5f * 50, 1),
-                new Vector4( 0.5f * 50, -0.5f * 50,  0.5f * 50, 1),
-                new Vector4( 0.5f * 50,  0.5f * 50, -0.5f * 50, 1),
-                new Vector4( 0.5f * 50,  0.5f * 50, -0.5f * 50, 1)
-            };
-            int[,] tris = new int[4, 4]
-            {
-                {0, 1, 3, 2},
-                {2, 6, 7, 3},
-                {0, 4, 6, 2},
-                {0, 4, 5, 1}
-            };
-            _GraphicObject = new G_Object("OBJ" , new MeshFilter(new Mesh(vertices, tris)));
-            
-            
-            worldToScreenPoint = new WorldToScreenPoint(new WorldToScreenPoint.Viewport(0, 0, canvas.Size.Width, canvas.Size.Height));
+            _VirtualCamera.Position = new Vector3(0, 0, 3);
 
-            updateTransformValues();
+            _GraphicObject = FileManager.importObject("..\\..\\3DModels\\Thompson.obj");
+            _GraphicObject.transform.Position = new Vector3(1000, 500, 0);
+            _GraphicObject.transform.Scale = new Vector3(100f, 100f, .3f);
+            
+
+            worldToScreenPoint = new WorldToScreenPoint(new WorldToScreenPoint.Window(0, 0, canvas.Size.Width, canvas.Size.Height), new WorldToScreenPoint.Viewport(-1, -1, 1, 1));
+
+            updateCameraTransformValues();
+            updateGraphicTransformValues();
+
             updateScreen();
         }
 
@@ -50,45 +37,29 @@ namespace UFN_CG
         {
             Graphics screenRenderer = canvas.CreateGraphics();
             screenRenderer.Clear(Color.White);
-            
+
             Brush brush = new SolidBrush(Color.Red);
-            Pen p = new Pen(brush, 5);
+            Pen p = new Pen(brush, 1);
 
-            //if (_VirtualCamera == null) return;
-            //if (_GraphicObject == null) return;
-
-            Vector2 toWorldPoint = worldToScreenPoint.getPoint();
-            Matrix4x4 projectionMatrix = _VirtualCamera.ProjectionMatrix;
-            Matrix4x4 visualizationMatrix = _VirtualCamera.VisualizationMatrix;
-            Matrix4x4 graphicObjectMatrix = _GraphicObject.transform.TransformationMatrix;
-            Mesh graphicObjectMesh = _GraphicObject.meshFilter.Mesh;
-
-            Console.WriteLine("");
-            Console.WriteLine(graphicObjectMatrix);
-            Console.WriteLine(visualizationMatrix);
-            Console.WriteLine(projectionMatrix);
+            Matrix4x4 VC_projectionMatrix = _VirtualCamera.ProjectionMatrix;
+            Matrix4x4 VC_visualizationMatrix = _VirtualCamera.VisualizationMatrix;
+            Matrix4x4 graphicObject_TransformationMatrix = _GraphicObject.transform.TransformationMatrix;
 
             List<Point> point = new List<Point>(); // Lista que irá conter toda lista de pontos
-            Console.WriteLine("");
-            for (int i = 0; i < graphicObjectMesh.Vertices.Length; i++)
-            {
-                graphicObjectMesh.Vertices[i] *= graphicObjectMatrix;
-                graphicObjectMesh.Vertices[i] *= visualizationMatrix;
-                graphicObjectMesh.Vertices[i] *= projectionMatrix;
-                graphicObjectMesh.Vertices[i] /= graphicObjectMesh.Vertices[i].w;
 
-                //Point novoPonto = new Point((int)(graphicObjectMesh.Vertices[i].x * toWorldPoint.x), (int)(graphicObjectMesh.Vertices[i].y * toWorldPoint.y));
-                Point novoPonto = new Point((int)(graphicObjectMesh.Vertices[i].x), (int)(graphicObjectMesh.Vertices[i].y));
-                point.Add(novoPonto);
-                Console.WriteLine(novoPonto);
+            for (int i = 0; i < _GraphicObject.meshFilter.Mesh.Vertices.Length; i++)
+            {
+                Vector4 novoPontoV4 = _GraphicObject.meshFilter.Mesh.Vertices[i] * graphicObject_TransformationMatrix * VC_visualizationMatrix * VC_projectionMatrix ;
+                novoPontoV4 /= novoPontoV4.w;
+                point.Add(new Point((int)novoPontoV4.x, (int)novoPontoV4.y));
             }
 
-            for (int i = 0; i < graphicObjectMesh.Triangles.GetLength(0); i++)
+            for (int i = 0; i < _GraphicObject.meshFilter.Mesh.Triangles.GetLength(0); i++)
             {
-                int p1 = graphicObjectMesh.Triangles[i, 0];
-                int p2 = graphicObjectMesh.Triangles[i, 1];
-                int p3 = graphicObjectMesh.Triangles[i, 2];
-                int p4 = graphicObjectMesh.Triangles[i, 3];
+                int p1 = _GraphicObject.meshFilter.Mesh.Triangles[i, 0];
+                int p2 = _GraphicObject.meshFilter.Mesh.Triangles[i, 1];
+                int p3 = _GraphicObject.meshFilter.Mesh.Triangles[i, 2];
+                int p4 = _GraphicObject.meshFilter.Mesh.Triangles[i, 3];
 
                 screenRenderer.DrawLine(p, point[p1], point[p2]);
                 screenRenderer.DrawLine(p, point[p2], point[p3]);
@@ -103,7 +74,7 @@ namespace UFN_CG
         private void btn_Import3DModel_Click(object sender, EventArgs e)
         {
             _GraphicObject = FileManager.importObject();
-            updateTransformValues();
+            updateGraphicTransformValues();
             updateScreen();
         }
 
@@ -112,10 +83,10 @@ namespace UFN_CG
             float _Tx = (float)_ObjectCommandsTranslate_X.Value;
             float _TY = (float)_ObjectCommandsTranslate_Y.Value;
             float _Tz = (float)_ObjectCommandsTranslate_Z.Value;
-            
+
             _GraphicObject.transform.translate(_Tx, _TY, _Tz);
 
-            updateTransformValues();
+            updateGraphicTransformValues();
             updateScreen();
         }
 
@@ -124,14 +95,14 @@ namespace UFN_CG
             float _Rx = (float)_ObjectCommandsRotate_X.Value;
             float _RY = (float)_ObjectCommandsRotate_Y.Value;
             float _Rz = (float)_ObjectCommandsRotate_Z.Value;
-            
+
             _GraphicObject.transform.rotate(_Rx, _RY, _Rz);
 
-            updateTransformValues();
+            updateGraphicTransformValues();
             updateScreen();
         }
 
-        private void updateTransformValues()
+        private void updateGraphicTransformValues()
         {
             // -- Graphic Object Values in canvas ------------------------------------------
             _ObjectTransformPosition_X.Value = (decimal)_GraphicObject.transform.Position.x;
@@ -168,7 +139,7 @@ namespace UFN_CG
         #region Rotation Values
 
         private void GraphicObject_RotationX_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged((float)_ObjectTransformRotation_X.Value, _GraphicObject.transform.Rotation.y, _GraphicObject.transform.Rotation.z);
-        private void GraphicObject_RotationY_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged(_GraphicObject.transform.Rotation.x, (float)_ObjectTransformRotation_Y.Value, _GraphicObject.transform.Rotation.z); 
+        private void GraphicObject_RotationY_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged(_GraphicObject.transform.Rotation.x, (float)_ObjectTransformRotation_Y.Value, _GraphicObject.transform.Rotation.z);
         private void GraphicObject_RotationZ_ValueChanged(object sender, EventArgs e) => OnGraphicObjectRotationChanged(_GraphicObject.transform.Rotation.x, _GraphicObject.transform.Rotation.y, (float)_ObjectTransformRotation_Z.Value);
 
         void OnGraphicObjectRotationChanged(float x, float y, float z)
@@ -182,7 +153,7 @@ namespace UFN_CG
         #region Scale Values
 
         private void Sx_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged((float)_ObjectTransformScale_X.Value, _GraphicObject.transform.Scale.y, _GraphicObject.transform.Scale.z);
-        private void Sy_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged(_GraphicObject.transform.Scale.x, (float)_ObjectTransformScale_Y.Value, _GraphicObject.transform.Scale.z); 
+        private void Sy_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged(_GraphicObject.transform.Scale.x, (float)_ObjectTransformScale_Y.Value, _GraphicObject.transform.Scale.z);
         private void Sz_ValueChanged(object sender, EventArgs e) => OnGraphicObjectScaleChanged(_GraphicObject.transform.Scale.x, _GraphicObject.transform.Scale.y, (float)_ObjectTransformScale_Z.Value);
 
         void OnGraphicObjectScaleChanged(float x, float y, float z)
@@ -218,6 +189,30 @@ namespace UFN_CG
             updateScreen();
         }
 
+        private void updateCameraTransformValues()
+        {
+            // -- Virtual Camera Values in canvas ------------------------------------------
+            _VirtualCameraPosition_X.Value = (decimal)_VirtualCamera.Position.x;
+            _VirtualCameraPosition_Y.Value = (decimal)_VirtualCamera.Position.y;
+            _VirtualCameraPosition_Z.Value = (decimal)_VirtualCamera.Position.z;
+
+            _VirtualCameraRotation_X.Value = (decimal)_VirtualCamera.Rotation.x;
+            _VirtualCameraRotation_Y.Value = (decimal)_VirtualCamera.Rotation.y;
+            _VirtualCameraRotation_Z.Value = (decimal)_VirtualCamera.Rotation.z;
+        }
+
         #endregion
+
+        #region Form
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            worldToScreenPoint = new WorldToScreenPoint(new WorldToScreenPoint.Viewport(0, 0, canvas.Size.Width, canvas.Size.Height));
+            _VirtualCamera.Perspective.aspect = canvas.Size.Width / canvas.Size.Height;
+            updateScreen();
+        }
+
+        #endregion
+
     }
 }

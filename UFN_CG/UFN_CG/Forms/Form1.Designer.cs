@@ -347,7 +347,6 @@
             // 
             // btn_Rotate
             // 
-            this.btn_Rotate.Enabled = false;
             this.btn_Rotate.Location = new System.Drawing.Point(6, 47);
             this.btn_Rotate.Name = "btn_Rotate";
             this.btn_Rotate.Size = new System.Drawing.Size(75, 20);
@@ -385,7 +384,6 @@
             // 
             // _ObjectCommandsRotate_Z
             // 
-            this._ObjectCommandsRotate_Z.Enabled = false;
             this._ObjectCommandsRotate_Z.Location = new System.Drawing.Point(175, 47);
             this._ObjectCommandsRotate_Z.Maximum = new decimal(new int[] {
             10000,
@@ -403,7 +401,6 @@
             // 
             // _ObjectCommandsRotate_Y
             // 
-            this._ObjectCommandsRotate_Y.Enabled = false;
             this._ObjectCommandsRotate_Y.Location = new System.Drawing.Point(130, 47);
             this._ObjectCommandsRotate_Y.Maximum = new decimal(new int[] {
             10000,
@@ -438,7 +435,6 @@
             // 
             // _ObjectCommandsRotate_X
             // 
-            this._ObjectCommandsRotate_X.Enabled = false;
             this._ObjectCommandsRotate_X.Location = new System.Drawing.Point(87, 47);
             this._ObjectCommandsRotate_X.Maximum = new decimal(new int[] {
             10000,
@@ -634,8 +630,10 @@
             this.ClientSize = new System.Drawing.Size(1254, 681);
             this.Controls.Add(this.canvas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(680, 400);
             this.Name = "MainForm";
             this.Text = "UFN_Computação Gráfica";
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.canvas.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -671,31 +669,31 @@
         #endregion
 
         private System.Windows.Forms.Panel canvas;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btn_Rotate;
         private System.Windows.Forms.Button btn_Translate;
         private System.Windows.Forms.NumericUpDown _ObjectCommandsTranslate_X;
-        private System.Windows.Forms.NumericUpDown _ObjectCommandsTranslate_Y;
-        private System.Windows.Forms.NumericUpDown _ObjectCommandsTranslate_Z;
         private System.Windows.Forms.NumericUpDown _ObjectCommandsRotate_Z;
         private System.Windows.Forms.NumericUpDown _ObjectCommandsRotate_Y;
+        private System.Windows.Forms.NumericUpDown _ObjectCommandsTranslate_Y;
         private System.Windows.Forms.NumericUpDown _ObjectCommandsRotate_X;
-        private System.Windows.Forms.Button btn_Rotate;
-        private System.Windows.Forms.NumericUpDown _ObjectTransformRotation_Z;
-        private System.Windows.Forms.NumericUpDown _ObjectTransformRotation_Y;
+        private System.Windows.Forms.NumericUpDown _ObjectCommandsTranslate_Z;
+        private System.Windows.Forms.Button btn_Import3DModel;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblPosition;
         private System.Windows.Forms.NumericUpDown _ObjectTransformRotation_X;
-        private System.Windows.Forms.NumericUpDown _ObjectTransformScale_Z;
-        private System.Windows.Forms.NumericUpDown _ObjectTransformScale_Y;
+        private System.Windows.Forms.NumericUpDown _ObjectTransformRotation_Y;
+        private System.Windows.Forms.NumericUpDown _ObjectTransformRotation_Z;
         private System.Windows.Forms.NumericUpDown _ObjectTransformScale_X;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown _ObjectTransformScale_Y;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown _ObjectTransformScale_Z;
+        private System.Windows.Forms.NumericUpDown _ObjectTransformPosition_X;
         private System.Windows.Forms.NumericUpDown _ObjectTransformPosition_Z;
         private System.Windows.Forms.NumericUpDown _ObjectTransformPosition_Y;
-        private System.Windows.Forms.NumericUpDown _ObjectTransformPosition_X;
-        private System.Windows.Forms.Label lblPosition;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btn_Import3DModel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown _VirtualCameraRotation_X;
         private System.Windows.Forms.NumericUpDown _VirtualCameraRotation_Y;
