@@ -38,12 +38,12 @@
 
         public Ortographic()
         {
-            left = 0;
-            right = 600;
-            top = 0;
-            bottom = 600;
-            near = 1;
-            far = 10;
+            left = -1;
+            right = 1;
+            top = 1;
+            bottom = -1;
+            near = -1;
+            far = 1;
         }
 
         public Ortographic(int left, int right, int top, int bottom, int near, int far)
@@ -81,7 +81,7 @@
 
         public VirtualCamera() 
         {
-            this.Position = new Vector3(0, 0, -10);
+            this.Position = new Vector3(0, 0, 0);
             this.Rotation = Vector3.Zero;
             Perspective = new Perspective();
             Ortographic = new Ortographic();
@@ -100,7 +100,7 @@
         }
         public VirtualCamera(int left, int right, int top, int bottom, int near, int far)
         {
-            Position = new Vector3(0,0,2);
+            Position = new Vector3(0,0,0);
             Rotation = Vector3.Zero;
             Ortographic = new Ortographic(left, right, top, bottom, near, far);
             Perspective = new Perspective();
@@ -119,7 +119,7 @@
         }
         public VirtualCamera(int fov, float aspect, float zNear, float zFar)
         {
-            Position = new Vector3(0, 0, 2);
+            Position = new Vector3(0, 0, 0);
             Rotation = Vector3.Zero;
             Perspective = new Perspective(fov, aspect, zNear, zFar);
             Ortographic = new Ortographic();
@@ -136,9 +136,8 @@
             // Passa os valores invertidos por argumento pois a matriz resultante será multiplicada pelo ponto do universo
             Matrix4x4 TranslationMatrix = Matrix4x4.TranslationMatrix(-Position.x, -Position.y, -Position.z);
             Matrix4x4 RotationMatrix = Matrix4x4.RotationMatrix(-Rotation.x, -Rotation.y, -Rotation.z);
-            Matrix4x4 ScaleMatrix = Matrix4x4.ScaleMatrix(-1,-1,-1);
 
-            return (TranslationMatrix * RotationMatrix) * ScaleMatrix;
+            return (TranslationMatrix * RotationMatrix);
         }
 
 
