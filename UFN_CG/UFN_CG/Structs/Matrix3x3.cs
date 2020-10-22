@@ -2,7 +2,7 @@
 
 namespace UFN_CG
 {
-    public struct Matrix3x3
+    public class Matrix3x3
     {
         public float m00, m01, m02,
                      m10, m11, m12,
