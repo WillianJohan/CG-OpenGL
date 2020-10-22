@@ -69,6 +69,14 @@ namespace UFN_CG
             return normalizedVector;
         }
 
+        public static float Distance(Vector3 p1, Vector3 p2)
+        {
+            double a = Math.Pow(p1.x - p2.x, 2);
+            double b = Math.Pow(p1.y - p2.y, 2);
+            double c = Math.Pow(p1.z - p2.z, 2);
+            return (float)Math.Sqrt(a + b + b);
+        }
+
         public static float Dot(Vector3 a, Vector3 b)
         {
             return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
