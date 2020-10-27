@@ -61,8 +61,8 @@ int main(void)
             2, 3, 0
         };
 
+        GLCall(glEnable(GL_BLEND)); //Set True para Blend na utilização de texturas
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)); // Definindo como OpenGL irá lidar com Alpha Pixels
-        GLCall(glEnable(GL_BLEND));
 
         VertexArray va;
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
