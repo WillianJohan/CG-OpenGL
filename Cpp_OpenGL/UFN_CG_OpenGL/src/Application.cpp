@@ -40,11 +40,11 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-    //glfwSwapInterval(5);
 
     if (glewInit() != GLEW_OK)
         std::cout << "GLEW IS NOT OK!" << std::endl;
     std::cout << glGetString(GL_VERSION) << std::endl;
+    
     {
         float positions[] =
         {
@@ -78,11 +78,15 @@ int main(void)
         IndexBuffer ib(indices, 6);
 
         glm::mat4 proj = glm::ortho(-4.0f, 4.0f, -2.0f, 2.0f, -1.0f, 1.0f);
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
+
+        glm::mat4 mvp = proj * view * model;
 
         Shader shader("res/Shaders/Basic.shader");
         shader.Bind();        
         shader.SetUniform4f("u_Color", 1.0f, 0.0f, 0.5f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", proj);
+        shader.SetUniformMat4f("u_MVP", mvp);
 
         Texture texture("res/Textures/luffy1.png");
         texture.Bind();
