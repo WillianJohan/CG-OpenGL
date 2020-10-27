@@ -13,6 +13,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 
 int main(void)
 {
@@ -68,6 +69,9 @@ int main(void)
         Shader shader("res/shaders/Basic.shader");
         shader.Bind();        
         shader.SetUniform4f("u_Color", 1.0f, 0.0f, 0.5f, 1.0f);
+
+        Texture texture("res/textures/luffy1.png");
+        texture.Bind();
 
         va.Unbind();
         vb.Unbind();
