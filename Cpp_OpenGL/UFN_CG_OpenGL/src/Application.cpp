@@ -45,10 +45,14 @@ int main(void)
     {
         float positions[] =
         {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f,
-            -0.5f,  0.5f
+            -0.5f, -0.5f,    0.0f, 0.0f, //0
+             0.5f, -0.5f,    1.0f, 0.0f, //1
+             0.5f,  0.5f,    1.0f, 1.0f, //2
+            -0.5f,  0.5f,    0.0f, 1.0f  //3
+    //   |================| |===============|
+    //    Vertex Positions   Area/Coordenada
+    //                       Para Leitura Das Texturas
+
         };
 
         unsigned int indices[] =
@@ -57,21 +61,26 @@ int main(void)
             2, 3, 0
         };
 
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)); // Definindo como OpenGL irá lidar com Alpha Pixels
+        GLCall(glEnable(GL_BLEND));
+
         VertexArray va;
-        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
+        layout.Push<float>(2);
         layout.Push<float>(2);
         va.AddBuffer(vb, layout);
        
         IndexBuffer ib(indices, 6);
 
-        Shader shader("res/shaders/Basic.shader");
+        Shader shader("res/Shaders/Basic.shader");
         shader.Bind();        
         shader.SetUniform4f("u_Color", 1.0f, 0.0f, 0.5f, 1.0f);
 
-        Texture texture("res/textures/luffy1.png");
+        Texture texture("res/Textures/luffy1.png");
         texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();
         vb.Unbind();
@@ -79,9 +88,6 @@ int main(void)
         shader.Unbind();
 
         Renderer renderer;
-
-        float r = 0.0f;
-        float increment = 0.5f;
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -93,13 +99,6 @@ int main(void)
             shader.SetUniform4f("u_Color", r, 0.0f, 0.5f, 1.0f);
 
             renderer.Draw(va, ib, shader);
-
-            if (r > 1.0f)
-                increment = -0.05f;
-            else if (r < 0.0f)
-                increment = 0.05f;
-
-            r += increment;
 
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
