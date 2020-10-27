@@ -167,6 +167,10 @@
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Textures\luffy1.png" />
+    <Image Include="res\Textures\luffy2.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
