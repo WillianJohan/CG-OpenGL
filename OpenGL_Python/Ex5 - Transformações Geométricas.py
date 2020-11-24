@@ -17,7 +17,9 @@ Ty = 0.0
 Sx = 1.0
 Sy = 1.0
 Angulo = 0
-ShaderSelection = 1
+
+ShaderButtonReleased = True
+ShaderSelection = 0
 
 def redimensionaCallback(window, w, h):
     global WIDTH, HEIGHT
@@ -225,7 +227,7 @@ def inicializaRenderizacao():
     glfw.terminate()
 
 def userInputEvents():
-    global Tx, Ty, Sx, Sy, Angulo, ShaderSelection
+    global Tx, Ty, Sx, Sy, Angulo, ShaderSelection, ShaderButtonReleased
 
     # Translação
     if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_UP)):
@@ -256,14 +258,15 @@ def userInputEvents():
     if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_END)):
         Angulo -= 0.01                                    
 
-    # Seleção do Shader
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_S)):
-        print("shader Selection: ", ShaderSelection)
-        if(ShaderSelection == 0):
-            ShaderSelection = 1
-        else:
-            ShaderSelection = 0
+    # Seleção do Shader    
+    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_S) and ShaderButtonReleased == True):        
+        ShaderSelection = (ShaderSelection + 1) % 2
+        ShaderButtonReleased = False
         inicializaShaders()
+    
+    if(ShaderButtonReleased == False):
+        if (glfw.PRESS != glfw.get_key(Window, glfw.KEY_S)):
+            ShaderButtonReleased = True
 
 # Função principal
 def main():
