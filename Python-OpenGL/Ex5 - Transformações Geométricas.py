@@ -11,16 +11,6 @@ Vao = None
 WIDTH = 800
 HEIGHT = 600
 
-# Valores para transformação do objeto
-Tx = 0.0
-Ty = 0.0
-Sx = 1.0
-Sy = 1.0
-Angulo = 0
-
-ShaderButtonReleased = True
-ShaderSelection = 0
-
 def redimensionaCallback(window, w, h):
     global WIDTH, HEIGHT
     WIDTH = w
@@ -33,7 +23,7 @@ def inicializaOpenGL():
     glfw.init()
 
     #Criação de uma janela
-    Window = glfw.create_window(WIDTH, HEIGHT, "Exercício", None, None)
+    Window = glfw.create_window(WIDTH, HEIGHT, "Exemplo - renderização de um triângulo", None, None)
     if not Window:
         glfw.terminate()
         exit()
@@ -88,63 +78,33 @@ def inicializaObjetos():
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, None)
 
 def inicializaShaders():
-    global Shader_programm, ShaderSelection
-    
+    global Shader_programm
     # Especificação do Vertex Shader:
-    vertex_shader = None
-    fragment_shader = None
-
-    if(ShaderSelection == 0):
-        print("Usando Shader 0")
-        vertex_shader = """
-            #version 400
-            layout(location = 0) in vec3 vertex_posicao; //vem da modelagem de um objeto no python
-            layout(location = 1) in vec3 vertex_cores; //vem da modelagem de um objeto no python
-            uniform mat4 matriz; //matriz 4x4 vem do python, pois ela tem o modificador "uniform"
-            out vec3 cores;
-            void main () {
-                cores = vertex_cores;
-                gl_Position = matriz * vec4 (vertex_posicao.x*2, vertex_posicao.y*2, vertex_posicao.z, 1.0);
-            }
-        """
-
-        fragment_shader = """
-            #version 400
-            in vec3 cores;
-            out vec4 frag_colour;
-            void main () {
-                frag_colour = vec4 (cores, 1.0);
-            }
-        """
-    elif(ShaderSelection == 1):
-        print("Usando Shader 1")
-        vertex_shader = """
-            #version 400
-            layout(location = 0) in vec3 vertex_posicao; //vem da modelagem de um objeto no python
-            layout(location = 1) in vec3 vertex_cores; //vem da modelagem de um objeto no python
-            uniform mat4 matriz; //matriz 4x4 vem do python, pois ela tem o modificador "uniform"
-            out vec3 cores;
-            void main () {
-                cores = vertex_cores;
-                gl_Position = matriz * vec4 (vertex_posicao, 1.0);
-            }
-        """
-        fragment_shader = """
-            #version 400
-            in vec3 cores;
-            out vec4 frag_colour;
-            void main () {
-                frag_colour = vec4 (1.0-cores.r, 1.0-cores.g, 1.0-cores.b, 1.0);
-            }
-        """
-
-    # Vertex Shader
+    vertex_shader = """
+        #version 400
+        layout(location = 0) in vec3 vertex_posicao; //vem da modelagem de um objeto no python
+        layout(location = 1) in vec3 vertex_cores; //vem da modelagem de um objeto no python
+        uniform mat4 matriz; //matriz 4x4 vem do python, pois ela tem o modificador "uniform"
+        out vec3 cores;
+        void main () {
+            cores = vertex_cores;
+            gl_Position = matriz * vec4 (vertex_posicao, 1.0);
+        }
+    """
     vs = OpenGL.GL.shaders.compileShader(vertex_shader, GL_VERTEX_SHADER)
     if not glGetShaderiv(vs, GL_COMPILE_STATUS):
         infoLog = glGetShaderInfoLog(vs, 512, None)
         print("Erro no vertex shader:\n", infoLog)
 
-    # Fragment Shader
+    # Especificação do Fragment Shader:
+    fragment_shader = """
+        #version 400
+        in vec3 cores;
+		out vec4 frag_colour;
+		void main () {
+		    frag_colour = vec4 (cores, 1.0);
+		}
+    """
     fs = OpenGL.GL.shaders.compileShader(fragment_shader, GL_FRAGMENT_SHADER)
     if not glGetShaderiv(fs, GL_COMPILE_STATUS):
         infoLog = glGetShaderInfoLog(fs, 512, None)
@@ -160,17 +120,15 @@ def inicializaShaders():
     glDeleteShader(fs)
 
 def transformaQuadrado():
-    global Tx, Ty, Sx, Sy, Angulo
-    
     #matriz de translação
     translacao = np.array([
-        [1.0, 0.0, 0.0, Tx], #joga o objeto Tx unidades para a direita
-        [0.0, 1.0, 0.0, Ty], #joga o objeto Ty unidades para baixo
+        [1.0, 0.0, 0.0, 0.5], #joga o objeto 0.5 unidades para a direita
+        [0.0, 1.0, 0.0, -0.5], #joga o objeto 0.5 unidades para baixo
         [0.0, 0.0, 1.0, 0.0], 
         [0.0, 0.0, 0.0, 1.0]], np.float32)
 
     #matriz de rotação de 30 graus em torno do eixo Z
-    angulo = np.radians(Angulo)
+    angulo = np.radians(30)
     cos = np.cos(angulo)
     sen = np.sin(angulo)
     rotacao = np.array([
@@ -180,18 +138,9 @@ def transformaQuadrado():
         [0.0, 0.0, 0.0, 1.0]
     ])
 
-    # Matriz de Escala
-    escala = np.array([
-        [Sx, 0.0, 0.0, 0.0],
-        [0.0, Sy, 0.0, 0.0],
-        [0.0, 0.0, 1.0, 0.0],
-        [0.0, 0.0, 0.0, 1.0]
-    ]) 
-
     #combinamos as transformacoes, multiplicando as matrizes
-    transformacao = (translacao.dot(rotacao))    
-    transformacao = (transformacao.dot(escala))
-    
+    transformacao = (translacao.dot(rotacao))
+    print(transformacao)
     
     #E passamos a matriz para o Vertex Shader.
     #descobre o endereço de memória (de vídeo) da variável matriz lá no shader
@@ -219,54 +168,10 @@ def inicializaRenderizacao():
 
         glfw.swap_buffers(Window)
         
-        userInputEvents()
-
         if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_ESCAPE)):
             glfw.set_window_should_close(Window, True)
     
     glfw.terminate()
-
-def userInputEvents():
-    global Tx, Ty, Sx, Sy, Angulo, ShaderSelection, ShaderButtonReleased
-
-    # Translação
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_UP)):
-        Ty += 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_DOWN)):
-        Ty -= 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_RIGHT)):
-        Tx += 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_LEFT)):
-        Tx -= 0.01
-
-    # Escala
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_KP_8)):
-        Sy += 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_KP_2)):
-        Sy -= 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_KP_6)):
-        Sx += 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_KP_4)):
-        Sx -= 0.01   
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_KP_5)):
-        Sy = 1.0
-        Sx = 1.0        
-
-    # Rotacao
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_HOME)):
-        Angulo += 0.01
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_END)):
-        Angulo -= 0.01                                    
-
-    # Seleção do Shader    
-    if (glfw.PRESS == glfw.get_key(Window, glfw.KEY_S) and ShaderButtonReleased == True):        
-        ShaderSelection = (ShaderSelection + 1) % 2
-        ShaderButtonReleased = False
-        inicializaShaders()
-    
-    if(ShaderButtonReleased == False):
-        if (glfw.PRESS != glfw.get_key(Window, glfw.KEY_S)):
-            ShaderButtonReleased = True
 
 # Função principal
 def main():
