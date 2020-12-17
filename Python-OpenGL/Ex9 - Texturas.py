@@ -1,6 +1,3 @@
-# Câmera
-
-# Neste exemplo, especificamos uma câmera virtual através da aplicação de transformações de projeção
 import glfw
 from OpenGL.GL import *
 import OpenGL.GL.shaders
@@ -248,7 +245,7 @@ def inicializaTexturas():
     global textura, Shader_programm
     
     #carrega a imagem
-    img = Image.open("gradient.png").transpose(Image.FLIP_TOP_BOTTOM)
+    img = Image.open("Python-OpenGL\gradient.png").transpose(Image.FLIP_TOP_BOTTOM)
     img_data = np.frombuffer(img.tobytes(), np.uint8) #converte o arquivo em bytes
     width, height = img.size #pega a largura e altura da imagem
 
@@ -263,6 +260,7 @@ def inicializaTexturas():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR) #qual a qualidade que uma textura pequena aumenta o seu tamanho
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data) #gera a textura OpenGL a partir da imagem
     #glGenerateMipmap(GL_TEXTURE_2D) #gera a textura OpenGL a partir da imagem
+    
 
 #ativa a textura
 def ativaTextura():
