@@ -26,10 +26,10 @@ class Window:
             glfw.terminate()
             exit()
 
-        glfw.set_window_size_callback(self.Canvas, self._ResizeCallBack)
+        glfw.set_window_size_callback(self.Canvas, self.ResizeCallBack)
         glfw.make_context_current(self.Canvas)
 
 
-    def _ResizeCallBack(self, WIDTH: int, HEIGHT: int):
+    def ResizeCallBack(self, Canvas, WIDTH, HEIGHT):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
