@@ -74,7 +74,7 @@ namespace UFN_CG
             double a = Math.Pow(p1.x - p2.x, 2);
             double b = Math.Pow(p1.y - p2.y, 2);
             double c = Math.Pow(p1.z - p2.z, 2);
-            return (float)Math.Sqrt(a + b + b);
+            return (float)Math.Sqrt(a + b + c);
         }
 
         public static float Dot(Vector3 a, Vector3 b)
