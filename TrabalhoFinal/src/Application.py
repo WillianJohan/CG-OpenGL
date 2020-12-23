@@ -7,6 +7,17 @@ import numpy as np
 
 window = Window(1000,1000,"teste")
 
+
+
+
+
+
+
+
+
+
+
+# Start Criando Objeto =====================================================
 Vao = glGenVertexArrays(1)
 glBindVertexArray(Vao)
 
@@ -46,6 +57,15 @@ glBindBuffer(GL_ARRAY_BUFFER, cvbo)
 glBufferData(GL_ARRAY_BUFFER, cores, GL_STATIC_DRAW)
 glEnableVertexAttribArray(1)
 glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, None)
+
+# End Criando Objeto =====================================================
+
+
+
+
+
+
+
 
 
 
@@ -87,6 +107,19 @@ if not glGetProgramiv(Shader_programm, GL_LINK_STATUS):
 
 glDeleteShader(vs)
 glDeleteShader(fs)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 while not glfw.window_should_close(window.Canvas):
