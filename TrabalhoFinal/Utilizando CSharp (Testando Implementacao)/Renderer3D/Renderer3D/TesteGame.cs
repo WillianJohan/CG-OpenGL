@@ -1,7 +1,9 @@
 ﻿using static Renderer3D.OpenGL.GL;
 using Renderer3D.Renderer.Shader;
+using Renderer3D.Renderer.Cameras;
 using GLFW;
 using System;
+using System.Numerics;
 
 namespace Renderer3D
 {
@@ -10,7 +12,7 @@ namespace Renderer3D
         uint vao;
         uint vbo;
         Shader shader;
-
+        Camera2D cam;
         public TesteGame(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle) : base(initialWindowWidth, initialWindowHeight, initialWindowTitle)
         {
             this.InitialWindowWidth = initialWindowWidth;
@@ -28,11 +30,14 @@ namespace Renderer3D
                                     layout (location = 0) in vec2 aPosition;
                                     layout (location = 1) in vec3 aColor;
                                     out vec4 vertexColor;
-    
+                                    
+                                    uniform mat4 projection;
+                                    uniform mat4 model;
+
                                     void main() 
                                     {
                                         vertexColor = vec4(aColor.rgb, 1.0);
-                                        gl_Position = vec4(aPosition.xy, 0, 1.0);
+                                        gl_Position = projection * model * vec4(aPosition.xy, 0, 1.0);
                                     }";
 
             string fragmentShader = @"#version 330 core
@@ -79,6 +84,8 @@ namespace Renderer3D
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
+
+            cam = new Camera2D(Renderer3D.Renderer.Display.DisplayManager.WindowSize / 2f, 1f);
         }
        
         protected override void Update()
@@ -90,7 +97,19 @@ namespace Renderer3D
             glClearColor(0,0,0,0);
             glClear(GL_COLOR_BUFFER_BIT);
 
+
+            Vector2 position = new Vector2(400, 300);
+            Vector2 scale = new Vector2(150, 100);
+            float rotation = MathF.Sin(GameLoop.GameTime.TotalElapsedSeconds) * MathF.PI * 1f;
+
+            Matrix4x4 t = Matrix4x4.CreateTranslation(position.X, position.Y, 0);
+            Matrix4x4 s = Matrix4x4.CreateScale(scale.X, scale.Y, 1);
+            Matrix4x4 r = Matrix4x4.CreateRotationZ(rotation);
+
+            shader.SetMatrix4x4("model", s * r * t);
+
             shader.Use();
+            shader.SetMatrix4x4("projection", cam.GetProjectionMatrix());
 
             glBindVertexArray(vao);
             glDrawArrays(GL_TRIANGLES, 0, 6);
