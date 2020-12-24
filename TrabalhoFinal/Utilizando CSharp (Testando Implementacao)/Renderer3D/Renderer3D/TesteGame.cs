@@ -1,4 +1,5 @@
 ﻿using static Renderer3D.OpenGL.GL;
+using Renderer3D.Renderer.Shader;
 using GLFW;
 using System;
 
@@ -8,7 +9,7 @@ namespace Renderer3D
     {
         uint vao;
         uint vbo;
-        uint shader;
+        Shader shader;
 
         public TesteGame(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle) : base(initialWindowWidth, initialWindowHeight, initialWindowTitle)
         {
@@ -43,20 +44,8 @@ namespace Renderer3D
                                         FragColor = vertexColor;
                                     }";
 
-            uint vs = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vs, vertexShader);
-            glCompileShader(vs);
-
-            uint fs = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fs, fragmentShader);
-            glCompileShader(fs);
-
-            shader = glCreateProgram();
-            glAttachShader(shader, vs);
-            glAttachShader(shader, fs);
-
-            glLinkProgram(shader);
-
+            shader = new Shader(vertexShader, fragmentShader);
+            shader.Load();
 
             // Criando VAO e VBO
             vao = glGenVertexArray();
@@ -101,7 +90,7 @@ namespace Renderer3D
             glClearColor(0,0,0,0);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glUseProgram(shader);
+            shader.Use();
 
             glBindVertexArray(vao);
             glDrawArrays(GL_TRIANGLES, 0, 6);
