@@ -97,7 +97,7 @@ namespace Renderer3D
             glClearColor(0,0,0,0);
             glClear(GL_COLOR_BUFFER_BIT);
 
-
+            // Transformacao do objeto // =========================================================
             Vector2 position = new Vector2(400, 300);
             Vector2 scale = new Vector2(150, 100);
             float rotation = MathF.Sin(GameLoop.GameTime.TotalElapsedSeconds) * MathF.PI * 1f;
@@ -106,10 +106,12 @@ namespace Renderer3D
             Matrix4x4 s = Matrix4x4.CreateScale(scale.X, scale.Y, 1);
             Matrix4x4 r = Matrix4x4.CreateRotationZ(rotation);
 
-            shader.SetMatrix4x4("model", s * r * t);
+            shader.SetMatrix4x4("model", s * r * t);            
 
             shader.Use();
             shader.SetMatrix4x4("projection", cam.GetProjectionMatrix());
+
+            // ====================================================================================
 
             glBindVertexArray(vao);
             glDrawArrays(GL_TRIANGLES, 0, 6);
