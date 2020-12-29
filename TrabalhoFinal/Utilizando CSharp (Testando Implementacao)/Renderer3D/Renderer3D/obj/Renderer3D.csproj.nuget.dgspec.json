@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj": {}
+    "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj": {}
   },
   "projects": {
-    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj": {
+    "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
+        "projectUniqueName": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
         "projectName": "Renderer3D",
-        "projectPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
-        "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
-        "outputPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\obj\\",
+        "projectPath": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
+        "packagesPath": "C:\\Users\\19123\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\19123\\Documents\\GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Johan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\19123\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
