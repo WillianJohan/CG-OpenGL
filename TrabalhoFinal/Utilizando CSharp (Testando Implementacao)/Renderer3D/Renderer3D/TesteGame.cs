@@ -1,6 +1,5 @@
 ﻿using static Renderer3D.OpenGL.GL;
 using Renderer3D.Renderer;
-using Renderer3D.Renderer.Cameras;
 using GLFW;
 using System;
 using System.Numerics;
@@ -12,7 +11,7 @@ namespace Renderer3D
         uint vao;
         uint vbo;
         Shader shader;
-        Camera2D cam;
+        VirtualCamera cam;
         public TesteGame(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle) : base(initialWindowWidth, initialWindowHeight, initialWindowTitle)
         {
             this.InitialWindowWidth = initialWindowWidth;
@@ -63,7 +62,8 @@ namespace Renderer3D
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
 
-            cam = new Camera2D(Renderer3D.Renderer.Display.DisplayManager.WindowSize / 2f, 1f);
+            cam = new VirtualCamera();
+            cam.IsOrtographic = true;
         }
        
         protected override void Update()
@@ -87,14 +87,14 @@ namespace Renderer3D
             shader.SetMatrix4x4("model", s * r * t);            
 
             shader.Use();
-            shader.SetMatrix4x4("projection", cam.GetProjectionMatrix());
+            shader.SetMatrix4x4("projection", cam.ProjectionMatrix);
 
             // ====================================================================================
 
             glBindVertexArray(vao);
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
-            Glfw.SwapBuffers(Renderer.Display.DisplayManager.window);
+            Glfw.SwapBuffers(DisplayManager.window);
         }
 
     }
