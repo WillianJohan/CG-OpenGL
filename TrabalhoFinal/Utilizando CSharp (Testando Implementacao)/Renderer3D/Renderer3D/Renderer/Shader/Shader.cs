@@ -1,20 +1,26 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
+using System.IO;
 using static Renderer3D.OpenGL.GL;
 
-namespace Renderer3D.Renderer.Shader
+namespace Renderer3D.Renderer
 {
-    class Shader
+    public class Shader
     {
-        string vertexCode;
-        string fragmentCode;
-
+        ShaderProgramSource source;
         public uint ProgramID { get; set; }
 
         public Shader(string vertexCode, string fragmentCode)
         {
-            this.vertexCode = vertexCode;
-            this.fragmentCode = fragmentCode;
+            source = new ShaderProgramSource(vertexCode, fragmentCode);
+        }
+
+        public Shader(string filepath)
+        {
+            if (File.Exists(filepath))
+                source = new ShaderProgramSource(filepath);
+            else
+                source = new ShaderProgramSource(@"E:\6 - GitHub\UFN_ComputacaoGrafica\TrabalhoFinal\Utilizando CSharp (Testando Implementacao)\Renderer3D\Renderer3D\Renderer\Shader\Basic.shader");
         }
 
         public void Load()
@@ -27,7 +33,7 @@ namespace Renderer3D.Renderer.Shader
 
             //Vertex Shader
             vs = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vs, vertexCode);
+            glShaderSource(vs, source.VertexShaderCode);
             glCompileShader(vs);
 
             status = glGetShaderiv(vs, GL_COMPILE_STATUS, 1);
@@ -40,7 +46,7 @@ namespace Renderer3D.Renderer.Shader
 
             //Fragment Shader
             fs = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fs, fragmentCode);
+            glShaderSource(fs, source.FragmentShaderCode);
             glCompileShader(fs);
 
             status = glGetShaderiv(fs, GL_COMPILE_STATUS, 1);
@@ -86,6 +92,57 @@ namespace Renderer3D.Renderer.Shader
                 m.M41, m.M42, m.M43, m.M44
             };
         }
+        
+        
+        private struct ShaderProgramSource
+        {
+            private enum ShaderType
+            {
+                NONE = -1,
+                VERTEX = 0,
+                FRAGMENT = 1
+            }
 
+            string vertexCode;
+            string fragmentCode;
+
+            public ShaderProgramSource(string vertexCode, string fragmentCode)
+            {
+                this.vertexCode = vertexCode;
+                this.fragmentCode = fragmentCode;
+            }
+
+            public ShaderProgramSource(string fiepath)
+            {
+                vertexCode = "";
+                fragmentCode = "";
+                ParseShader(fiepath);
+            }
+
+
+            public string VertexShaderCode { get => vertexCode; }
+            public string FragmentShaderCode { get => fragmentCode; }
+
+
+            public void ParseShader(string filepath)
+            {
+                string[] FileString = File.ReadAllLines(filepath);
+                string[] shaderCode = new string[] { "", "" };
+                ShaderType type = ShaderType.NONE;
+
+                foreach (string Line in FileString)
+                {
+                    if (Line.Equals("#shader vertex"))
+                        type = ShaderType.VERTEX;
+                    else if (Line.Equals("#shader fragment"))
+                        type = ShaderType.FRAGMENT;
+                    else
+                        shaderCode[(int)type] += Line + "\n";
+                }
+
+                vertexCode = shaderCode[(int)ShaderType.VERTEX];
+                fragmentCode = shaderCode[(int)ShaderType.FRAGMENT];
+            }
+        }
     }
 }

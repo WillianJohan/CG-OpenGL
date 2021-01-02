@@ -1,5 +1,5 @@
 ﻿using static Renderer3D.OpenGL.GL;
-using Renderer3D.Renderer.Shader;
+using Renderer3D.Renderer;
 using Renderer3D.Renderer.Cameras;
 using GLFW;
 using System;
@@ -26,30 +26,8 @@ namespace Renderer3D
 
         protected unsafe override void LoadContent()
         {
-            string vertexShader = @"#version 330 core
-                                    layout (location = 0) in vec2 aPosition;
-                                    layout (location = 1) in vec3 aColor;
-                                    out vec4 vertexColor;
-                                    
-                                    uniform mat4 projection;
-                                    uniform mat4 model;
-
-                                    void main() 
-                                    {
-                                        vertexColor = vec4(aColor.rgb, 1.0);
-                                        gl_Position = projection * model * vec4(aPosition.xy, 0, 1.0);
-                                    }";
-
-            string fragmentShader = @"#version 330 core
-                                    out vec4 FragColor;
-                                    in vec4 vertexColor;
-
-                                    void main() 
-                                    {
-                                        FragColor = vertexColor;
-                                    }";
-
-            shader = new Shader(vertexShader, fragmentShader);
+            
+            shader = new Shader("E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer\\Shader\\BasicShader2.shader");
             shader.Load();
 
             // Criando VAO e VBO
