@@ -18,10 +18,10 @@ namespace Renderer3D.GameLoop
         public void Run() 
         {
             Initialize();
-            Renderer.Display.DisplayManager.CreateWindow(InitialWindowWidth, InitialWindowHeight, InitialWindowTitle);
+            DisplayManager.CreateWindow(InitialWindowWidth, InitialWindowHeight, InitialWindowTitle);
             LoadContent();
 
-            while (!Glfw.WindowShouldClose(Renderer.Display.DisplayManager.window))
+            while (!Glfw.WindowShouldClose(DisplayManager.window))
             {
                 GameTime.DeltaTime = (float)Glfw.Time - GameTime.TotalElapsedSeconds;
                 GameTime.TotalElapsedSeconds = (float)Glfw.Time;
@@ -33,7 +33,7 @@ namespace Renderer3D.GameLoop
                 Render();
             }
 
-            Renderer.Display.DisplayManager.CloseWindow();
+            DisplayManager.CloseWindow();
         }
 
         protected abstract void Initialize();

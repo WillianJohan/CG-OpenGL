@@ -3,7 +3,7 @@ using static Renderer3D.OpenGL.GL;
 using System.Numerics;
 using System.Drawing;
 
-namespace Renderer3D.Renderer.Display
+namespace Renderer3D
 {
     public static class DisplayManager
     {
