@@ -40,24 +40,24 @@ namespace Renderer3D
 
         public Ortographic()
         {
-            this.left = DisplayManager.WindowSize.X - DisplayManager.WindowSize.X / 2f;
-            this.right = DisplayManager.WindowSize.X + DisplayManager.WindowSize.X / 2f;
-            this.top = DisplayManager.WindowSize.Y - DisplayManager.WindowSize.Y / 2f;
-            this.bottom = DisplayManager.WindowSize.Y + DisplayManager.WindowSize.Y / 2f;
+            this.left   = (DisplayManager.WindowSize.X - DisplayManager.WindowSize.X) / 2f;
+            this.right  = (DisplayManager.WindowSize.X + DisplayManager.WindowSize.X) / 2f;
+            this.top    = (DisplayManager.WindowSize.Y - DisplayManager.WindowSize.Y) / 2f;
+            this.bottom = (DisplayManager.WindowSize.Y + DisplayManager.WindowSize.Y) / 2f;
 
-            this.near = 0.01f;
-            this.far = 1000f;
+            this.near   = 0.01f;
+            this.far    = 1000f;
         }
 
         public Ortographic(int near, int far)
         {
-            this.left = DisplayManager.WindowSize.X - DisplayManager.WindowSize.X / 2f;
-            this.right = DisplayManager.WindowSize.X + DisplayManager.WindowSize.X / 2f;
-            this.top = DisplayManager.WindowSize.Y - DisplayManager.WindowSize.Y / 2f;
-            this.bottom = DisplayManager.WindowSize.Y + DisplayManager.WindowSize.Y / 2f;
+            this.left   = (DisplayManager.WindowSize.X - DisplayManager.WindowSize.X) / 2f;
+            this.right  = (DisplayManager.WindowSize.X + DisplayManager.WindowSize.X) / 2f;
+            this.top    = (DisplayManager.WindowSize.Y - DisplayManager.WindowSize.Y) / 2f;
+            this.bottom = (DisplayManager.WindowSize.Y + DisplayManager.WindowSize.Y) / 2f;
 
-            this.near = near;
-            this.far = far;
+            this.near   = near;
+            this.far    = far;
         }
 
         public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreateOrthographicOffCenter(left, right, bottom, top, near, far);
