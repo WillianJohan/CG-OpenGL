@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Renderer3D
 {
-    class TesteGame : GameLoop.Game
+    class TesteGame : Game
     {
         uint vao;
         uint vbo;
@@ -78,7 +78,7 @@ namespace Renderer3D
             // Transformacao do objeto // =========================================================
             Vector2 position = new Vector2(400, 300);
             Vector2 scale = new Vector2(150, 100);
-            float rotation = MathF.Sin(GameLoop.GameTime.TotalElapsedSeconds) * MathF.PI * 1f;
+            float rotation = MathF.Sin(Time.TotalElapsedSeconds) * MathF.PI * 1f;
 
             Matrix4x4 t = Matrix4x4.CreateTranslation(position.X, position.Y, 0);
             Matrix4x4 s = Matrix4x4.CreateScale(scale.X, scale.Y, 1);

@@ -1,6 +1,6 @@
 ﻿using GLFW;
 
-namespace Renderer3D.GameLoop
+namespace Renderer3D
 {
     public abstract class Game
     {
@@ -23,11 +23,12 @@ namespace Renderer3D.GameLoop
 
             while (!Glfw.WindowShouldClose(DisplayManager.window))
             {
-                GameTime.DeltaTime = (float)Glfw.Time - GameTime.TotalElapsedSeconds;
-                GameTime.TotalElapsedSeconds = (float)Glfw.Time;
+                Time.DeltaTime = (float)Glfw.Time - Time.TotalElapsedSeconds;
+                Time.TotalElapsedSeconds = (float)Glfw.Time;
 
                 Update();
-                
+
+                //Glfw.SwapBuffers(DisplayManager.window);
                 Glfw.PollEvents();
                 
                 Render();

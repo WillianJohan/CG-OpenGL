@@ -1,6 +1,6 @@
-﻿namespace Renderer3D.GameLoop
+﻿namespace Renderer3D
 {
-    static class GameTime
+    static class Time
     {
         public static float DeltaTime { get; set; }
         public static float TotalElapsedSeconds { get; set; }
