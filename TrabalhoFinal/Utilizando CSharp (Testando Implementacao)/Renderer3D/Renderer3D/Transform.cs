@@ -18,7 +18,8 @@ namespace Renderer3D
             Matrix4x4 RotationMatrix = Matrix4x4.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z));
             Matrix4x4 ScaleMatrix = Matrix4x4.CreateScale(Scale);
 
-            return (TranslationMatrix * RotationMatrix) * ScaleMatrix;
+            return (TranslationMatrix * RotationMatrix) * ScaleMatrix; //Modo que estava originalmente
+            //return ScaleMatrix * RotationMatrix * TranslationMatrix; // Modo do cara do video
         }
 
         #endregion
