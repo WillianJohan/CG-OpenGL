@@ -11,9 +11,9 @@ namespace Renderer3D
 
         public Perspective()
         {
-            fov = 60;
-            aspect = 1;
-            zNear = 0.1f;
+            fov = 60f;
+            aspect = 1.0f;
+            zNear = 0.01f;
             zFar = 100f;
         }
 
@@ -25,7 +25,7 @@ namespace Renderer3D
             this.zFar = zFar;
         }
 
-        public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreatePerspectiveFieldOfView(fov, aspect, zNear, zFar);
+        public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreatePerspectiveFieldOfView((System.MathF.PI / 180) * fov, aspect, zNear, zFar);
 
     }
 
