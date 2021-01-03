@@ -7,6 +7,7 @@ namespace Renderer3D
 {
     public static class FileManager
     {
+        /*
         static string selectedPathFileName(string filter)
         {
             //Open File Dialog
@@ -150,5 +151,6 @@ namespace Renderer3D
         {
             return loadObj(path);
         }
+        */
     }
 }
