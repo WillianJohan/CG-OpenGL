@@ -12,12 +12,15 @@ namespace Renderer3D
 
         public static void CreateWindow(int width, int height, string title)
         {
-            
             // Define o tamanho da window
             WindowSize = new Vector2(width, height);
 
             // Inicializa GLFW
-            Glfw.Init();
+            Debug.Log("Initializing Glfw");
+            if (Glfw.Init())
+                Debug.Log("Glfw Initialized");
+            else
+                Debug.ErrorLog("Failed to initialize Gflw");
 
             /*
             // informa qual versão do OpenGL está sendo utilizada
@@ -25,19 +28,21 @@ namespace Renderer3D
             Glfw.WindowHint(Hint.ContextVersionMinor, 3);
             Glfw.WindowHint(Hint.ContextVersionMajor, Profile.Core);
             */
-            
+
             Glfw.WindowHint(Hint.Focused, true);
             Glfw.WindowHint(Hint.Resizable, false);
-            
 
-
-            
             //Criando de fato a window.
+            Debug.Log("Creating a Window");
             window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
-
+            
             // Verifica se a janela foi inicializada
-            if (window == Window.None) 
+            if (window == Window.None)
+            {
+                Debug.ErrorLog("Failed to create a Window\nClosing Application.");
                 return;
+            }
+                            
 
             //Centraliza a janela no meio da tela
             Rectangle screen = Glfw.PrimaryMonitor.WorkArea;
@@ -54,7 +59,11 @@ namespace Renderer3D
             Glfw.SwapInterval(0); // VSync off (1 para ativar)
         }
 
-        public static void CloseWindow() => Glfw.Terminate();
+        public static void CloseWindow()
+        {
+            Debug.Log("Closing Window");
+            Glfw.Terminate();
+        }
 
     }
 }

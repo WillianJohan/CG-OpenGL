@@ -40,7 +40,7 @@ namespace Renderer3D.Renderer
             if (status[0] == 0)
             {
                 string error = glGetShaderInfoLog(vs);
-                Debug.WriteLine("ERRO AO COMPILAR VERTEX SHADER: " + error);
+                Debug.ErrorLog("COMPILAR VERTEX SHADER: " + error);
             }
 
 
@@ -53,7 +53,7 @@ namespace Renderer3D.Renderer
             if (status[0] == 0)
             {
                 string error = glGetShaderInfoLog(fs);
-                Debug.WriteLine("ERRO AO COMPILAR FRAGMENT SHADER: " + error);
+                Debug.ErrorLog("COMPILAR FRAGMENT SHADER: " + error);
             }
 
 
