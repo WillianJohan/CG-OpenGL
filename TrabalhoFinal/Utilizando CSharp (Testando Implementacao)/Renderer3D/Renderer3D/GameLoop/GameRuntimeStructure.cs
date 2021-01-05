@@ -28,7 +28,6 @@ namespace RendererEngine
 
                 Update();
 
-                //Glfw.SwapBuffers(DisplayManager.window);
                 Glfw.PollEvents();
                 
                 Render();
