@@ -22,7 +22,7 @@ namespace RendererEngine
 
         protected unsafe override void LoadContent()
         {
-            foreach(GraphicObject obj in scene.Objects)
+            foreach(GameObject obj in scene.Objects)
                 obj.Load();
         }
        
@@ -35,7 +35,7 @@ namespace RendererEngine
             glClearColor(0,0,0,0);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            foreach (GraphicObject obj in scene.Objects)
+            foreach (GameObject obj in scene.Objects)
                 obj.Render();
 
             Glfw.SwapBuffers(DisplayManager.window);

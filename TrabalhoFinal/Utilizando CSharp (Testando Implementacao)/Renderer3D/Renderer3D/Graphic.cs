@@ -16,7 +16,7 @@ namespace RendererEngine
         public unsafe void Load()
         {
             // Verificar dps
-            shader = new Shader("..\\..\\..\\Renderer\\Shader\\BasicShader2.shader");
+            shader = new Shader();
             shader.Load();
 
             // Criando VAO e VBO

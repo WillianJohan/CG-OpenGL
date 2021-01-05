@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
-      "projectName": "Renderer3D",
-      "projectPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\Renderer3D.csproj",
+      "projectUniqueName": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj",
+      "projectName": "RendererEngine",
+      "projectPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj",
       "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
       "outputPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\obj\\",
       "projectStyle": "PackageReference",
