@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Numerics;
+﻿using System.Numerics;
 using System.IO;
 using static RendererEngine.OpenGL.GL;
 
@@ -8,7 +7,15 @@ namespace RendererEngine.Renderer
     public class Shader
     {
         ShaderProgramSource source;
-        public uint ProgramID { get; set; }
+
+        public uint VertexShaderID      { get; private set; }
+        public uint FragmentShaderID    { get; private set; }
+        public uint ProgramID           { get; private set; }
+
+        public Shader()
+        {
+            source = new ShaderProgramSource(ShaderProgramSource.DEFAULT_SHADER_PATH);
+        }
 
         public Shader(string vertexCode, string fragmentCode)
         {
@@ -20,56 +27,54 @@ namespace RendererEngine.Renderer
             if (File.Exists(filepath))
                 source = new ShaderProgramSource(filepath);
             else
-                source = new ShaderProgramSource(@"E:\6 - GitHub\UFN_ComputacaoGrafica\TrabalhoFinal\Utilizando CSharp (Testando Implementacao)\Renderer3D\Renderer3D\Renderer\Shader\Basic.shader");
+                source = new ShaderProgramSource(ShaderProgramSource.DEFAULT_SHADER_PATH);
         }
 
         public void Load()
         {
             //Criando as variáveis
-            uint vs; //VertexShader
-            uint fs; //FragmentShader
             int[] status; //Serve para verificar o status da compilação dos Shaders
 
 
             //Vertex Shader
-            vs = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vs, source.VertexShaderCode);
-            glCompileShader(vs);
+            VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+            glShaderSource(VertexShaderID, source.VertexShaderCode);
+            glCompileShader(VertexShaderID);
 
-            status = glGetShaderiv(vs, GL_COMPILE_STATUS, 1);
+            status = glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, 1);
             if (status[0] == 0)
             {
-                string error = glGetShaderInfoLog(vs);
+                string error = glGetShaderInfoLog(VertexShaderID);
                 Debug.ErrorLog("COMPILAR VERTEX SHADER: " + error);
             }
 
 
             //Fragment Shader
-            fs = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fs, source.FragmentShaderCode);
-            glCompileShader(fs);
+            FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+            glShaderSource(FragmentShaderID, source.FragmentShaderCode);
+            glCompileShader(FragmentShaderID);
 
-            status = glGetShaderiv(fs, GL_COMPILE_STATUS, 1);
+            status = glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, 1);
             if (status[0] == 0)
             {
-                string error = glGetShaderInfoLog(fs);
+                string error = glGetShaderInfoLog(FragmentShaderID);
                 Debug.ErrorLog("COMPILAR FRAGMENT SHADER: " + error);
             }
 
 
             //Linkando os shaders ao Program
             ProgramID = glCreateProgram();
-            glAttachShader(ProgramID, vs);
-            glAttachShader(ProgramID, fs);
+            glAttachShader(ProgramID, VertexShaderID);
+            glAttachShader(ProgramID, FragmentShaderID);
 
             glLinkProgram(ProgramID);
 
 
             //Delete Shader pq não precisa mais depois que carrega
-            glDetachShader(ProgramID, vs);
-            glDetachShader(ProgramID, fs);
-            glDeleteShader(vs);
-            glDeleteShader(fs);
+            glDetachShader(ProgramID, VertexShaderID);
+            glDetachShader(ProgramID, FragmentShaderID);
+            glDeleteShader(VertexShaderID);
+            glDeleteShader(FragmentShaderID);
 
         }
 
@@ -94,35 +99,28 @@ namespace RendererEngine.Renderer
         }
         
         
-        private struct ShaderProgramSource
+        public struct ShaderProgramSource
         {
-            private enum ShaderType
-            {
-                NONE = -1,
-                VERTEX = 0,
-                FRAGMENT = 1
-            }
+            public static readonly string DEFAULT_SHADER_PATH = "..\\..\\..\\Renderer\\Shader\\Basic.shader";
+            private enum ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 }
 
-            string vertexCode;
-            string fragmentCode;
+
+            public string VertexShaderCode      { get; private set; }
+            public string FragmentShaderCode    { get; private set; }
+
 
             public ShaderProgramSource(string vertexCode, string fragmentCode)
             {
-                this.vertexCode = vertexCode;
-                this.fragmentCode = fragmentCode;
+                this.VertexShaderCode = vertexCode;
+                this.FragmentShaderCode = fragmentCode;
             }
 
             public ShaderProgramSource(string fiepath)
             {
-                vertexCode = "";
-                fragmentCode = "";
+                VertexShaderCode = "";
+                FragmentShaderCode = "";
                 ParseShader(fiepath);
             }
-
-
-            public string VertexShaderCode { get => vertexCode; }
-            public string FragmentShaderCode { get => fragmentCode; }
-
 
             public void ParseShader(string filepath)
             {
@@ -140,8 +138,8 @@ namespace RendererEngine.Renderer
                         shaderCode[(int)type] += Line + "\n";
                 }
 
-                vertexCode = shaderCode[(int)ShaderType.VERTEX];
-                fragmentCode = shaderCode[(int)ShaderType.FRAGMENT];
+                VertexShaderCode = shaderCode[(int)ShaderType.VERTEX];
+                FragmentShaderCode = shaderCode[(int)ShaderType.FRAGMENT];
             }
         }
     }
