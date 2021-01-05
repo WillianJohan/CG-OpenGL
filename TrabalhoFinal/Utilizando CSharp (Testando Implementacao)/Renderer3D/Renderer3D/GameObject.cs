@@ -3,26 +3,28 @@ using static RendererEngine.OpenGL.GL;
 
 namespace RendererEngine
 {
-    public class GraphicObject : Graphic
+    public class GameObject : Graphic
     {
-        public string Name { get; set; }
+        public string Name;
         public Transform transform;
+        public Mesh mesh;
+        public Shader shader;
 
         #region Constructors
 
-        public GraphicObject()
+        public GameObject()
         {
             this.Name = "No Name Object";
             this.transform = new Transform();
         }
 
-        public GraphicObject(string Name)
+        public GameObject(string Name)
         {
             this.Name = Name;
             this.transform = new Transform();
         }
 
-        public GraphicObject(string Name, Vector3 Position)
+        public GameObject(string Name, Vector3 Position)
         {
             this.Name = Name;
             this.transform = new Transform();
@@ -30,7 +32,7 @@ namespace RendererEngine
 
         }
 
-        public GraphicObject(string Name, Vector3 Position, Vector3 Rotation, Vector3 Scale)
+        public GameObject(string Name, Vector3 Position, Vector3 Rotation, Vector3 Scale)
         {
             this.Name = Name;
             this.transform = new Transform();
@@ -39,7 +41,7 @@ namespace RendererEngine
             this.transform.Scale = Scale;
         }
 
-        public GraphicObject(string Name, Transform transform)
+        public GameObject(string Name, Transform transform)
         {
             this.Name = Name;
             this.transform = transform;

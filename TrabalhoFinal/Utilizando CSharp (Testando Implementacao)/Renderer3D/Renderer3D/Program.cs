@@ -8,7 +8,7 @@ namespace RendererEngine
         static void Main(string[] args)
         {
             //Criando um Objeto 3D
-            GraphicObject objQueGira = new GraphicObject("Objeto Simples");
+            GameObject objQueGira = new GameObject("Objeto Simples");
             objQueGira.transform.Position = new Vector3(400, 300, -10);
             objQueGira.transform.Scale = new Vector3(150, 100, 1);
             objQueGira.Vertices = new float[]
