@@ -1,6 +1,6 @@
 ﻿using GLFW;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public abstract class GameRuntimeStructure
     {

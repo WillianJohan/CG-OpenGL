@@ -1,10 +1,10 @@
-﻿using static Renderer3D.OpenGL.GL;
-using Renderer3D.Renderer;
+﻿using static RendererEngine.OpenGL.GL;
+using RendererEngine.Renderer;
 using GLFW;
 using System;
 using System.Numerics;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public class Game : GameRuntimeStructure
     {

@@ -3,7 +3,7 @@ using System.Numerics;
 using System.IO;
 
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public static class FileManager
     {

@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 using System.IO;
-using static Renderer3D.OpenGL.GL;
+using static RendererEngine.OpenGL.GL;
 
-namespace Renderer3D.Renderer
+namespace RendererEngine.Renderer
 {
     public class Shader
     {

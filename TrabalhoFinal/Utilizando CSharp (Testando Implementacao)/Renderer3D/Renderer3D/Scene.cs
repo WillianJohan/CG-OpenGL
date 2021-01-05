@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public class Scene
     {

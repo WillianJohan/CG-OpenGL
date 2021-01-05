@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using static Renderer3D.OpenGL.GL;
+using static RendererEngine.OpenGL.GL;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public class GraphicObject : Graphic
     {

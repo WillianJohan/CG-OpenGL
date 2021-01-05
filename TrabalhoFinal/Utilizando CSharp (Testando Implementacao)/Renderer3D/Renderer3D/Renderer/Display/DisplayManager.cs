@@ -1,9 +1,9 @@
 ﻿using GLFW;
-using static Renderer3D.OpenGL.GL;
+using static RendererEngine.OpenGL.GL;
 using System.Numerics;
 using System.Drawing;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public static class DisplayManager
     {

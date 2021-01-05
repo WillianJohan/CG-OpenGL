@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Renderer3D
+namespace RendererEngine
 {
     public static class Debug
     {

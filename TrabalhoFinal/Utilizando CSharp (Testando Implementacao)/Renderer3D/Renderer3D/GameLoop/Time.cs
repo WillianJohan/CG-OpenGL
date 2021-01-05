@@ -1,4 +1,4 @@
-﻿namespace Renderer3D
+﻿namespace RendererEngine
 {
     static class Time
     {
