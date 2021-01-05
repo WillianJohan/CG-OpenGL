@@ -28,7 +28,7 @@ namespace Renderer3D
             cenaTeste.Objects.Add(objQueGira);
 
             //Iniciando o Game
-            Game game = new TesteGame(800, 600, "Teste", cenaTeste);
+            GameRuntimeStructure game = new Game(800, 600, "Teste", cenaTeste);
             game.Run();
         }
 

@@ -6,12 +6,12 @@ using System.Numerics;
 
 namespace Renderer3D
 {
-    class TesteGame : Game
+    public class Game : GameRuntimeStructure
     {
         
         protected Scene scene { get; set; }
         
-        public TesteGame(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle, Scene scene) : base(initialWindowWidth, initialWindowHeight, initialWindowTitle)
+        public Game(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle, Scene scene) : base(initialWindowWidth, initialWindowHeight, initialWindowTitle)
         {
             this.scene = scene;
         }

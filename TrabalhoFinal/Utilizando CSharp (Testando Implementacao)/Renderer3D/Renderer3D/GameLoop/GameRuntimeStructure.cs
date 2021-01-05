@@ -2,13 +2,13 @@
 
 namespace Renderer3D
 {
-    public abstract class Game
+    public abstract class GameRuntimeStructure
     {
         protected int InitialWindowWidth { get; set; }
         protected int InitialWindowHeight { get; set; }
         protected string InitialWindowTitle { get; set; }
 
-        protected Game(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle)
+        protected GameRuntimeStructure(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle)
         {
             this.InitialWindowWidth = initialWindowWidth;
             this.InitialWindowHeight = initialWindowHeight;
