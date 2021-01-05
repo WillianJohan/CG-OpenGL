@@ -2,7 +2,7 @@
 using System.IO;
 using static RendererEngine.OpenGL.GL;
 
-namespace RendererEngine.Renderer
+namespace RendererEngine
 {
     public class Shader
     {
