@@ -5,19 +5,19 @@ namespace RendererEngine
     public class Perspective
     {
         public float fov;
-        public float aspect;
+        public float aspect { get; private set; }
         public float zNear;
         public float zFar;
 
         public Perspective()
         {
             fov = 60f;
-            aspect = 1.0f;
+            aspect = DisplayManager.WindowSize.X / DisplayManager.WindowSize.Y;
             zNear = 0.01f;
             zFar = 100f;
         }
 
-        public Perspective(float fov, float aspect, float zNear, float zFar)
+        public Perspective(float fov, float zNear, float zFar)
         {
             this.fov = fov;
             this.aspect = aspect;
@@ -112,20 +112,20 @@ namespace RendererEngine
             this.IsOrtographic = true;
         }
 
-        public VirtualCamera(Vector3 position, Vector3 rotation, int fov, float aspect, float zNear, float zFar)
+        public VirtualCamera(Vector3 position, Vector3 rotation, int fov, float zNear, float zFar)
         {
             this.Position = position;
             this.Rotation = rotation;
-            Perspective = new Perspective(fov, aspect, zNear, zFar);
+            Perspective = new Perspective(fov, zNear, zFar);
             Ortographic = new Ortographic();
 
             this.IsOrtographic = false;
         }
-        public VirtualCamera(int fov, float aspect, float zNear, float zFar)
+        public VirtualCamera(int fov, float zNear, float zFar)
         {
             Position = new Vector3(0, 0, 0);
             Rotation = Vector3.Zero;
-            Perspective = new Perspective(fov, aspect, zNear, zFar);
+            Perspective = new Perspective(fov, zNear, zFar);
             Ortographic = new Ortographic();
 
             this.IsOrtographic = false;
