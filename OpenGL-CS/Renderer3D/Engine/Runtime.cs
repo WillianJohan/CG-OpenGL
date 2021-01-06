@@ -1,4 +1,5 @@
 ﻿using GLFW;
+using static RendererEngine.OpenGL.GL;
 
 namespace RendererEngine
 {
@@ -20,6 +21,7 @@ namespace RendererEngine
             Initialize();
             DisplayManager.CreateWindow(InitialWindowWidth, InitialWindowHeight, InitialWindowTitle);
             LoadContent();
+            glEnable(GL_DEPTH_TEST);
 
             while (!Glfw.WindowShouldClose(DisplayManager.window))
             {
