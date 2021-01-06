@@ -1,11 +1,9 @@
 ﻿using static RendererEngine.OpenGL.GL;
 using GLFW;
-using System;
-using System.Numerics;
 
 namespace RendererEngine
 {
-    public class Game : GameRuntimeStructure
+    public class Game : Runtime
     {
         
         protected Scene scene { get; set; }
@@ -21,10 +19,9 @@ namespace RendererEngine
 
         protected unsafe override void LoadContent()
         {
-            foreach(GameObject obj in scene.Objects)
-                obj.Load();
+            // Render all content of specific scene
         }
-       
+
         protected override void Update()
         {
         }
@@ -34,8 +31,7 @@ namespace RendererEngine
             glClearColor(0,0,0,0);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            foreach (GameObject obj in scene.Objects)
-                obj.Render();
+            // Render all content of specific scene
 
             Glfw.SwapBuffers(DisplayManager.window);
         }

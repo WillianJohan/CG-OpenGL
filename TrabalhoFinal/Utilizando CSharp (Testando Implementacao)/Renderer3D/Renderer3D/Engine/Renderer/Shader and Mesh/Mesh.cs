@@ -27,14 +27,14 @@ namespace RendererEngine
 
         public unsafe void Load()
         {
-            // Cria e dá um Bind no meu VAO =======================================
+            // Create and Bind VAO ===============================================
             VAO = glGenVertexArray();
             glBindVertexArray(VAO);
 
 
-            // Cria o VBO dos Vertices ============================================
+            // Create VBO of Vertices ============================================
             VBO_Vertices = glGenBuffer();
-            glBindBuffer(GL_ARRAY_BUFFER, VBO_Vertices); //Gera o buffer do ID especificado
+            glBindBuffer(GL_ARRAY_BUFFER, VBO_Vertices); // Generate buffer of specific ID
 
             fixed (float* verticesPointer = &Vertices[0])
                 glBufferData(GL_ARRAY_BUFFER, sizeof(float) * Vertices.Length, verticesPointer, GL_STATIC_DRAW);
@@ -43,9 +43,9 @@ namespace RendererEngine
             glVertexAttribPointer(0, 3, GL_FLOAT, true, 0, (void*)0);
 
 
-            // Cria o VBO das Normais ============================================
+            // Create  VBO of Normals ============================================
             VBO_Normals = glGenBuffer();
-            glBindBuffer(GL_ARRAY_BUFFER, VBO_Normals); //Gera o buffer do ID especificado
+            glBindBuffer(GL_ARRAY_BUFFER, VBO_Normals); // Generate buffer of specific ID
 
             fixed (float* normalsPointer = &Normals[0])
                 glBufferData(GL_ARRAY_BUFFER, sizeof(float) * Normals.Length, normalsPointer, GL_STATIC_DRAW);

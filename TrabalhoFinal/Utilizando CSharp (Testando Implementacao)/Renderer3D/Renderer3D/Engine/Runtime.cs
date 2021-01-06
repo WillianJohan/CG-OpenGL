@@ -2,13 +2,13 @@
 
 namespace RendererEngine
 {
-    public abstract class GameRuntimeStructure
+    public abstract class Runtime
     {
         protected int InitialWindowWidth { get; set; }
         protected int InitialWindowHeight { get; set; }
         protected string InitialWindowTitle { get; set; }
 
-        protected GameRuntimeStructure(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle)
+        protected Runtime(int initialWindowWidth, int initialWindowHeight, string initialWindowTitle)
         {
             this.InitialWindowWidth = initialWindowWidth;
             this.InitialWindowHeight = initialWindowHeight;

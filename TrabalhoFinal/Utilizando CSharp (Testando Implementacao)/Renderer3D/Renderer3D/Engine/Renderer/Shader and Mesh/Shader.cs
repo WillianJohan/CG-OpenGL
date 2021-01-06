@@ -32,11 +32,10 @@ namespace RendererEngine
 
         public void Load()
         {
-            //Criando as variáveis
-            int[] status; //Serve para verificar o status da compilação dos Shaders
+            int[] status; // Status of shader compilation
 
 
-            //Vertex Shader
+            // Vertex Shader ==============================================
             VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(VertexShaderID, source.VertexShaderCode);
             glCompileShader(VertexShaderID);
@@ -45,11 +44,11 @@ namespace RendererEngine
             if (status[0] == 0)
             {
                 string error = glGetShaderInfoLog(VertexShaderID);
-                Debug.ErrorLog("COMPILAR VERTEX SHADER: " + error);
+                Debug.ErrorLog("To compile VERTEX SHADER: " + error);
             }
 
 
-            //Fragment Shader
+            // Fragment Shader =============================================
             FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(FragmentShaderID, source.FragmentShaderCode);
             glCompileShader(FragmentShaderID);
@@ -58,11 +57,11 @@ namespace RendererEngine
             if (status[0] == 0)
             {
                 string error = glGetShaderInfoLog(FragmentShaderID);
-                Debug.ErrorLog("COMPILAR FRAGMENT SHADER: " + error);
+                Debug.ErrorLog("To compile FRAGMENT SHADER: " + error);
             }
 
 
-            //Linkando os shaders ao Program
+            // Linking the shader to program ===============================
             ProgramID = glCreateProgram();
             glAttachShader(ProgramID, VertexShaderID);
             glAttachShader(ProgramID, FragmentShaderID);
@@ -70,7 +69,7 @@ namespace RendererEngine
             glLinkProgram(ProgramID);
 
 
-            //Delete Shader pq não precisa mais depois que carrega
+            // Delete and Detach Shader because we don't need anymore ======
             glDetachShader(ProgramID, VertexShaderID);
             glDetachShader(ProgramID, FragmentShaderID);
             glDeleteShader(VertexShaderID);
@@ -142,8 +141,8 @@ namespace RendererEngine
                         shaderCode[(int)type] += Line + "\n";
                 }
 
-                VertexShaderCode = shaderCode[(int)ShaderType.VERTEX];
-                FragmentShaderCode = shaderCode[(int)ShaderType.FRAGMENT];
+                VertexShaderCode    = shaderCode[(int)ShaderType.VERTEX];
+                FragmentShaderCode  = shaderCode[(int)ShaderType.FRAGMENT];
             }
         }
     }

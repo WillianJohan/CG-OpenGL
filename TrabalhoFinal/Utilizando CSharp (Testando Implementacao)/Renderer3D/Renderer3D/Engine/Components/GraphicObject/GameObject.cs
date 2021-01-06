@@ -2,7 +2,7 @@
 
 namespace RendererEngine
 {
-    public class GameObject : Graphic
+    public class GameObject : Renderable
     {
         public string Name;
 
@@ -51,8 +51,6 @@ namespace RendererEngine
         }
 
         #endregion
-
-
 
     }
 }

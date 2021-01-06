@@ -2,7 +2,7 @@
 
 namespace RendererEngine
 {
-    public abstract class Graphic : IDisposable
+    public abstract class Renderable : IDisposable
     {
         public Transform transform  { get; set; }
         public Shader shader        { get; protected set; }
@@ -16,7 +16,7 @@ namespace RendererEngine
 
         public void Render()
         {
-            //Aplica as transformações
+            // Apply Transformation in the object
 
             { //Verificar os calculos pelo codigo do professor
                 transform.Rotation.Z = System.MathF.Sin(Time.TotalElapsedSeconds) * System.MathF.PI * 1f;

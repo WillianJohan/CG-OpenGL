@@ -12,10 +12,10 @@ namespace RendererEngine
 
         public static void CreateWindow(int width, int height, string title)
         {
-            // Define o tamanho da window
+            // Define Window Size =============================================
             WindowSize = new Vector2(width, height);
 
-            // Inicializa GLFW
+            // Initialize GLFW ================================================
             Debug.Log("Initializing Glfw");
             if (Glfw.Init())
                 Debug.Log("Glfw Initialized");
@@ -25,31 +25,32 @@ namespace RendererEngine
             Glfw.WindowHint(Hint.Focused, true);
             Glfw.WindowHint(Hint.Resizable, false);
 
-            //Criando de fato a window.
+
+            // Creating the Window =============================================
             Debug.Log("Creating a Window");
             window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
-            
-            // Verifica se a janela foi inicializada
+
+            // Checks if created
             if (window == Window.None)
             {
                 Debug.ErrorLog("Failed to create a Window\nClosing Application.");
                 return;
             }
-                            
 
-            //Centraliza a janela no meio da tela
+            // Center the window in the middle of the screen
             Rectangle screen = Glfw.PrimaryMonitor.WorkArea;
             int x = (screen.Width - width) / 2;
             int y = (screen.Height - height) / 2;
             Glfw.SetWindowPosition(window, x, y);
 
-
-            // Referencia o window criado para o contexto do Glfw
+            // References the window created for the Glfw context
             Glfw.MakeContextCurrent(window);
             Import(Glfw.GetProcAddress); //GL Method
 
+
+
             glViewport(0, 0, width, height);
-            Glfw.SwapInterval(0); // VSync off (1 para ativar)
+            Glfw.SwapInterval(0); // VSync off (1 to Turn ON)
         }
 
         public static void CloseWindow()

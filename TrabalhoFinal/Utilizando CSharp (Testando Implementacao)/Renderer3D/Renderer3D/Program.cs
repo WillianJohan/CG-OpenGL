@@ -7,8 +7,7 @@ namespace RendererEngine
 
         static void Main(string[] args)
         {
-            //Iniciando o Game
-            GameRuntimeStructure game = new Game(800, 600, "Teste", new Scene());
+            Runtime game = new Game(800, 600, "Teste", new Scene());
             game.Run();
         }
 
