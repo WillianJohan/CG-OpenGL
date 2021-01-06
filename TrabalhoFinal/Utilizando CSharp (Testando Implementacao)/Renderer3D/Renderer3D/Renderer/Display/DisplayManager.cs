@@ -7,8 +7,8 @@ namespace RendererEngine
 {
     public static class DisplayManager
     {
-        public static Window window { get; set; }
-        public static Vector2 WindowSize { get; set; }
+        public static Window window         { get; set; }
+        public static Vector2 WindowSize    { get; set; }
 
         public static void CreateWindow(int width, int height, string title)
         {
@@ -21,13 +21,6 @@ namespace RendererEngine
                 Debug.Log("Glfw Initialized");
             else
                 Debug.ErrorLog("Failed to initialize Gflw");
-
-            /*
-            // informa qual versão do OpenGL está sendo utilizada
-            Glfw.WindowHint(Hint.ContextVersionMajor, 3);
-            Glfw.WindowHint(Hint.ContextVersionMinor, 3);
-            Glfw.WindowHint(Hint.ContextVersionMajor, Profile.Core);
-            */
 
             Glfw.WindowHint(Hint.Focused, true);
             Glfw.WindowHint(Hint.Resizable, false);

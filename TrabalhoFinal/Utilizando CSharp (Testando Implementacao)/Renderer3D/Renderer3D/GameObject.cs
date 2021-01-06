@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using static RendererEngine.OpenGL.GL;
 
 namespace RendererEngine
 {

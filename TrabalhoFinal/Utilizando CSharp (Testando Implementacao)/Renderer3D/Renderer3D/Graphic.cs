@@ -1,8 +1,4 @@
-﻿using static RendererEngine.OpenGL.GL;
-using RendererEngine.Renderer;
-using GLFW;
-using System;
-using System.Numerics;
+﻿using System;
 
 namespace RendererEngine
 {
@@ -28,9 +24,6 @@ namespace RendererEngine
                 shader.Use();
                 shader.SetMatrix4x4("projection", Scene.virtualCamera.ProjectionMatrix);
             }
-
-
-
 
             mesh.Render();
         }

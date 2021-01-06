@@ -1,5 +1,4 @@
 ﻿using static RendererEngine.OpenGL.GL;
-using RendererEngine.Renderer;
 using GLFW;
 using System;
 using System.Numerics;

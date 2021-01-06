@@ -6,6 +6,7 @@ namespace RendererEngine
     {
         public float[] Vertices     { get; private set; }
         public float[] Normals      { get; private set; }
+        
         public uint VAO             { get; private set; }
         public uint VBO_Vertices    { get; private set; }
         public uint VBO_Normals     { get; private set; }
