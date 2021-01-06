@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace RendererEngine
 {
-    public abstract class Graphic
+    public abstract class Graphic : IDisposable
     {
         public Transform transform  { get; set; }
         public Shader shader        { get; protected set; }
@@ -34,5 +34,12 @@ namespace RendererEngine
 
             mesh.Render();
         }
+
+        public void Dispose()
+        {
+            mesh.Dispose();
+            shader.Dispose();
+        }
+
     }
 }

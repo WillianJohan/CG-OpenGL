@@ -4,7 +4,7 @@ using static RendererEngine.OpenGL.GL;
 
 namespace RendererEngine
 {
-    public class Shader
+    public class Shader : System.IDisposable
     {
         ShaderProgramSource source;
 
@@ -97,8 +97,12 @@ namespace RendererEngine
                 m.M41, m.M42, m.M43, m.M44
             };
         }
-        
-        
+
+        public void Dispose()
+        {
+            glDeleteProgram(ProgramID);
+        }
+
         public struct ShaderProgramSource
         {
             public static readonly string DEFAULT_SHADER_PATH = "..\\..\\..\\Renderer\\Shader\\Basic.shader";
