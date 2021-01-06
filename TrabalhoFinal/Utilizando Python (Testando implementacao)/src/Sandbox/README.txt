@@ -1,1 +1,0 @@
-Essa pasta contem todos os modelos 3D que serão renderizados na aplicação principal
