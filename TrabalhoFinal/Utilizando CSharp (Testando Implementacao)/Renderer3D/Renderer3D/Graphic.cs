@@ -8,44 +8,31 @@ namespace RendererEngine
 {
     public abstract class Graphic
     {
-        public Shader shader { get; set; }
-        public float[] Vertices { get; set; }
-        protected uint vao;
-        protected uint vbo;
+        public Transform transform  { get; set; }
+        public Shader shader        { get; protected set; }
+        public Mesh mesh            { get; protected set; }
 
         public unsafe void Load()
         {
-            // Verificar dps
-            shader = new Shader();
+            mesh.Load();
             shader.Load();
-
-            // Criando VAO e VBO
-            vao = glGenVertexArray();
-            vbo = glGenBuffer();
-
-            glBindVertexArray(vao);
-            glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-            //====================================
-            //Aqui havia a definição dos vertices
-            //====================================
-
-            fixed (float* v = &Vertices[0])
-            {
-                glBufferData(GL_ARRAY_BUFFER, sizeof(float) * Vertices.Length, v, GL_STATIC_DRAW);
-            }
-
-            glVertexAttribPointer(0, 2, GL_FLOAT, false, 5 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
-
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 5 * sizeof(float), (void*)(2 * sizeof(float)));
-            glEnableVertexAttribArray(1);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
         }
 
-        public void Render() => Renderer();
-        protected abstract void Renderer();
+        public void Render()
+        {
+            //Aplica as transformações
+
+            { //Verificar os calculos pelo codigo do professor
+                transform.Rotation.Z = System.MathF.Sin(Time.TotalElapsedSeconds) * System.MathF.PI * 1f;
+                shader.SetMatrix4x4("model", transform.TransformationMatrix);
+                shader.Use();
+                shader.SetMatrix4x4("projection", Scene.virtualCamera.ProjectionMatrix);
+            }
+
+
+
+
+            mesh.Render();
+        }
     }
 }
