@@ -1,4 +1,5 @@
 ﻿using static RendererEngine.OpenGL.GL;
+using System.Numerics;
 using GLFW;
 
 namespace RendererEngine
@@ -19,19 +20,29 @@ namespace RendererEngine
 
         protected unsafe override void LoadContent()
         {
-            // Render all content of specific scene
+            scene.LoadContent();
+            
         }
 
         protected override void Update()
         {
+            scene.virtualCamera.rotate(Vector3.UnitX , 45 * Time.DeltaTime);
+            foreach (GameObject obj in scene.Objects)
+            {
+                obj.transform.translate(new Vector3(1, 0, 0) * Time.DeltaTime * 5);
+                Debug.Log(obj.transform.Position.ToString());
+            }
         }
 
         protected override void Render()
         {
-            glClearColor(0,0,0,0);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            // Render all content of specific scene
+            // configura a viewport para pegar toda a janela
+            glViewport(0, 0, (int)DisplayManager.WindowSize.X, (int)DisplayManager.WindowSize.Y);
+
+            scene.DrawObjects();
 
             Glfw.SwapBuffers(DisplayManager.window);
         }
