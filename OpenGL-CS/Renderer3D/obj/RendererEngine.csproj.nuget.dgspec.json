@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj": {}
+    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\OpenGL-CS\\Renderer3D\\RendererEngine.csproj": {}
   },
   "projects": {
-    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj": {
+    "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\OpenGL-CS\\Renderer3D\\RendererEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj",
+        "projectUniqueName": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\OpenGL-CS\\Renderer3D\\RendererEngine.csproj",
         "projectName": "RendererEngine",
-        "projectPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\RendererEngine.csproj",
+        "projectPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\OpenGL-CS\\Renderer3D\\RendererEngine.csproj",
         "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
-        "outputPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\TrabalhoFinal\\Utilizando CSharp (Testando Implementacao)\\Renderer3D\\Renderer3D\\obj\\",
+        "outputPath": "E:\\6 - GitHub\\UFN_ComputacaoGrafica\\OpenGL-CS\\Renderer3D\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
