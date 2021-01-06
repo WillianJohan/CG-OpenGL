@@ -54,11 +54,9 @@ namespace RendererEngine
             glVertexAttribPointer(1, 3, GL_FLOAT, true, 0, (void*)0);
         }
 
-        public void Render()
-        {
-            glBindVertexArray(VAO);
-            glDrawArrays(GL_TRIANGLES, 0, Vertices.Length);
-        }
+        public void Bind() => glBindVertexArray(VAO);
+        public void Draw() => glDrawArrays(GL_TRIANGLES, 0, Vertices.Length);
+
 
         // IDisposable interface
         public void Dispose()

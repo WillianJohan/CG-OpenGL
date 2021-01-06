@@ -5,7 +5,7 @@
 layout(location = 0) in vec3 vertex_position;
 layout(location = 1) in vec3 vertex_normal;
 
-out vec3 vertex_position_cam
+out vec3 vertex_position_cam;
 out vec3 vertex_normal_cam;
 
 uniform mat4 matriz;
@@ -43,7 +43,7 @@ uniform vec3 Ka; // Ambient Reflection
 uniform float especular_exp; // Specular exponent
 
 uniform mat4 view;
-
+out vec4 frag_colour;
 
 // CRIAR AQUI METODOS PARA RETORNAR OS CALCULOS DAS LUZES E ETC...
 
