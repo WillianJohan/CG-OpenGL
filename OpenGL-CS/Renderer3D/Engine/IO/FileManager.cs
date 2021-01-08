@@ -7,6 +7,63 @@ namespace RendererEngine
 {
     public static class FileManager
     {
+        struct MeshFilter
+        {
+            public string name;
+            public List<float> Vertices;
+            public List<float> Normals;
+            public List<float> Faces;
+
+            public void ParseValues(string line)
+            {
+                if (line.StartsWith("v"))
+                    ParseVertice(line);
+                else if (line.StartsWith("vn"))
+                    ParseNormal(line);
+                else if (line.StartsWith("f"))
+                    ParseFace(line);
+            }
+
+            void ParseVertice(string line)
+            {
+
+            }
+
+            void ParseNormal(string line)
+            {
+
+            }
+
+            void ParseFace(string line)
+            {
+
+            }
+        }
+
+        public static void ImportGameObjects(string filepath)
+        {
+            //List<string> StringObjects = new List<string>();
+            //string[] FileLines = File.ReadAllLines(filepath);
+            //bool objectFounded = false;
+            //int objIndex = -1;
+            ////separa o arquivo em todos os "o" encontrado
+            //foreach(string line in FileLines)
+            //{
+            //    if (!objectFounded && !line.StartsWith('o'))
+            //        continue;
+            //
+            //    if (line.StartsWith('o'))
+            //    {
+            //        objectFounded = true;
+            //        objIndex++;
+            //        StringObjects.Add(line + "\n");
+            //        continue;
+            //    }
+            //    StringObjects[objIndex] += line + "\n";
+            //}
+        }
+
+
         /*
         static string selectedPathFileName(string filter)
         {
