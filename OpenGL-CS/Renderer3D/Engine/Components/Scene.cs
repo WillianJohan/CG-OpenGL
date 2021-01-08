@@ -61,7 +61,6 @@ namespace RendererEngine
 
         public void LoadContent()
         {
-            //REVISAR
             foreach (GameObject obj in Objects)
                 obj.Load();
         }
@@ -70,20 +69,20 @@ namespace RendererEngine
         {
             foreach (GameObject obj in Objects)
             {
-                //Activate Shader
+                // Activate Shader
                 obj.shader.Use();
 
-                //LIGHT
+                // LIGHT
                 obj.shader.setVector3("light_position", spotLight.transform.Position);
                 obj.shader.setVector3("La", spotLight.La);
                 obj.shader.setVector3("Ld", spotLight.Ld);
                 obj.shader.setVector3("Ls", spotLight.Ls);
 
-                //CAMERA
+                // CAMERA
                 obj.shader.SetMatrix4x4("view", virtualCamera.VisualizationMatrix);
                 obj.shader.SetMatrix4x4("proj", virtualCamera.ProjectionMatrix);
 
-                // APPLY TRANSFORMATIONS AND MATERIAL VALUES
+                // APPLY MATERIAL IN OBJ
                 obj.mesh.Bind();
                 
                 obj.shader.setVector3("Ka", obj.material.AmbientReflection);      // SETTING MATERIAL VALUES
@@ -91,6 +90,7 @@ namespace RendererEngine
                 obj.shader.setVector3("Ks", obj.material.Specularreflection);     // SETTING MATERIAL VALUES
                 obj.shader.setFloat("especular_exp", obj.material.especular_exp); // SETTING MATERIAL VALUES
 
+                // APPLY TRANSFORMATION
                 obj.shader.SetMatrix4x4("matriz", obj.transform.TransformationMatrix);
                 obj.mesh.Draw();
             

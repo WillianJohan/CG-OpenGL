@@ -25,7 +25,17 @@ namespace RendererEngine
             this.zFar = zFar;
         }
 
-        public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreatePerspectiveFieldOfView((System.MathF.PI / 180) * fov, aspect, zNear, zFar);
+        //public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreatePerspectiveFieldOfView((System.MathF.PI / 180) * fov, aspect, zNear, zFar);
+        public Matrix4x4 ProjectionMatrix() => Matrix4x4.CreatePerspective(DisplayManager.WindowSize.X, DisplayManager.WindowSize.Y, zNear, zFar);
+        //public Matrix4x4 ProjectionMatrix() {
+        //    float left = (DisplayManager.WindowSize.X - DisplayManager.WindowSize.X) / 2f;
+        //    float right = (DisplayManager.WindowSize.X + DisplayManager.WindowSize.X) / 2f;
+        //    float top = (DisplayManager.WindowSize.Y - DisplayManager.WindowSize.Y) / 2f;
+        //    float bottom = (DisplayManager.WindowSize.Y + DisplayManager.WindowSize.Y) / 2f;
+        //
+        //    return Matrix4x4.CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar);
+        //
+        //}
 
     }
 
@@ -142,6 +152,7 @@ namespace RendererEngine
             Matrix4x4 RotationMatrix = Matrix4x4.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z));
 
             return (TranslationMatrix * RotationMatrix);
+            //return RotationMatrix * TranslationMatrix;
         }
 
 

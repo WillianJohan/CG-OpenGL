@@ -11,9 +11,9 @@ namespace RendererEngine
         public SpotLight()
         {
             transform = new Transform();
-            setLA(0.2f);
+            setLA(0.8f);
             setLD(0.7f);
-            setLS(1.0f);
+            setLS(0.7f);
         }
 
         public SpotLight(Transform transform, Vector3 la, Vector3 ld, Vector3 ls)

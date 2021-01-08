@@ -11,8 +11,8 @@ namespace RendererEngine
 
         public unsafe void Load()
         {
-            mesh.Load();
             shader.Load();
+            mesh.Load();
         }
 
         public void Dispose()

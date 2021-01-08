@@ -18,10 +18,10 @@ namespace RendererEngine
 
         public Material()
         {
-            setAmbientReflection(0.2f);
-            setDiffuseReflection(0.5f);
+            setAmbientReflection(0.1f);
+            setDiffuseReflection(0.1f);
             setSpecularreflection(1.0f);
-            especular_exp = 32;
+            especular_exp = 20;
         }
 
         public void setAmbientReflection(float value) => AmbientReflection  = new Vector3(value);

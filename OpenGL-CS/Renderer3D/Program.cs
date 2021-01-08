@@ -7,8 +7,11 @@ namespace RendererEngine
 
         static void Main(string[] args)
         {
-
-			float[] objVertex = new float[]
+			// CRIA DO GAMEOBJECT =========================================================
+			
+			#region Vertices and Normals
+			
+			float[] v = new float[]
 			{
 				//face frontal
 				 0.5f,  0.5f, 0.5f,
@@ -58,7 +61,7 @@ namespace RendererEngine
 				-0.5f, 0.5f, -0.5f,
 				-0.5f, 0.5f,  0.5f
 			};
-			float[] objNormals = new float[]
+			float[] n = new float[]
 			{
 				//face frontal
 				0.0f, 0.0f, 1.0f,
@@ -103,14 +106,27 @@ namespace RendererEngine
 				0.0f, 1.0f, 0.0f,
 				0.0f, 1.0f, 0.0f
 			};
-			GameObject simpleObject = new GameObject("Simple Object", new Transform(), new Mesh(objVertex, objNormals));
+			
+			#endregion
+            
+			Mesh objMesh = new Mesh(v, n);
+			
+			GameObject obj = new GameObject("Simple Object", new Transform(), objMesh);
+			obj.transform.Scale *= 50;
 
-			Scene simpleScene = new Scene("SimpleScene");
-			simpleScene.Objects.Add(simpleObject);
-			simpleScene.spotLight.transform.Position.X = -2f;
-			simpleScene.virtualCamera.Position.Z = 10f;
+			// SCENE ======================================================================
+			Scene scene = new Scene("SimpleScene");
+			
+			scene.Objects.Add(obj);
+			scene.spotLight.transform.Position.Z = 1;
 
-            Runtime game = new Game(800, 600, simpleScene.SceneName, simpleScene);
+			scene.virtualCamera.Position.X = -150f;
+			scene.virtualCamera.Position.Y = -100f;
+			scene.virtualCamera.Position.Z = 5f;
+			scene.virtualCamera.Perspective.zFar = 10000;
+
+			// INIT GAME WINDOW ===========================================================
+			Runtime game = new Game(800, 600, scene.SceneName, scene);
             game.Run();
         }
 

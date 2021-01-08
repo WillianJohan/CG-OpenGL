@@ -52,7 +52,7 @@ namespace RendererEngine
             FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(FragmentShaderID, source.FragmentShaderCode);
             glCompileShader(FragmentShaderID);
-
+            
             status = glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, 1);
             if (status[0] == 0)
             {
